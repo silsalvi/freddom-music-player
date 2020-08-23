@@ -1,1 +1,7 @@
-<p>music-list works!</p>
+<p-dataView [value]="brani">
+  <ng-template let-brano pTemplate="listItem">
+    <div pRipple class="list-item" (click)="onSelection(brano)">
+      {{ brano.nome }}
+    </div>
+  </ng-template>
+</p-dataView>
