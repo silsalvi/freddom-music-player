@@ -1,1 +1,33 @@
-<p>player works!</p>
+<p-dialog
+  [header]="'Player'"
+  [position]="'bottom'"
+  [visible]="true"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+  [(visible)]="display"
+  (onHide)="onHide()"
+>
+  <ng-template pTemplate="body">
+    <div class="centered">{{ branoSelezionato.nome }}</div>
+
+    <div class="centered">
+      <p-button
+        [icon]="'pi pi-backward'"
+        [styleClass]="'p-button-rounded p-button-text'"
+        (onClick)="onBackwordClick()"
+      ></p-button>
+      <p-button
+        [icon]="isPlaying ? 'pi pi-pause' : 'pi pi-play'"
+        [styleClass]="'p-button-rounded p-button-text'"
+        (onClick)="onPlayClick()"
+      ></p-button>
+      <p-button
+        [icon]="'pi pi-forward'"
+        [styleClass]="'p-button-rounded p-button-text'"
+        (onClick)="onForwardClick()"
+      ></p-button>
+    </div>
+  </ng-template>
+</p-dialog>

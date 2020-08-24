@@ -14,9 +14,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PlayerComponent } from './player/player.component';
-
+import { DialogModule } from 'primeng/dialog';
 @NgModule({
-  declarations: [AppComponent, MusicListComponent, MenubarComponent, PlayerComponent],
+  declarations: [
+    AppComponent,
+    MusicListComponent,
+    MenubarComponent,
+    PlayerComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,6 +33,7 @@ import { PlayerComponent } from './player/player.component';
     ReactiveFormsModule,
     FormsModule,
     InputTextModule,
+    DialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
