@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Brano } from '../models/brano.model';
-import { brani } from '../mock-data';
 import { BraniService } from '../services/brani.service';
+
 @Component({
   selector: 'app-music-list',
   templateUrl: './music-list.component.html',
@@ -26,6 +26,6 @@ export class MusicListComponent implements OnInit {
    * @todo implementare insieme a ricerca
    */
   onSelection(brano: Brano) {
-    console.log(brano);
+    this.braniService.riproduci(brano);
   }
 }

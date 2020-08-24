@@ -3,18 +3,15 @@ import { Brano } from './models/brano.model';
 export const menuItems: MenuItem[] = [];
 export const brani: Brano[] = [
   {
-    durata: 500,
-    nome: 'Tik tok',
-    path: '',
+    nome: 'Je so pazz',
+    path: 'assets/app-data/pino-daniele_je-so-pazzo.mp3',
   },
   {
-    durata: 500,
     nome: 'Fear of the dark',
-    path: '',
+    path: 'assets/app-data/iron-maiden_fear-of-the-dark.mp3',
   },
   {
-    durata: 500,
     nome: 'Bohemian Rhapsody',
-    path: '',
+    path: 'assets/app-data/queen_bohemian-rhapsody.mp3',
   },
 ];
