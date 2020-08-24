@@ -7,14 +7,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MusicListComponent } from './music-list/music-list.component';
 import { DataViewModule } from 'primeng/dataview';
 import { RippleModule } from 'primeng/ripple';
+import { MenubarModule } from 'primeng/menubar';
+import { MenubarComponent } from './menubar/menubar.component';
+import { ButtonModule } from 'primeng/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+
 @NgModule({
-  declarations: [AppComponent, MusicListComponent],
+  declarations: [AppComponent, MusicListComponent, MenubarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     DataViewModule,
     RippleModule,
+    MenubarModule,
+    ButtonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    InputTextModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

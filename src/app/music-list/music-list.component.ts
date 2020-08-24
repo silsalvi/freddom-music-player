@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Brano } from '../models/brano.model';
+import { brani } from '../mock-data';
+import { BraniService } from '../services/brani.service';
 @Component({
   selector: 'app-music-list',
   templateUrl: './music-list.component.html',
@@ -7,24 +9,14 @@ import { Brano } from '../models/brano.model';
 })
 export class MusicListComponent implements OnInit {
   branoSelezionato: Brano;
-  brani: Brano[] = [
-    {
-      durata: 500,
-      nome: 'Tik tok',
-      path: '',
-    },
-    {
-      durata: 500,
-      nome: 'Fear of the dark',
-      path: '',
-    },
-    {
-      durata: 500,
-      nome: 'Bohemian Rhapsody',
-      path: '',
-    },
-  ];
-  constructor() {}
+
+  /**
+   * Ritorna i risultati delle ricerche dal service
+   */
+  get risultatiRicerca() {
+    return this.braniService.risultatiRicerca;
+  }
+  constructor(private braniService: BraniService) {}
 
   ngOnInit(): void {}
 
