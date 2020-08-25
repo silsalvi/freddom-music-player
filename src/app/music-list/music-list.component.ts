@@ -27,5 +27,10 @@ export class MusicListComponent implements OnInit {
    */
   onSelection(brano: Brano) {
     this.braniService.riproduci(brano);
+    console.log(
+      brano.collaborazioni.length > 0
+        ? brano.collaborazioniToString()
+        : brano.autore.nomeArte
+    );
   }
 }

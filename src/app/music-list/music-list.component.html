@@ -1,7 +1,12 @@
 <p-dataView [value]="risultatiRicerca" [emptyMessage]="'Nessun brano trovato'">
   <ng-template let-brano pTemplate="listItem">
     <div pRipple class="list-item" (click)="onSelection(brano)">
-      {{ brano.nome }}
+      <div>{{ brano.nome }}</div>
+      <small class="lbl-artista">{{
+        brano.collaborazioni.length > 0
+          ? brano.collaborazioniToString()
+          : brano.autore.nomeArte
+      }}</small>
     </div>
   </ng-template>
 </p-dataView>
