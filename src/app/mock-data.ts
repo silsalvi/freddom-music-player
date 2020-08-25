@@ -27,4 +27,14 @@ export const brani: Brano[] = [
     },
     [{ nomeArte: 'Lazza' }]
   ),
+  new Brano('Ricochet', 'assets/app-data/gue-pequeno,lazza_medellin.mp3', {
+    nomeArte: 'Gue Pequeno',
+  }),
+  new Brano(
+    "Sono Un Bravo Ragazzo Un Po' Fuori Di Testa",
+    'assets/app-data/random_sono-un-bravo-ragazzo-un-po-fuori-di-testa.mp3',
+    {
+      nomeArte: 'Random',
+    }
+  ),
 ];
