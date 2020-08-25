@@ -1,7 +1,12 @@
 .list-item {
   padding: 25px;
-  font-size: 25px;
+  font-size: 30px;
 }
 .lbl-artista {
-  font-size: 15px;
+  font-size: 20px;
+}
+
+div.list-item:hover {
+  background: #5daef1;
+  color: black;
 }

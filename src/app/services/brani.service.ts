@@ -47,10 +47,9 @@ export class BraniService {
    * Ritorna un nuovo oggetto di tipo Howl per riprodurre un nuovo brano
    */
   private creaNuovoFlusso(brano: Brano) {
-    if (this.howl.playing()) {
-      this.howl.pause();
-      this.howl.stop();
-    }
+    this.howl.pause();
+    this.howl.stop();
+
     this.howl = new Howl({
       src: [brano.path],
     });
