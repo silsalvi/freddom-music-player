@@ -1,6 +1,5 @@
-import { MenuItem } from 'primeng/api';
 import { Brano } from './models/brano.model';
-export const menuItems: MenuItem[] = [];
+
 export const brani: Brano[] = [
   new Brano('Je so pazz', 'assets/app-data/pino-daniele_je-so-pazzo.mp3', {
     nomeArte: 'Pino Daniele',
