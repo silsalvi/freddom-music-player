@@ -1,5 +1,4 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { menuItems } from '../mock-data';
 import { BraniService } from '../services/brani.service';
 
 @Component({
@@ -8,7 +7,6 @@ import { BraniService } from '../services/brani.service';
   styleUrls: ['./menubar.component.css'],
 })
 export class MenubarComponent implements OnInit {
-  items = menuItems;
   //valore della ricerca
   ricerca: string;
 
