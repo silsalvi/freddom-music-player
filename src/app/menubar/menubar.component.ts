@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { BraniService } from '../services/brani.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-menubar',
@@ -9,25 +10,32 @@ import { BraniService } from '../services/brani.service';
 export class MenubarComponent implements OnInit {
   //valore della ricerca
   ricerca: string;
-
-  constructor(private braniService: BraniService) {}
+  private timeout: number;
+  constructor(
+    private braniService: BraniService,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {}
 
   /**
    * Listener per la ricerca di un brano.
-   * Alla digitazione dei caratteri effettua una per like (similarità)
+   * Alla digitazione dei caratteri effettua una ricerca per like (similarità)
    *
    * @todo implementare ricerca al backend
-   * @param event keyboard event
    */
   @HostListener('keyup', ['$event'])
   onSearch() {
-    this.braniService.risultatiRicerca = this.braniService
-      .getBraniMock()
-      .filter((brano) => {
-        const regex = new RegExp(this.ricerca);
-        return regex.test(brano.nome);
-      });
+    clearTimeout(this.timeout);
+    this.spinner.show();
+    this.timeout = setTimeout(() => {
+      this.braniService.risultatiRicerca = this.braniService
+        .getBraniMock()
+        .filter((brano) => {
+          const regex = new RegExp(this.ricerca.toLowerCase());
+          return regex.test(brano.nome.toLowerCase());
+        });
+      this.spinner.hide();
+    }, 1000);
   }
 }
