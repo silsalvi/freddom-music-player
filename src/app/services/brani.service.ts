@@ -16,13 +16,13 @@ export class BraniService {
   });
   mostraPlayer: boolean;
   branoSelezionato: Brano;
-
   /**
    * Ritorna true se c'è già un brano in riproduzione
    */
   get isPlaying() {
     return this.howl.playing();
   }
+
   constructor() {}
 
   /**
@@ -35,6 +35,7 @@ export class BraniService {
 
   /**
    * Riproduce un brano passato in input
+   * @param brano il brano da riprodurre
    */
   riproduci(brano: Brano) {
     this.branoSelezionato = brano;
@@ -45,6 +46,7 @@ export class BraniService {
 
   /**
    * Ritorna un nuovo oggetto di tipo Howl per riprodurre un nuovo brano
+   * @param brano brano da cui creare il nuovo flusso
    */
   private creaNuovoFlusso(brano: Brano) {
     this.howl.pause();
