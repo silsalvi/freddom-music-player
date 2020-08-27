@@ -6,3 +6,57 @@
 .btn-control {
   padding: 5px;
 }
+
+.player-container-minimize {
+  bottom: 0;
+  position: sticky;
+  background: rgb(0, 0, 0);
+  padding: 2px;
+  text-align: center;
+}
+
+.name-song-minimize {
+  padding: 10px;
+  color: white;
+  text-align: center;
+}
+
+.player-controls-minimize {
+  text-align: center;
+}
+
+.player-container-full {
+  height: 100%;
+  position: fixed;
+  background: rgb(0, 0, 0, 0.8);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.name-song-full {
+  padding: 20px;
+  color: white;
+  text-align: center;
+  margin: auto;
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  font-size: 50px;
+  transform: translate(-50%, -50%);
+}
+
+.player-controls-full {
+  margin: auto;
+  text-align: center;
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  font-size: 50px;
+  transform: translate(-50%, -50%);
+}
+
+#close-wrapper {
+  padding: 5px;
+}
