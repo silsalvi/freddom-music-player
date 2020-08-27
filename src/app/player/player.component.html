@@ -1,33 +1,68 @@
-<p-dialog
-  [header]="'Player'"
-  [position]="'bottom'"
-  [visible]="true"
-  [style]="{ width: '50vw' }"
-  [baseZIndex]="10000"
-  [draggable]="false"
-  [resizable]="false"
-  [(visible)]="display"
-  (onHide)="onHide()"
->
-  <ng-template pTemplate="body">
-    <div class="centered">{{ branoSelezionato.nome }}</div>
+<ng-container>
+  <ng-container [ngTemplateOutlet]="minimize" *ngIf="!fullMode"></ng-container>
+  <ng-container [ngTemplateOutlet]="opened" *ngIf="fullMode"></ng-container>
+</ng-container>
 
-    <div class="centered">
+<ng-template #minimize>
+  <div
+    id="player-minimize"
+    class="player-container-minimize"
+    (click)="fullMode = true"
+  >
+    <div class="name-song-minimize">
+      <span>{{ branoSelezionato.nome }}</span>
+    </div>
+
+    <div class="player-controls-minimize">
       <p-button
         [icon]="'pi pi-backward'"
         [styleClass]="'p-button-rounded p-button-text'"
-        (onClick)="onBackwordClick()"
+        (onClick)="onBackwordClick($event)"
       ></p-button>
       <p-button
         [icon]="isPlaying ? 'pi pi-pause' : 'pi pi-play'"
         [styleClass]="'p-button-rounded p-button-text'"
-        (onClick)="onPlayClick()"
+        (onClick)="onPlayClick($event)"
       ></p-button>
       <p-button
         [icon]="'pi pi-forward'"
         [styleClass]="'p-button-rounded p-button-text'"
-        (onClick)="onForwardClick()"
+        (onClick)="onForwardClick($event)"
       ></p-button>
     </div>
-  </ng-template>
-</p-dialog>
+  </div>
+</ng-template>
+
+<ng-template #opened>
+  <div id="full-player" class="player-container-full">
+    <div id="close-wrapper">
+      <p-button
+        [icon]="'pi pi-times'"
+        [styleClass]="'p-button-rounded p-button-text p-button-lg'"
+        (click)="fullMode = false"
+        [style]="{ float: 'right' }"
+      ></p-button>
+    </div>
+    <div class="name-song-full">
+      <span>{{ branoSelezionato.nome }}</span>
+    </div>
+
+    <div class="player-controls-full">
+      <p-button
+        [icon]="'pi pi-backward'"
+        [styleClass]="'p-button-rounded p-button-text p-button-lg'"
+        (onClick)="onBackwordClick($event)"
+      ></p-button>
+      <p-button
+        [icon]="isPlaying ? 'pi pi-pause' : 'pi pi-play'"
+        [styleClass]="'p-button-rounded p-button-text p-button-lg'"
+        (onClick)="onPlayClick($event)"
+      ></p-button>
+      <p-button
+        [icon]="'pi pi-forward'"
+        [styleClass]="'p-button-rounded p-button-text p-button-lg'"
+        (onClick)="onForwardClick($event)"
+      ></p-button>
+    </div>
+  </div>
+</ng-template>

@@ -3,6 +3,7 @@ import { brani } from '../mock-data';
 import { Brano } from '../models/brano.model';
 import { BehaviorSubject } from 'rxjs';
 import { Howl } from 'howler';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Injectable({
   providedIn: 'root',
 })
@@ -23,7 +24,7 @@ export class BraniService {
     return this.howl.playing();
   }
 
-  constructor() {}
+  constructor(private spinner: NgxSpinnerService) {}
 
   /**
    * Restituisce l'array di brani mockati
@@ -39,6 +40,7 @@ export class BraniService {
    */
   riproduci(brano: Brano) {
     this.branoSelezionato = brano;
+    this.spinner.show();
     this.mostraPlayer = true;
     this.braniSubject.next(brano);
     this.creaNuovoFlusso(brano);
@@ -55,6 +57,9 @@ export class BraniService {
     this.howl = new Howl({
       src: [brano.path],
     });
-    this.howl.play();
+
+    setTimeout(() => {
+      this.spinner.hide();
+    }, this.howl.play());
   }
 }

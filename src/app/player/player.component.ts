@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { BraniService } from '../services/brani.service';
 import { Subscription } from 'rxjs';
 import { Brano } from '../models/brano.model';
@@ -11,8 +11,7 @@ import { Brano } from '../models/brano.model';
 export class PlayerComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   branoSelezionato: Brano;
-  @Input() display: boolean;
-
+  fullMode: boolean;
   constructor(private braniService: BraniService) {}
 
   get isPlaying(): boolean {
@@ -33,7 +32,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
    * Handler per la riproduzione del brano
    * Stoppa o manda in play il brano selezionato
    */
-  onPlayClick() {
+  onPlayClick(event: Event) {
+    event.stopPropagation();
     if (this.isPlaying) {
       this.braniService.howl.pause();
     } else {
@@ -46,7 +46,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
    * A partire dall'index del brano selezionato verifica se l'array dei risultati di ricerca sfora.
    * Se è vero allora riparte dal primo, altrimenti avanza di 1
    */
-  onForwardClick() {
+  onForwardClick(event: Event) {
+    event.stopPropagation();
     const brani = this.braniService.risultatiRicerca;
     let branoSelezionato = this.braniService.branoSelezionato;
     const index = brani.findIndex((brano) => brano === branoSelezionato);
@@ -71,7 +72,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
    * Verifica se il brano attualmente selezionato è il primo:
    * se è vero allora riprende dall'ultimo altrimenti retrocede di 1
    */
-  onBackwordClick() {
+  onBackwordClick(event: Event) {
+    event.stopPropagation();
     const brani = this.braniService.risultatiRicerca;
     let branoSelezionato = this.braniService.branoSelezionato;
     const index = brani.findIndex((brano) => brano === branoSelezionato);
