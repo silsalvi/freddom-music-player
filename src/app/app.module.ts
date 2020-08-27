@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,6 +14,9 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PlayerComponent } from './player/player.component';
 import { DialogModule } from 'primeng/dialog';
+
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +36,7 @@ import { DialogModule } from 'primeng/dialog';
     FormsModule,
     InputTextModule,
     DialogModule,
+    NgxSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

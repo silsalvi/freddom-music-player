@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Brano } from '../models/brano.model';
 import { BraniService } from '../services/brani.service';
+import { brani } from '../mock-data';
 
 @Component({
   selector: 'app-music-list',
@@ -27,10 +28,5 @@ export class MusicListComponent implements OnInit {
    */
   onSelection(brano: Brano) {
     this.braniService.riproduci(brano);
-    console.log(
-      brano.collaborazioni.length > 0
-        ? brano.collaborazioniToString()
-        : brano.autore.nomeArte
-    );
   }
 }
