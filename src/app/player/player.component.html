@@ -13,6 +13,17 @@
       <span>{{ branoSelezionato.nome }}</span>
     </div>
 
+    <div class="progress-bar-minimize" (click)="$event.stopPropagation()">
+      <p-slider
+        [(ngModel)]="tempo"
+        (onChange)="onProgressChange($event)"
+        [min]="0"
+        [max]="100"
+      ></p-slider>
+      <div class="time">{{ tempoToDate | date: "mm:ss" }}</div>
+      <div class="time-duration">{{ durata }}</div>
+    </div>
+
     <div class="player-controls-minimize">
       <p-button
         [icon]="'pi pi-backward'"

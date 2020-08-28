@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PlayerComponent } from './player/player.component';
 import { DialogModule } from 'primeng/dialog';
-
+import { SliderModule } from 'primeng/slider';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
@@ -37,6 +37,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     InputTextModule,
     DialogModule,
     NgxSpinnerModule,
+    SliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
