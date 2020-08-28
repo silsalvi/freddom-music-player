@@ -57,6 +57,21 @@
   transform: translate(-50%, -50%);
 }
 
+.progress-bar-minimize {
+  padding: 10px;
+}
+
+.time {
+  color: white;
+  float: left;
+  padding: 5px 5px 5px 0;
+}
+.time-duration {
+  color: white;
+  float: right;
+  padding: 5px 0 5px 5px;
+}
+
 #close-wrapper {
   padding: 5px;
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { BraniService } from '../services/brani.service';
 import { Subscription } from 'rxjs';
 import { Brano } from '../models/brano.model';
+import { brani } from '../mock-data';
 
 @Component({
   selector: 'app-player',
@@ -12,6 +13,9 @@ export class PlayerComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   branoSelezionato: Brano;
   fullMode: boolean;
+  tempo: number;
+  tempoToDate: Date;
+  durata: string;
   constructor(private braniService: BraniService) {}
 
   get isPlaying(): boolean {
@@ -22,6 +26,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.subscription = this.braniService.brani$.subscribe((brano) => {
       this.branoSelezionato = brano;
     });
+    this.initSlider();
   }
 
   ngOnDestroy() {
@@ -57,6 +62,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
       this.braniService.branoSelezionato = brani[0];
     }
     this.braniService.riproduci(this.braniService.branoSelezionato);
+    this.initSlider();
   }
 
   /**
@@ -83,5 +89,40 @@ export class PlayerComponent implements OnInit, OnDestroy {
       this.braniService.branoSelezionato = brani[brani.length - 1];
     }
     this.braniService.riproduci(this.braniService.branoSelezionato);
+    this.initSlider();
+  }
+
+  /**
+   * Handler per la progress bar.
+   * Al cambiamento manuale del valore della progress-bar porta il brano
+   * al punto desiderato
+   */
+  onProgressChange(event: any) {
+    const song_duration = this.braniService.howl.duration();
+    const tempo_scelto = event.value;
+
+    this.tempo = this.braniService.howl.seek(
+      song_duration * (tempo_scelto / 100)
+    ) as number;
+  }
+
+  /**
+   * Avvia lo slider al caricamento del componente
+   */
+  initSlider() {
+    const sound = this.braniService.howl;
+
+    setInterval(() => {
+      update();
+    }, 1000);
+
+    const update = () => {
+      if (sound.playing()) {
+        this.tempo = ((sound.seek() as number) / sound.duration()) * 100;
+        this.tempoToDate = new Date(this.tempo * 3600);
+        const seconds = Math.floor(sound.duration());
+        this.durata = Math.floor(seconds / 60) + ':' + Math.floor(seconds % 60);
+      }
+    };
   }
 }
