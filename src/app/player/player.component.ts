@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { BraniService } from '../services/brani.service';
 import { Subscription } from 'rxjs';
 import { Brano } from '../models/brano.model';
-import { brani } from '../mock-data';
 
 @Component({
   selector: 'app-player',
@@ -14,7 +13,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   branoSelezionato: Brano;
   fullMode: boolean;
   tempo: number;
-  tempoToDate: Date;
+  attuale: string;
   durata: string;
   constructor(private braniService: BraniService) {}
 
@@ -25,6 +24,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.braniService.brani$.subscribe((brano) => {
       this.branoSelezionato = brano;
+      console.log('abbiamm');
+      this.initSlider();
     });
     this.initSlider();
   }
@@ -110,18 +111,28 @@ export class PlayerComponent implements OnInit, OnDestroy {
    * Avvia lo slider al caricamento del componente
    */
   initSlider() {
+    console.clear();
     const sound = this.braniService.howl;
-
     setInterval(() => {
       update();
+      clearInterval();
     }, 1000);
+
+    const calcolaDurata = () => {
+      const durataTotale = Math.floor(sound.duration());
+      const minuti = Math.floor(durataTotale / 60);
+      const secondi = Math.floor(durataTotale % 60);
+      this.durata = `${minuti}:${secondi}`;
+    };
 
     const update = () => {
       if (sound.playing()) {
-        this.tempo = ((sound.seek() as number) / sound.duration()) * 100;
-        this.tempoToDate = new Date(this.tempo * 3600);
-        const seconds = Math.floor(sound.duration());
-        this.durata = Math.floor(seconds / 60) + ':' + Math.floor(seconds % 60);
+        calcolaDurata();
+        const seek = sound.seek() as number;
+        this.tempo = (seek / sound.duration()) * 100;
+        const minutes = Math.floor(seek / 60);
+        const seconds = Math.floor(seek % 60);
+        this.attuale = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
       }
     };
   }
