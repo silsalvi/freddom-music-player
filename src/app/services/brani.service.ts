@@ -42,7 +42,6 @@ export class BraniService {
     this.branoSelezionato = brano;
     this.spinner.show();
     this.mostraPlayer = true;
-    this.braniSubject.next(brano);
     this.creaNuovoFlusso(brano);
   }
 
@@ -61,5 +60,7 @@ export class BraniService {
     setTimeout(() => {
       this.spinner.hide();
     }, this.howl.play());
+
+    this.braniSubject.next(brano);
   }
 }
