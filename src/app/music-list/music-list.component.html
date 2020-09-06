@@ -1,6 +1,11 @@
 <p-dataView [value]="risultatiRicerca" [emptyMessage]="'Nessun brano trovato'">
   <ng-template let-brano pTemplate="listItem">
-    <div pRipple class="list-item" (click)="onSelection(brano)">
+    <div
+      pRipple
+      class="list-item"
+      (click)="onSelection(brano)"
+      [id]="'brano-' + brano.id"
+    >
       <div>
         <strong>{{ brano.nome }}</strong>
       </div>
