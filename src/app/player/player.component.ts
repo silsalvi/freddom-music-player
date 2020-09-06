@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { BraniService } from '../services/brani.service';
 import { Subscription } from 'rxjs';
 import { Brano } from '../models/brano.model';
-import { brani } from '../mock-data';
 
 @Component({
   selector: 'app-player',
