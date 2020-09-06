@@ -1,10 +1,11 @@
 import { Brano } from './models/brano.model';
 
 export const brani: Brano[] = [
-  new Brano('Je so pazz', 'assets/app-data/pino-daniele_je-so-pazzo.mp3', {
+  new Brano(1, 'Je so pazz', 'assets/app-data/pino-daniele_je-so-pazzo.mp3', {
     nomeArte: 'Pino Daniele',
   }),
   new Brano(
+    2,
     'Fear of the dark',
     'assets/app-data/iron-maiden_fear-of-the-dark.mp3',
     {
@@ -12,6 +13,7 @@ export const brani: Brano[] = [
     }
   ),
   new Brano(
+    3,
     'Bohemian Rhapsody',
     'assets/app-data/queen_bohemian-rhapsody.mp3',
     {
@@ -19,6 +21,7 @@ export const brani: Brano[] = [
     }
   ),
   new Brano(
+    4,
     'Medellin',
     'assets/app-data/gue-pequeno,lazza_medellin.mp3',
     {
@@ -26,10 +29,11 @@ export const brani: Brano[] = [
     },
     [{ nomeArte: 'Lazza' }]
   ),
-  new Brano('Ricochet', 'assets/app-data/starset_ricochet.mp3', {
+  new Brano(5, 'Ricochet', 'assets/app-data/starset_ricochet.mp3', {
     nomeArte: 'Starset',
   }),
   new Brano(
+    6,
     "Sono Un Bravo Ragazzo Un Po' Fuori Di Testa",
     'assets/app-data/random_sono-un-bravo-ragazzo-un-po-fuori-di-testa.mp3',
     {

@@ -1,17 +1,20 @@
 import { Autore } from './autore.model';
 export class Brano {
+  id: number;
   nome: string;
   path: string;
   collaborazioni?: Autore[];
   autore: Autore;
   dataUscita?: Date;
   constructor(
+    id: number,
     nome: string,
     path: string,
     autore: Autore,
     collaborazioni?: Autore[],
     dataUscita?: Date
   ) {
+    this.id = id;
     this.nome = nome;
     this.path = path;
     if (collaborazioni) {
