@@ -10,13 +10,13 @@
 .player-container-minimize {
   bottom: 0;
   position: sticky;
-  background: rgb(0, 0, 0);
+  background: #243857;
   padding: 2px;
   text-align: center;
 }
 
 .name-song-minimize {
-  padding: 10px;
+  padding: 5px;
   color: white;
   text-align: center;
 }
@@ -28,7 +28,7 @@
 .player-container-full {
   height: 100%;
   position: fixed;
-  background: rgb(0, 0, 0, 0.8);
+  background: rgba(36, 56, 87, 0.9);
   top: 0;
   left: 0;
   right: 0;
@@ -39,26 +39,17 @@
   padding: 20px;
   color: white;
   text-align: center;
-  margin: auto;
-  position: fixed;
-  top: 25%;
-  left: 50%;
-  font-size: 50px;
-  transform: translate(-50%, -50%);
+  padding-top: 20%;
 }
 
 .player-controls-full {
   margin: auto;
   text-align: center;
-  position: fixed;
-  top: 60%;
-  left: 50%;
-  font-size: 50px;
-  transform: translate(-50%, -50%);
+  padding-top: 5%;
 }
 
 .progress-bar-minimize {
-  padding: 10px;
+  padding: 15px;
 }
 
 .time {
@@ -74,4 +65,26 @@
 
 #close-wrapper {
   padding: 5px;
+}
+
+.progress-bar-full {
+  padding: 5%;
+}
+
+@media only screen and (max-width: 600px) {
+  .name-song-full {
+    font-size: x-large;
+    padding-top: 50%;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .name-song-full {
+    font-size: xx-large;
+  }
+  .player-controls-full {
+    margin: auto;
+    text-align: center;
+    padding-top: 5%;
+  }
 }

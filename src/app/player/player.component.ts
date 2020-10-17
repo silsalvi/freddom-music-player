@@ -1,37 +1,35 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Howl } from 'howler';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BraniService } from '../services/brani.service';
-import { Subscription } from 'rxjs';
 import { Brano } from '../models/brano.model';
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class PlayerComponent implements OnInit, OnDestroy {
-  subscription: Subscription;
+export class PlayerComponent implements OnInit {
   branoSelezionato: Brano;
   fullMode: boolean;
   tempo: number;
   attuale: string;
   durata: string;
-  constructor(private braniService: BraniService) {}
+  howl: Howl;
+  interval: number;
+  constructor(private braniService: BraniService) {
+    this.howl = braniService.howl;
+  }
 
   get isPlaying(): boolean {
     return this.braniService.isPlaying;
   }
 
   ngOnInit(): void {
-    this.subscription = this.braniService.brani$.subscribe((brano) => {
+    this.braniService.brani$.subscribe((brano) => {
       this.branoSelezionato = brano;
-      console.log('abbiamm');
-      this.initSlider();
+      this.startPlay();
     });
-    this.initSlider();
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   /**
@@ -63,7 +61,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
       this.braniService.branoSelezionato = brani[0];
     }
     this.braniService.riproduci(this.braniService.branoSelezionato);
-    this.initSlider();
+    this.startPlay();
   }
 
   /**
@@ -90,7 +88,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
       this.braniService.branoSelezionato = brani[brani.length - 1];
     }
     this.braniService.riproduci(this.braniService.branoSelezionato);
-    this.initSlider();
+    this.startPlay();
   }
 
   /**
@@ -98,42 +96,38 @@ export class PlayerComponent implements OnInit, OnDestroy {
    * Al cambiamento manuale del valore della progress-bar porta il brano
    * al punto desiderato
    */
-  onProgressChange(event: any) {
+  onProgressEnd(event: any) {
+    const howl = this.braniService.howl;
     const song_duration = this.braniService.howl.duration();
     const tempo_scelto = event.value;
-
-    this.tempo = this.braniService.howl.seek(
-      song_duration * (tempo_scelto / 100)
-    ) as number;
+    this.tempo = howl.seek(song_duration * (tempo_scelto / 100)) as number;
   }
 
   /**
-   * Avvia lo slider al caricamento del componente
+   * Avvia lo slider al caricamento del brano selezionato
    */
-  initSlider() {
-    console.clear();
-    const sound = this.braniService.howl;
-    setInterval(() => {
-      update();
-      clearInterval();
+  startPlay() {
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      this.update();
     }, 1000);
+  }
 
-    const calcolaDurata = () => {
-      const durataTotale = Math.floor(sound.duration());
-      const minuti = Math.floor(durataTotale / 60);
-      const secondi = Math.floor(durataTotale % 60);
-      this.durata = `${minuti}:${secondi}`;
-    };
+  private calcolaDurata() {
+    const durataTotale = Math.floor(this.howl.duration());
+    const minuti = Math.floor(durataTotale / 60);
+    const secondi = Math.floor(durataTotale % 60);
+    this.durata = `${minuti}:${secondi}`;
+  }
 
-    const update = () => {
-      if (sound.playing()) {
-        calcolaDurata();
-        const seek = sound.seek() as number;
-        this.tempo = (seek / sound.duration()) * 100;
-        const minutes = Math.floor(seek / 60);
-        const seconds = Math.floor(seek % 60);
-        this.attuale = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-      }
-    };
+  private update() {
+    if (this.howl.playing()) {
+      this.calcolaDurata();
+      const seek = this.howl.seek() as number;
+      this.tempo = (seek / this.howl.duration()) * 100;
+      const minutes = Math.floor(seek / 60);
+      const seconds = Math.floor(seek % 60);
+      this.attuale = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+    }
   }
 }
