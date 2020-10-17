@@ -15,12 +15,11 @@ export class PlayerComponent implements OnInit {
   tempo: number;
   attuale: string;
   durata: string;
-  howl: Howl;
-  interval: number;
-  constructor(private braniService: BraniService) {
-    this.howl = braniService.howl;
-  }
+  constructor(private braniService: BraniService) {}
 
+  get howl(): Howl {
+    return this.braniService.howl;
+  }
   get isPlaying(): boolean {
     return this.braniService.isPlaying;
   }
@@ -39,9 +38,9 @@ export class PlayerComponent implements OnInit {
   onPlayClick(event: Event) {
     event.stopPropagation();
     if (this.isPlaying) {
-      this.braniService.howl.pause();
+      this.howl.pause();
     } else {
-      this.braniService.howl.play();
+      this.howl.play();
     }
   }
 
@@ -61,7 +60,6 @@ export class PlayerComponent implements OnInit {
       this.braniService.branoSelezionato = brani[0];
     }
     this.braniService.riproduci(this.braniService.branoSelezionato);
-    this.startPlay();
   }
 
   /**
@@ -88,7 +86,6 @@ export class PlayerComponent implements OnInit {
       this.braniService.branoSelezionato = brani[brani.length - 1];
     }
     this.braniService.riproduci(this.braniService.branoSelezionato);
-    this.startPlay();
   }
 
   /**
@@ -107,9 +104,9 @@ export class PlayerComponent implements OnInit {
    * Avvia lo slider al caricamento del brano selezionato
    */
   startPlay() {
-    clearInterval(this.interval);
-    this.interval = setInterval(() => {
+    setInterval(() => {
       this.update();
+      clearInterval();
     }, 1000);
   }
 
@@ -121,7 +118,7 @@ export class PlayerComponent implements OnInit {
   }
 
   private update() {
-    if (this.howl.playing()) {
+    if (this.isPlaying) {
       this.calcolaDurata();
       const seek = this.howl.seek() as number;
       this.tempo = (seek / this.howl.duration()) * 100;
