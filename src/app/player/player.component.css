@@ -72,6 +72,15 @@
   padding: 5%;
 }
 
+.chevron-up-btn {
+  float: right;
+  padding-top: 0 !important;
+}
+
+.label-name {
+  padding-left: 40px;
+}
+
 @media only screen and (max-width: 600px) {
   .name-song-full {
     font-size: x-large;

@@ -36,7 +36,6 @@ export class PlayerComponent implements OnInit {
    * Stoppa o manda in play il brano selezionato
    */
   onPlayClick(event: Event) {
-    event.stopPropagation();
     if (this.isPlaying) {
       this.howl.pause();
     } else {
@@ -50,7 +49,6 @@ export class PlayerComponent implements OnInit {
    * Se è vero allora riparte dal primo, altrimenti avanza di 1
    */
   onForwardClick(event: Event) {
-    event.stopPropagation();
     const brani = this.braniService.risultatiRicerca;
     let branoSelezionato = this.braniService.branoSelezionato;
     const index = brani.findIndex((brano) => brano === branoSelezionato);
@@ -76,7 +74,6 @@ export class PlayerComponent implements OnInit {
    * se è vero allora riprende dall'ultimo altrimenti retrocede di 1
    */
   onBackwordClick(event: Event) {
-    event.stopPropagation();
     const brani = this.braniService.risultatiRicerca;
     let branoSelezionato = this.braniService.branoSelezionato;
     const index = brani.findIndex((brano) => brano === branoSelezionato);
@@ -93,11 +90,10 @@ export class PlayerComponent implements OnInit {
    * Al cambiamento manuale del valore della progress-bar porta il brano
    * al punto desiderato
    */
-  onProgressEnd(event: any) {
-    const howl = this.braniService.howl;
-    const song_duration = this.braniService.howl.duration();
-    const tempo_scelto = event.value;
-    this.tempo = howl.seek(song_duration * (tempo_scelto / 100)) as number;
+  onProgressEnd(eventEmitted: any) {
+    const song_duration = this.howl.duration();
+    const tempo_scelto = eventEmitted.value;
+    this.tempo = this.howl.seek(song_duration * (tempo_scelto / 100)) as number;
   }
 
   /**

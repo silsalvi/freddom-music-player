@@ -4,16 +4,19 @@
 </ng-container>
 
 <ng-template #minimize>
-  <div
-    id="player-minimize"
-    class="player-container-minimize"
-    (click)="fullMode = !fullMode"
-  >
+  <div id="player-minimize" class="player-container-minimize">
     <div class="name-song-minimize">
-      <strong>{{ branoSelezionato.nome }}</strong>
+      <strong class="label-name">{{ branoSelezionato.nome }} </strong>
+      <button
+        pButton
+        icon="pi pi-chevron-up"
+        class="p-button-rounded p-button-text chevron-up-btn text-right"
+        (click)="fullMode = !fullMode"
+        pTooltip="Clicca per espandere"
+      ></button>
     </div>
 
-    <div class="progress-bar-minimize" (click)="$event.stopPropagation()">
+    <div class="progress-bar-minimize">
       <p-slider
         [(ngModel)]="tempo"
         (onSlideEnd)="onProgressEnd($event)"
@@ -51,12 +54,13 @@
         [icon]="'pi pi-times'"
         [styleClass]="'p-button-rounded p-button-text p-button-lg'"
         (click)="fullMode = !fullMode"
+        pTooltip="Clicca per chiudere"
       ></p-button>
     </div>
     <div class="name-song-full">
       <strong>{{ branoSelezionato.nome }}</strong>
     </div>
-    <div class="progress-bar-full" (click)="$event.stopPropagation()">
+    <div class="progress-bar-full">
       <p-slider
         [(ngModel)]="tempo"
         (onSlideEnd)="onProgressEnd($event)"
