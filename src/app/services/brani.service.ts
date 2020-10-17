@@ -40,7 +40,6 @@ export class BraniService {
    */
   riproduci(brano: Brano) {
     this.branoSelezionato = brano;
-    this.spinner.show();
     this.mostraPlayer = true;
     this.creaNuovoFlusso(brano);
   }
@@ -50,6 +49,7 @@ export class BraniService {
    * @param brano brano da cui creare il nuovo flusso
    */
   private creaNuovoFlusso(brano: Brano) {
+    this.spinner.show();
     this.howl.pause();
     this.howl.stop();
 
@@ -57,9 +57,10 @@ export class BraniService {
       src: [brano.path],
     });
 
-    setTimeout(() => {
+    this.howl.once('load', () => {
+      this.howl.play();
       this.spinner.hide();
-    }, this.howl.play());
+    });
 
     this.braniSubject.next(brano);
   }

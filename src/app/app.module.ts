@@ -16,6 +16,7 @@ import { PlayerComponent } from './player/player.component';
 import { DialogModule } from 'primeng/dialog';
 import { SliderModule } from 'primeng/slider';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     DialogModule,
     NgxSpinnerModule,
     SliderModule,
+    TooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
