@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { Injectable } from '@angular/core';
 import { brani } from '../mock-data';
 import { Brano } from '../models/brano.model';
@@ -49,19 +50,32 @@ export class BraniService {
    * @param brano brano da cui creare il nuovo flusso
    */
   private creaNuovoFlusso(brano: Brano) {
-    this.spinner.show();
     this.howl.pause();
     this.howl.stop();
 
     this.howl = new Howl({
       src: [brano.path],
+      autoplay: true,
     });
+    this.spinner.show();
 
-    this.howl.once('load', () => {
-      this.howl.play();
+    this.howl.once('play', () => {
       this.spinner.hide();
     });
 
+    this.applySelectedClass(brano.id);
     this.braniSubject.next(brano);
+  }
+
+  /**
+   * Applica la classe selected al brano selezionato
+   * @param id id del brano selezionato su cui applicare la classe
+   */
+  private applySelectedClass(id: number) {
+    document.querySelectorAll('.selected').forEach((element) => {
+      element.classList.remove('selected');
+    });
+    const element = document.querySelector(`#brano-${id}`);
+    element.classList.add('selected');
   }
 }

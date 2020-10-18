@@ -100,7 +100,10 @@ export class PlayerComponent implements OnInit {
    * Avvia lo slider al caricamento del brano selezionato
    */
   startPlay() {
-    setInterval(() => {
+    this.tempo = 0;
+    this.attuale = '0:00';
+    this.durata = '0:00';
+    const interval = setInterval(() => {
       this.update();
       clearInterval();
     }, 1000);

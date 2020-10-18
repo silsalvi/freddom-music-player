@@ -6,14 +6,25 @@
 <ng-template #minimize>
   <div id="player-minimize" class="player-container-minimize">
     <div class="name-song-minimize">
-      <strong class="label-name">{{ branoSelezionato.nome }} </strong>
-      <button
-        pButton
-        icon="pi pi-chevron-up"
-        class="p-button-rounded p-button-text chevron-up-btn text-right"
-        (click)="fullMode = !fullMode"
-        pTooltip="Clicca per espandere"
-      ></button>
+      <div>
+        <strong class="label-name">{{ branoSelezionato.nome }} </strong>
+        <button
+          pButton
+          icon="pi pi-chevron-up"
+          class="p-button-rounded p-button-text chevron-up-btn text-right"
+          (click)="fullMode = !fullMode"
+          pTooltip="Clicca per espandere"
+        ></button>
+      </div>
+      <div>
+        <strong class="label-name">
+          {{
+            branoSelezionato.collaborazioni.length > 0
+              ? branoSelezionato.collaborazioniToString()
+              : branoSelezionato.autore.nomeArte
+          }}
+        </strong>
+      </div>
     </div>
 
     <div class="progress-bar-minimize">
@@ -58,7 +69,14 @@
       ></p-button>
     </div>
     <div class="name-song-full">
-      <strong>{{ branoSelezionato.nome }}</strong>
+      <strong>{{ branoSelezionato.nome }} </strong>
+      <h4>
+        {{
+          branoSelezionato.collaborazioni.length > 0
+            ? branoSelezionato.collaborazioniToString()
+            : branoSelezionato.autore.nomeArte
+        }}
+      </h4>
     </div>
     <div class="progress-bar-full">
       <p-slider
