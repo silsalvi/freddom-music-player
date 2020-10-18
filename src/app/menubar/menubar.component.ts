@@ -26,9 +26,8 @@ export class MenubarComponent implements OnInit {
    */
   @HostListener('keyup', ['$event'])
   onSearch() {
-    clearTimeout(this.timeout);
     this.spinner.show();
-    this.timeout = setTimeout(() => {
+    setTimeout(() => {
       this.braniService.risultatiRicerca = this.braniService
         .getBraniMock()
         .filter((brano) => {

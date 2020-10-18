@@ -30,11 +30,6 @@ export class MusicListComponent implements OnInit {
    * @todo implementare insieme a ricerca
    */
   onSelection(brano: Brano) {
-    document.querySelectorAll('.selected').forEach((element) => {
-      element.classList.remove('selected');
-    });
-    const element = document.querySelector(`#brano-${brano.id}`);
-    element.classList.add('selected');
     this.braniService.riproduci(brano);
   }
 }
