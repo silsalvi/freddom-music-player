@@ -126,4 +126,8 @@ export class PlayerComponent implements OnInit {
       this.attuale = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
     }
   }
+
+  onSwitchMode() {
+    this.fullMode = !this.fullMode;
+  }
 }

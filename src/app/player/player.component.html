@@ -7,17 +7,12 @@
   <div id="player-minimize" class="player-container-minimize">
     <div class="name-song-minimize">
       <div>
-        <strong class="label-name">{{ branoSelezionato.nome }} </strong>
-        <button
-          pButton
-          icon="pi pi-chevron-up"
-          class="p-button-rounded p-button-text chevron-up-btn text-right"
-          (click)="fullMode = !fullMode"
-          pTooltip="Clicca per espandere"
-        ></button>
+        <strong (click)="onSwitchMode()" pTooltip="Clicca per espandere">
+          {{ branoSelezionato.nome }}
+        </strong>
       </div>
       <div>
-        <strong class="label-name">
+        <strong>
           {{
             branoSelezionato.collaborazioni.length > 0
               ? branoSelezionato.collaborazioniToString()
@@ -64,7 +59,7 @@
       <p-button
         [icon]="'pi pi-times'"
         [styleClass]="'p-button-rounded p-button-text p-button-lg'"
-        (click)="fullMode = !fullMode"
+        (click)="onSwitchMode()"
         pTooltip="Clicca per chiudere"
       ></p-button>
     </div>
