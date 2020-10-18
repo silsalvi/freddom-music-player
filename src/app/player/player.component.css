@@ -72,9 +72,8 @@
   padding: 5%;
 }
 
-.chevron-up-btn {
-  float: right;
-  padding-top: 0 !important;
+#label-nome {
+  padding: 4%;
 }
 
 @media only screen and (max-width: 600px) {
