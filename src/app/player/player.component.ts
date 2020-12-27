@@ -103,22 +103,16 @@ export class PlayerComponent implements OnInit {
     this.tempo = 0;
     this.attuale = '0:00';
     this.durata = '0:00';
-    const interval = setInterval(() => {
+    this.durata = this.braniService.durata;
+
+    setInterval(() => {
       this.update();
       clearInterval();
     }, 1000);
   }
 
-  private calcolaDurata() {
-    const durataTotale = Math.floor(this.howl.duration());
-    const minuti = Math.floor(durataTotale / 60);
-    const secondi = Math.floor(durataTotale % 60);
-    this.durata = `${minuti}:${secondi}`;
-  }
-
   private update() {
     if (this.isPlaying) {
-      this.calcolaDurata();
       const seek = this.howl.seek() as number;
       this.tempo = (seek / this.howl.duration()) * 100;
       const minutes = Math.floor(seek / 60);

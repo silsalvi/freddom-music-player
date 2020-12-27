@@ -5,9 +5,9 @@
 
 <ng-template #minimize>
   <div id="player-minimize" class="player-container-minimize">
-    <div class="name-song-minimize" pTooltip="Clicca per espandere">
-      <div id="label-nome">
-        <strong (click)="onSwitchMode()">
+    <div class="name-song-minimize">
+      <div id="label-nome" (click)="onSwitchMode()">
+        <strong>
           {{ branoSelezionato.nome }}
         </strong>
       </div>
