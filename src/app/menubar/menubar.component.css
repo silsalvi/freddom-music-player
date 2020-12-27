@@ -1,14 +1,11 @@
 .logo {
   width: 120px;
   margin-right: 10px;
+  vertical-align: text-bottom;
 }
-.menubar {
-  background: #1f2d40;
-  padding: 8px;
-  border-bottom: 1px solid black;
-}
-.button-bar {
-  float: right;
+
+.p-menubar {
+  border-radius: 0px !important;
 }
 
 @media only screen and (max-width: 600px) {

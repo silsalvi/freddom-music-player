@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { BraniService } from '../services/brani.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-menubar',
@@ -10,7 +11,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class MenubarComponent implements OnInit {
   //valore della ricerca
   ricerca: string;
-  private timeout: number;
   constructor(
     private braniService: BraniService,
     private spinner: NgxSpinnerService
