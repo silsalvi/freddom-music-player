@@ -1,21 +1,22 @@
-<header class="menubar">
-  <img src="assets/app-data/logo.svg" class="logo" alt="logo" />
-  <span class="p-input-icon-left">
-    <i class="pi pi-search"></i>
-    <input
-      type="text"
-      pInputText
-      placeholder="Cerca un brano"
-      [(ngModel)]="ricerca"
-      (keyup)="onSearch()"
-    />
-  </span>
-
-  <div class="button-bar">
+<p-menubar [style]="{ 'border-radius': '0px' }">
+  <ng-template pTemplate="start">
+    <img src="assets/app-data/logo.svg" class="logo" alt="logo" />
+  </ng-template>
+  <ng-template pTemplate="end">
+    <span class="p-input-icon-left mr-2">
+      <i class="pi pi-search"></i>
+      <input
+        type="text"
+        pInputText
+        placeholder="Cerca un brano"
+        [(ngModel)]="ricerca"
+        (keyup)="onSearch()"
+      />
+    </span>
     <p-button
       label="Esci"
       icon="pi pi-sign-out"
       styleClass="p-button-rounded"
     ></p-button>
-  </div>
-</header>
+  </ng-template>
+</p-menubar>

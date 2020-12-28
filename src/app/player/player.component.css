@@ -24,6 +24,7 @@
 .player-controls-minimize {
   text-align: center;
   padding: 5px;
+  margin: 5px;
 }
 
 .player-container-full {
@@ -46,7 +47,6 @@
 .player-controls-full {
   margin: auto;
   text-align: center;
-  padding-top: 5%;
 }
 
 .progress-bar-minimize {
@@ -58,6 +58,7 @@
   float: left;
   padding: 5px 5px 5px 0;
 }
+
 .time-duration {
   color: white;
   float: right;
@@ -73,8 +74,14 @@
 }
 
 #label-nome {
-  padding: 4%;
+  padding: 25px;
 }
+
+.p-slider.p-slider-horizontal {
+  height: 0.5rem !important;
+}
+
+/* MEDIA QUERIES*/
 
 @media only screen and (max-width: 600px) {
   .name-song-full {

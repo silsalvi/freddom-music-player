@@ -1,14 +1,7 @@
 .logo {
   width: 120px;
   margin-right: 10px;
-}
-.menubar {
-  background: #1f2d40;
-  padding: 8px;
-  border-bottom: 1px solid black;
-}
-.button-bar {
-  float: right;
+  vertical-align: text-bottom;
 }
 
 @media only screen and (max-width: 600px) {

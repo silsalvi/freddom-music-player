@@ -1,10 +1,10 @@
-import { element } from 'protractor';
 import { Injectable } from '@angular/core';
 import { brani } from '../mock-data';
 import { Brano } from '../models/brano.model';
 import { BehaviorSubject } from 'rxjs';
 import { Howl } from 'howler';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { loadingProps } from 'src/app/config/loading-congif';
 @Injectable({
   providedIn: 'root',
 })
@@ -18,6 +18,7 @@ export class BraniService {
   });
   mostraPlayer: boolean;
   branoSelezionato: Brano;
+  durata: string;
   /**
    * Ritorna true se c'è già un brano in riproduzione
    */
@@ -41,7 +42,6 @@ export class BraniService {
    */
   riproduci(brano: Brano) {
     this.branoSelezionato = brano;
-    this.mostraPlayer = true;
     this.creaNuovoFlusso(brano);
   }
 
@@ -57,14 +57,15 @@ export class BraniService {
       src: [brano.path],
       autoplay: true,
     });
-    this.spinner.show();
+    this.spinner.show(undefined, loadingProps);
 
     this.howl.once('play', () => {
+      this.durata = this.calcolaDurata();
       this.spinner.hide();
+      this.braniSubject.next(brano);
+      this.mostraPlayer = true;
+      this.applySelectedClass(brano.id);
     });
-
-    this.applySelectedClass(brano.id);
-    this.braniSubject.next(brano);
   }
 
   /**
@@ -77,5 +78,17 @@ export class BraniService {
     });
     const element = document.querySelector(`#brano-${id}`);
     element.classList.add('selected');
+  }
+
+  /**
+   * Calcola la durata effettiva di un brano,
+   * ritornando sotto forma di stringa separata da carattere ":"
+   * i minuti e i secondi
+   */
+  calcolaDurata() {
+    const durataTotale = Math.floor(this.howl.duration());
+    const minuti = Math.floor(durataTotale / 60);
+    const secondi = Math.floor(durataTotale % 60);
+    return `${minuti}:${secondi}`;
   }
 }

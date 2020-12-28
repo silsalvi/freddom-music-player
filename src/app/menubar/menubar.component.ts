@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { BraniService } from '../services/brani.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { loadingProps } from '../config/loading-congif';
 
 @Component({
   selector: 'app-menubar',
@@ -10,7 +11,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class MenubarComponent implements OnInit {
   //valore della ricerca
   ricerca: string;
-  private timeout: number;
   constructor(
     private braniService: BraniService,
     private spinner: NgxSpinnerService
@@ -26,7 +26,7 @@ export class MenubarComponent implements OnInit {
    */
   @HostListener('keyup', ['$event'])
   onSearch() {
-    this.spinner.show();
+    this.spinner.show(undefined, loadingProps);
     setTimeout(() => {
       this.braniService.risultatiRicerca = this.braniService
         .getBraniMock()

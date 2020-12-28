@@ -13,3 +13,23 @@ body {
   color: white;
   padding: 10px;
 }
+
+@keyframes textColorChange {
+  0% {
+    color: #0000ff;
+  }
+  50% {
+    color: #00ff00;
+  }
+  100% {
+    color: #0000ff;
+  }
+}
+/* Use @-webkit-keyframes for Safari/Chrome */
+
+.pulse {
+  animation: textColorChange 10s infinite;
+  width: 160px;
+  height: 160px;
+}
+/* Use -webkit-animation for Safari/Chrome */

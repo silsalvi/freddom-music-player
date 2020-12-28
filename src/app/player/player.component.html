@@ -5,9 +5,9 @@
 
 <ng-template #minimize>
   <div id="player-minimize" class="player-container-minimize">
-    <div class="name-song-minimize" pTooltip="Clicca per espandere">
-      <div id="label-nome">
-        <strong (click)="onSwitchMode()">
+    <div class="name-song-minimize">
+      <div id="label-nome" (click)="onSwitchMode()">
+        <strong>
           {{ branoSelezionato.nome }}
         </strong>
       </div>
@@ -33,7 +33,7 @@
       <div class="time-duration">{{ durata }}</div>
     </div>
 
-    <div class="player-controls-minimize">
+    <div class="player-controls-minimize mt-3">
       <p-button
         [icon]="'pi pi-backward'"
         [styleClass]="'p-button-rounded p-button-text'"
@@ -54,7 +54,7 @@
 </ng-template>
 
 <ng-template #opened>
-  <div id="full-player" class="player-container-full">
+  <div id="full-player" class="player-container-full" [@openClose]>
     <div id="close-wrapper" class="text-right">
       <p-button
         [icon]="'pi pi-times'"
