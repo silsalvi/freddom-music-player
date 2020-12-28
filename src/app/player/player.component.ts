@@ -2,12 +2,26 @@ import { Howl } from 'howler';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BraniService } from '../services/brani.service';
 import { Brano } from '../models/brano.model';
+import { trigger, style, transition, animate } from '@angular/animations';
 
+declare var $: any;
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css'],
   encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('openClose', [
+      transition(':enter', [
+        style({ transform: 'translateY(100%)', opacity: 0 }),
+        animate('200ms', style({ transform: 'translateY(0)', opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ transform: 'translateY(0)', opacity: 1 }),
+        animate('200ms', style({ transform: 'translateY(100%)', opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class PlayerComponent implements OnInit {
   branoSelezionato: Brano;
@@ -35,7 +49,7 @@ export class PlayerComponent implements OnInit {
    * Handler per la riproduzione del brano
    * Stoppa o manda in play il brano selezionato
    */
-  onPlayClick(event: Event) {
+  onPlayClick() {
     if (this.isPlaying) {
       this.howl.pause();
     } else {
@@ -48,7 +62,7 @@ export class PlayerComponent implements OnInit {
    * A partire dall'index del brano selezionato verifica se l'array dei risultati di ricerca sfora.
    * Se è vero allora riparte dal primo, altrimenti avanza di 1
    */
-  onForwardClick(event: Event) {
+  onForwardClick() {
     const brani = this.braniService.risultatiRicerca;
     let branoSelezionato = this.braniService.branoSelezionato;
     const index = brani.findIndex((brano) => brano === branoSelezionato);
@@ -73,7 +87,7 @@ export class PlayerComponent implements OnInit {
    * Verifica se il brano attualmente selezionato è il primo:
    * se è vero allora riprende dall'ultimo altrimenti retrocede di 1
    */
-  onBackwordClick(event: Event) {
+  onBackwordClick() {
     const brani = this.braniService.risultatiRicerca;
     let branoSelezionato = this.braniService.branoSelezionato;
     const index = brani.findIndex((brano) => brano === branoSelezionato);

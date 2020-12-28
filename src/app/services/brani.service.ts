@@ -1,10 +1,10 @@
-import { element } from 'protractor';
 import { Injectable } from '@angular/core';
 import { brani } from '../mock-data';
 import { Brano } from '../models/brano.model';
 import { BehaviorSubject } from 'rxjs';
 import { Howl } from 'howler';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { loadingProps } from 'src/app/config/loading-congif';
 @Injectable({
   providedIn: 'root',
 })
@@ -57,7 +57,7 @@ export class BraniService {
       src: [brano.path],
       autoplay: true,
     });
-    this.spinner.show();
+    this.spinner.show(undefined, loadingProps);
 
     this.howl.once('play', () => {
       this.durata = this.calcolaDurata();

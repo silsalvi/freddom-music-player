@@ -1,7 +1,9 @@
-<p-menubar>
+<p-menubar [style]="{ 'border-radius': '0px' }">
   <ng-template pTemplate="start">
     <img src="assets/app-data/logo.svg" class="logo" alt="logo" />
-    <span class="p-input-icon-left">
+  </ng-template>
+  <ng-template pTemplate="end">
+    <span class="p-input-icon-left mr-2">
       <i class="pi pi-search"></i>
       <input
         type="text"
@@ -11,8 +13,6 @@
         (keyup)="onSearch()"
       />
     </span>
-  </ng-template>
-  <ng-template pTemplate="end">
     <p-button
       label="Esci"
       icon="pi pi-sign-out"

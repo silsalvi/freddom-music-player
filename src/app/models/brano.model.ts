@@ -32,7 +32,7 @@ export class Brano {
    * @example 'nomeArtista feat collab1,collab2 etc.'
    */
   collaborazioniToString() {
-    return `${this.autore.nomeArte} feat ${this.collaborazioni
+    return `${this.autore.nomeArte} feat. ${this.collaborazioni
       .map((feat) => feat.nomeArte)
       .join()}`;
   }

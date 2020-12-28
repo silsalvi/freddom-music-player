@@ -4,10 +4,6 @@
   vertical-align: text-bottom;
 }
 
-.p-menubar {
-  border-radius: 0px !important;
-}
-
 @media only screen and (max-width: 600px) {
   .logo {
     display: none;
