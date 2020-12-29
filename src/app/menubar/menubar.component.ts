@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { BraniService } from '../services/brani.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { loadingProps } from '../config/loading-congif';
+import { RicercaBrani } from '../models/brano.model';
 
 @Component({
   selector: 'app-menubar',
@@ -21,20 +22,18 @@ export class MenubarComponent implements OnInit {
   /**
    * Listener per la ricerca di un brano.
    * Alla digitazione dei caratteri effettua una ricerca per like (similarità)
-   *
-   * @todo implementare ricerca al backend
    */
   @HostListener('keyup', ['$event'])
   onSearch() {
-    this.spinner.show(undefined, loadingProps);
-    setTimeout(() => {
-      this.braniService.risultatiRicerca = this.braniService
-        .getBraniMock()
-        .filter((brano) => {
-          const regex = new RegExp(this.ricerca.toLowerCase());
-          return regex.test(brano.nome.toLowerCase());
-        });
-      this.spinner.hide();
-    }, 1000);
+    if (this.ricerca.length > 0) {
+      this.spinner.show(undefined, loadingProps);
+      const request: RicercaBrani = { name: this.ricerca };
+      this.braniService.getRisultatiRicerca(request).subscribe((brani) => {
+        this.spinner.hide();
+        this.braniService.risultatiRicerca = brani;
+      });
+    } else {
+      this.braniService.risultatiRicerca = [];
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { Howl } from 'howler';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BraniService } from '../services/brani.service';
-import { Brano } from '../models/brano.model';
+import { Brano, RicercaBraniResponse } from '../models/brano.model';
 import { trigger, style, transition, animate } from '@angular/animations';
 
 declare var $: any;
@@ -24,7 +24,7 @@ declare var $: any;
   ],
 })
 export class PlayerComponent implements OnInit {
-  branoSelezionato: Brano;
+  branoSelezionato: RicercaBraniResponse;
   fullMode: boolean;
   tempo: number;
   attuale: string;

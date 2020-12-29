@@ -17,6 +17,7 @@ import { DialogModule } from 'primeng/dialog';
 import { SliderModule } from 'primeng/slider';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TooltipModule } from 'primeng/tooltip';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { TooltipModule } from 'primeng/tooltip';
     NgxSpinnerModule,
     SliderModule,
     TooltipModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
