@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Brano } from '../models/brano.model';
+import { Brano, RicercaBraniResponse } from '../models/brano.model';
 import { BraniService } from '../services/brani.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class MusicListComponent implements OnInit {
    * Ferma o riproduce il brano se quest'ultimo era già in riproduzione o meno.
    * @todo implementare insieme a ricerca
    */
-  onSelection(brano: Brano) {
+  onSelection(brano: RicercaBraniResponse) {
     this.braniService.riproduci(brano);
   }
 }

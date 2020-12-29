@@ -8,16 +8,12 @@
     <div class="name-song-minimize">
       <div id="label-nome" (click)="onSwitchMode()">
         <strong>
-          {{ branoSelezionato.nome }}
+          {{ branoSelezionato.titolo }}
         </strong>
       </div>
       <div id="label-artisti">
         <strong>
-          {{
-            branoSelezionato.collaborazioni.length > 0
-              ? branoSelezionato.collaborazioniToString()
-              : branoSelezionato.autore.nomeArte
-          }}
+          {{ branoSelezionato.artista }}
         </strong>
       </div>
     </div>
@@ -64,13 +60,9 @@
       ></p-button>
     </div>
     <div class="name-song-full">
-      <strong>{{ branoSelezionato.nome }} </strong>
+      <strong>{{ branoSelezionato.titolo }} </strong>
       <h4>
-        {{
-          branoSelezionato.collaborazioni.length > 0
-            ? branoSelezionato.collaborazioniToString()
-            : branoSelezionato.autore.nomeArte
-        }}
+        {{ branoSelezionato.artista }}
       </h4>
     </div>
     <div class="progress-bar-full">
