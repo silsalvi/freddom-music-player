@@ -1,13 +1,14 @@
 {
   "name": "freedom-music-player",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy-to-github": "ng deploy --base-href=freedom-music-player"
   },
   "private": true,
   "dependencies": {
