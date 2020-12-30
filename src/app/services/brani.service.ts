@@ -87,9 +87,9 @@ export class BraniService {
    */
   calcolaDurata() {
     const durataTotale = Math.floor(this.howl.duration());
-    const minuti = Math.floor(durataTotale / 60);
-    const secondi = Math.floor(durataTotale % 60);
-    return `${minuti}:${secondi}`;
+    const minutes = Math.floor(durataTotale / 60);
+    const seconds = Math.floor(durataTotale % 60);
+    return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
   }
 
   /**

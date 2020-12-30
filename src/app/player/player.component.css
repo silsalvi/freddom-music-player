@@ -41,11 +41,10 @@
   padding: 20px;
   color: white;
   text-align: center;
-  padding-top: 20%;
 }
 
 .player-controls-full {
-  margin: auto;
+  margin-top: 5%;
   text-align: center;
 }
 
@@ -81,12 +80,14 @@
   height: 0.5rem !important;
 }
 
+.thumb {
+  text-align: center;
+}
 /* MEDIA QUERIES*/
 
 @media only screen and (max-width: 600px) {
   .name-song-full {
     font-size: x-large;
-    padding-top: 50%;
   }
 }
 
@@ -95,8 +96,6 @@
     font-size: xx-large;
   }
   .player-controls-full {
-    margin: auto;
     text-align: center;
-    padding-top: 5%;
   }
 }

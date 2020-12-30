@@ -104,10 +104,30 @@ export class PlayerComponent implements OnInit {
    * Al cambiamento manuale del valore della progress-bar porta il brano
    * al punto desiderato
    */
-  onProgressEnd(eventEmitted: any) {
-    const song_duration = this.howl.duration();
-    const tempo_scelto = eventEmitted.value;
-    this.tempo = this.howl.seek(song_duration * (tempo_scelto / 100)) as number;
+  onProgressBarChange(eventEmitted: any) {
+    if (
+      eventEmitted.event.type !== 'mousemove' &&
+      eventEmitted.event.type !== 'touchmove'
+    ) {
+      const song_duration = this.howl.duration();
+      const tempo_scelto = eventEmitted.value;
+      const result = song_duration * (tempo_scelto / 100);
+      this.tempo = this.howl.seek(result) as number;
+    }
+  }
+
+  /**
+   * Handler per la progress bar.
+   * Al cambiamento manuale del valore della progress-bar porta il brano
+   * al punto desiderato
+   */
+  onProgressBarEnd(eventEmitted: any) {
+    if (eventEmitted.originalEvent.type === 'mouseup') {
+      const song_duration = this.howl.duration();
+      const tempo_scelto = eventEmitted.value;
+      const result = song_duration * (tempo_scelto / 100);
+      this.tempo = this.howl.seek(result) as number;
+    }
   }
 
   /**
