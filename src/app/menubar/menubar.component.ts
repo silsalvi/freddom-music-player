@@ -12,7 +12,7 @@ import { RicercaBrani } from '../models/brano.model';
 export class MenubarComponent implements OnInit {
   //valore della ricerca
   ricerca: string;
-  timeout: number = 0;
+  private timeout: number = 0;
   constructor(
     private braniService: BraniService,
     private spinner: NgxSpinnerService
