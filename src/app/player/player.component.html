@@ -21,7 +21,8 @@
     <div class="progress-bar-minimize">
       <p-slider
         [(ngModel)]="tempo"
-        (onSlideEnd)="onProgressEnd($event)"
+        (onSlideEnd)="onProgressBarEnd($event)"
+        (onChange)="onProgressBarChange($event)"
         [min]="0"
         [max]="100"
       ></p-slider>
@@ -68,7 +69,8 @@
     <div class="progress-bar-full">
       <p-slider
         [(ngModel)]="tempo"
-        (onSlideEnd)="onProgressEnd($event)"
+        (onSlideEnd)="onProgressBarEnd($event)"
+        (onChange)="onProgressBarChange($event)"
         [min]="0"
         [max]="100"
       ></p-slider>
