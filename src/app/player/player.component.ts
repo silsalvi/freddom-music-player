@@ -1,7 +1,7 @@
 import { Howl } from 'howler';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BraniService } from '../services/brani.service';
-import { Brano, RicercaBraniResponse } from '../models/brano.model';
+import { RicercaBraniResponse } from '../models/brano.model';
 import { trigger, style, transition, animate } from '@angular/animations';
 
 declare var $: any;
