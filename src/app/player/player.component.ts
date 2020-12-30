@@ -105,7 +105,6 @@ export class PlayerComponent implements OnInit {
    * al punto desiderato
    */
   onProgressBarChange(eventEmitted: any) {
-    console.log(eventEmitted);
     if (
       eventEmitted.event.type !== 'mousemove' &&
       eventEmitted.event.type !== 'touchmove'
