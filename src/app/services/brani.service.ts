@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Brano,
-  RicercaBrani,
-  RicercaBraniResponse,
-} from '../models/brano.model';
+import { RicercaBrani, RicercaBraniResponse } from '../models/brano.model';
 import { BehaviorSubject } from 'rxjs';
 import { Howl } from 'howler';
 import { NgxSpinnerService } from 'ngx-spinner';
