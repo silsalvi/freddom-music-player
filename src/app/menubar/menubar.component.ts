@@ -12,6 +12,7 @@ import { RicercaBrani } from '../models/brano.model';
 export class MenubarComponent implements OnInit {
   //valore della ricerca
   ricerca: string;
+  timeout: number = 0;
   constructor(
     private braniService: BraniService,
     private spinner: NgxSpinnerService
@@ -25,15 +26,18 @@ export class MenubarComponent implements OnInit {
    */
   @HostListener('keyup', ['$event'])
   onSearch() {
-    if (this.ricerca.length > 0) {
-      this.spinner.show(undefined, loadingProps);
-      const request: RicercaBrani = { name: this.ricerca };
-      this.braniService.getRisultatiRicerca(request).subscribe((brani) => {
-        this.spinner.hide();
-        this.braniService.risultatiRicerca = brani;
-      });
-    } else {
-      this.braniService.risultatiRicerca = [];
-    }
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      if (this.ricerca.length > 0) {
+        this.spinner.show(undefined, loadingProps);
+        const request: RicercaBrani = { name: this.ricerca };
+        this.braniService.getRisultatiRicerca(request).subscribe((brani) => {
+          this.spinner.hide();
+          this.braniService.risultatiRicerca = brani;
+        });
+      } else {
+        this.braniService.risultatiRicerca = [];
+      }
+    }, 500);
   }
 }
