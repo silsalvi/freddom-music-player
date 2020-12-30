@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Brano, RicercaBraniResponse } from '../models/brano.model';
+import { Component } from '@angular/core';
+import { RicercaBraniResponse } from '../models/brano.model';
 import { BraniService } from '../services/brani.service';
 
 @Component({
@@ -7,9 +7,7 @@ import { BraniService } from '../services/brani.service';
   templateUrl: './music-list.component.html',
   styleUrls: ['./music-list.component.css'],
 })
-export class MusicListComponent implements OnInit {
-  branoSelezionato: Brano;
-
+export class MusicListComponent {
   /**
    * Ritorna i risultati delle ricerche dal service
    */
@@ -21,8 +19,6 @@ export class MusicListComponent implements OnInit {
     return this.braniService.isPlaying;
   }
   constructor(private braniService: BraniService) {}
-
-  ngOnInit(): void {}
 
   /**
    * Handler per l'evento di selezione di un brano.
