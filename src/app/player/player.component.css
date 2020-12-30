@@ -9,10 +9,11 @@
 
 .player-container-minimize {
   bottom: 0;
-  position: sticky;
+  position: fixed;
   background: #243857;
   padding: 2px;
   text-align: center;
+  width: 100%;
 }
 
 .name-song-minimize {
