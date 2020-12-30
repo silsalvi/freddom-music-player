@@ -21,7 +21,8 @@
     <div class="progress-bar-minimize">
       <p-slider
         [(ngModel)]="tempo"
-        (onSlideEnd)="onProgressEnd($event)"
+        (onSlideEnd)="onProgressBarEnd($event)"
+        (onChange)="onProgressBarChange($event)"
         [min]="0"
         [max]="100"
       ></p-slider>
@@ -59,6 +60,14 @@
         pTooltip="Clicca per chiudere"
       ></p-button>
     </div>
+    <div class="thumb">
+      <img
+        src="{{ branoSelezionato.thumbnail }}"
+        alt="thumbnail"
+        width="200"
+        height="200"
+      />
+    </div>
     <div class="name-song-full">
       <strong>{{ branoSelezionato.titolo }} </strong>
       <h4>
@@ -68,7 +77,8 @@
     <div class="progress-bar-full">
       <p-slider
         [(ngModel)]="tempo"
-        (onSlideEnd)="onProgressEnd($event)"
+        (onSlideEnd)="onProgressBarEnd($event)"
+        (onChange)="onProgressBarChange($event)"
         [min]="0"
         [max]="100"
       ></p-slider>

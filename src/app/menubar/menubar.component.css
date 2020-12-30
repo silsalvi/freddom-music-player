@@ -1,7 +1,14 @@
 .logo {
   width: 120px;
   margin-right: 10px;
-  vertical-align: text-bottom;
+  display: inline-block;
+  height: 100%;
+}
+
+.header {
+  background: #1f2d40;
+  padding: 1rem;
+  border-bottom: 1px solid #6e6e6e;
 }
 
 @media only screen and (max-width: 600px) {
