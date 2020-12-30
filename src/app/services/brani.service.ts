@@ -51,21 +51,17 @@ export class BraniService {
   private creaNuovoFlusso(brano: RicercaBraniResponse, stream: Blob) {
     this.howl.pause();
     this.howl.stop();
-    const reader = new FileReader();
-    reader.readAsDataURL(stream);
-    reader.onloadend = () => {
-      const b64data = reader.result;
-      this.howl = new Howl({
-        src: [b64data.toString()],
-        autoplay: true,
-      });
-      this.howl.once('play', () => {
-        this.durata = this.calcolaDurata();
-        this.braniSubject.next(brano);
-        this.mostraPlayer = true;
-        this.applySelectedClass(brano.id);
-      });
-    };
+    this.howl = new Howl({
+      src: [URL.createObjectURL(stream)],
+      autoplay: true,
+      format: ['mp4'],
+    });
+    this.howl.once('play', () => {
+      this.durata = this.calcolaDurata();
+      this.braniSubject.next(brano);
+      this.mostraPlayer = true;
+      this.applySelectedClass(brano.id);
+    });
   }
 
   /**

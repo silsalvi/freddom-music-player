@@ -14,22 +14,28 @@ body {
   padding: 10px;
 }
 
-@keyframes textColorChange {
+.pulse {
+  display: block;
+  width: 160px;
+  cursor: pointer;
+  box-shadow: 0 0 0 #243857;
+  animation: pulse 1s infinite;
+}
+.pulse:hover {
+  animation: none;
+}
+
+@keyframes pulse {
   0% {
-    color: #0000ff;
+    -moz-box-shadow: 0 0 0 0 #243857;
+    box-shadow: 0 0 0 0 #243857;
   }
-  50% {
-    color: #00ff00;
+  70% {
+    -moz-box-shadow: 0 0 0 30px rgba(204, 169, 44, 0);
+    box-shadow: 0 0 0 30px rgba(204, 169, 44, 0);
   }
   100% {
-    color: #0000ff;
+    -moz-box-shadow: 0 0 0 0 #243857;
+    box-shadow: 0 0 0 0 #243857;
   }
 }
-/* Use @-webkit-keyframes for Safari/Chrome */
-
-.pulse {
-  animation: textColorChange 10s infinite;
-  width: 160px;
-  height: 160px;
-}
-/* Use -webkit-animation for Safari/Chrome */
