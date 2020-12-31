@@ -105,10 +105,7 @@ export class PlayerComponent implements OnInit {
    * al punto desiderato
    */
   onProgressBarChange(eventEmitted: any) {
-    if (
-      eventEmitted.event.type !== 'mousemove' &&
-      eventEmitted.event.type !== 'touchmove'
-    ) {
+    if (eventEmitted.event.type !== 'mousemove') {
       const song_duration = this.howl.duration();
       const tempo_scelto = eventEmitted.value;
       const result = song_duration * (tempo_scelto / 100);
@@ -122,10 +119,7 @@ export class PlayerComponent implements OnInit {
    * al punto desiderato
    */
   onProgressBarEnd(eventEmitted: any) {
-    if (
-      eventEmitted.originalEvent.type === 'mouseup' ||
-      eventEmitted.originalEvent.type === 'touchmove'
-    ) {
+    if (eventEmitted.originalEvent.type !== 'touchmove') {
       const song_duration = this.howl.duration();
       const tempo_scelto = eventEmitted.value;
       const result = song_duration * (tempo_scelto / 100);
