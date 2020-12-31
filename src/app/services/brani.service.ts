@@ -40,7 +40,6 @@ export class BraniService {
     this.spinner.show(undefined, loadingProps);
     this.getBrano(brano).subscribe((blob) => {
       this.creaNuovoFlusso(brano, blob);
-      this.spinner.hide();
     });
   }
 
@@ -53,14 +52,15 @@ export class BraniService {
     this.howl.stop();
     this.howl = new Howl({
       src: [URL.createObjectURL(stream)],
-      autoplay: true,
       format: ['mp4'],
     });
+    this.howl.play();
     this.howl.once('play', () => {
       this.durata = this.calcolaDurata();
       this.braniSubject.next(brano);
       this.mostraPlayer = true;
       this.applySelectedClass(brano.id);
+      this.spinner.hide();
     });
   }
 
