@@ -29,6 +29,7 @@ export class PlayerComponent implements OnInit {
   tempo: number;
   attuale: string;
   durata: string;
+  timeChanged: number;
   constructor(private braniService: BraniService) {}
 
   get howl(): Howl {
@@ -107,28 +108,26 @@ export class PlayerComponent implements OnInit {
   onProgressBarChange(eventEmitted: any) {
     eventEmitted.event.preventDefault();
     eventEmitted.event.stopPropagation();
-    if (eventEmitted.event.type === 'click') {
-      const song_duration = this.howl.duration();
-      const tempo_scelto = eventEmitted.value;
-      const result = song_duration * (tempo_scelto / 100);
-      this.tempo = this.howl.seek(result) as number;
+    const type = eventEmitted.event.type;
+    this.timeChanged = this.calculateTime(eventEmitted);
+    if (type !== 'touchmove' && type !== 'mousemove') {
+      this.howl.seek(this.timeChanged);
     }
   }
 
-  /**
-   * Handler per la progress bar.
-   * Al cambiamento manuale del valore della progress-bar porta il brano
-   * al punto desiderato
-   */
   onProgressBarEnd(eventEmitted: any) {
     eventEmitted.originalEvent.preventDefault();
     eventEmitted.originalEvent.stopPropagation();
-    if (eventEmitted.originalEvent.type !== 'mouseup') {
-      const song_duration = this.howl.duration();
-      const tempo_scelto = eventEmitted.value;
-      const result = song_duration * (tempo_scelto / 100);
-      this.tempo = this.howl.seek(result) as number;
-    }
+    this.timeChanged = this.calculateTime(eventEmitted);
+    this.howl.seek(this.timeChanged);
+  }
+  /**
+   * Calcola il tempo verso cui spostarsi.
+   */
+  private calculateTime(eventEmitted: any) {
+    const song_duration = this.howl.duration();
+    const tempo_scelto = eventEmitted.value;
+    return song_duration * (tempo_scelto / 100);
   }
 
   /**

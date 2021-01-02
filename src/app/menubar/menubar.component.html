@@ -1,30 +1,60 @@
-<div class="container-fluid header">
-  <div class="row">
-    <div class="col-12 col-md-6" style="vertical-align: middle">
-      <img src="assets/app-data/logo.svg" class="logo" alt="logo" />
-    </div>
-    <div class="col-12 col-md-6 text-right">
-      <div class="row">
-        <div class="col-8">
-          <span class="p-input-icon-left mr-2">
-            <i class="pi pi-search"></i>
-            <input
-              type="text"
-              pInputText
-              placeholder="Cerca un brano."
-              [(ngModel)]="ricerca"
-              (keyup)="onSearch()"
-            />
-          </span>
-        </div>
-        <div class="col-4">
-          <p-button
-            label="Esci"
-            icon="pi pi-sign-out"
-            styleClass="p-button-rounded"
-          ></p-button>
-        </div>
-      </div>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-right navbar-dark blue">
+  <a class="navbar-brand" href="#">
+    <img
+      src="assets/app-data/logo.svg"
+      class="logo"
+      alt="logo"
+      style="vertical-align: sub"
+    />
+  </a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="form-inline ml-auto">
+      <input
+        class="form-control blue mt-1 mr-2"
+        type="search"
+        placeholder="Cerca un brano..."
+        aria-label="Search"
+        style="color: white"
+        (click)="onSearch($event)"
+        [(ngModel)]="ricerca"
+        [ngModelOptions]="{ standalone: true }"
+      />
+      <button
+        class="btn btn-dark mt-1"
+        type="button"
+        pRipple
+        (click)="openModal()"
+      >
+        <span class="pi pi-search"></span>
+        Ricerca Avanzata
+      </button>
+    </form>
   </div>
-</div>
+</nav>
+
+<p-dialog
+  [(visible)]="showDialog"
+  [modal]="true"
+  [style]="{ width: '100vh' }"
+  [position]="'top'"
+  [draggable]="false"
+>
+  <p-header>Aggiungi criteri di ricerca</p-header>
+  <div class="row">
+    <div class="col-12">PROSSIMAMENTE DISPONIBILE!</div>
+  </div>
+  <p-footer>
+    <button class="btn btn-dark" pRipple>Effettua Ricerca Avanzata</button>
+  </p-footer>
+</p-dialog>
