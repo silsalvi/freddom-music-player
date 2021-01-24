@@ -28,6 +28,7 @@
   padding: 5px;
   color: white;
   text-align: center;
+  cursor: pointer;
 }
 
 .player-controls-minimize {
@@ -50,6 +51,7 @@
   padding: 20px;
   color: white;
   text-align: center;
+  cursor: pointer;
 }
 
 .player-controls-full {
