@@ -14,10 +14,7 @@ const BASE_API_URL = environment.apiFreedom;
 export class BraniService {
   braniSubject = new BehaviorSubject<RicercaBraniResponse>(null);
   brani$ = this.braniSubject.asObservable();
-  howl = new Howl({
-    src: [''],
-    format: ['mp3'],
-  });
+  howl = null;
   mostraPlayer: boolean;
   branoSelezionato: RicercaBraniResponse;
   durata: string;
@@ -48,25 +45,25 @@ export class BraniService {
    * @param brano brano da cui creare il nuovo flusso
    */
   private creaNuovoFlusso(brano: RicercaBraniResponse, stream: Blob) {
-    this.howl.pause();
-    this.howl.stop();
-    const reader = new FileReader();
-    reader.readAsDataURL(stream);
-    reader.onload = () => {
-      const b64data = reader.result;
-      this.howl = new Howl({
-        src: [b64data.toString()],
-        autoplay: true,
-        format: ['mp4'],
-      });
-      this.howl.once('play', () => {
-        this.spinner.hide();
-        this.durata = this.calcolaDurata();
-        this.braniSubject.next(brano);
-        this.mostraPlayer = true;
-        this.applySelectedClass(brano.id);
-      });
-    };
+    if (this.howl) {
+      this.howl.pause();
+      this.howl.stop();
+    }
+    const url = URL.createObjectURL(stream);
+
+    this.howl = new Howl({
+      src: url,
+      autoplay: true,
+      html5: true,
+      format: ['mp3'],
+    });
+    this.howl.once('load', () => {
+      this.spinner.hide();
+      this.durata = this.calcolaDurata();
+      this.braniSubject.next(brano);
+      this.mostraPlayer = true;
+      this.applySelectedClass(brano.id);
+    });
   }
 
   /**

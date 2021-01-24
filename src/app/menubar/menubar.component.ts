@@ -29,7 +29,11 @@ export class MenubarComponent implements OnInit {
   onSearch(event: KeyboardEvent) {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
-      if (this.ricerca.length > 0 && event.key.match(/[a-zA-Z0-9]+$/g)) {
+      if (
+        this.ricerca.length > 0 &&
+        event.key &&
+        event.key.match(/[a-zA-Z0-9]+$/g)
+      ) {
         this.spinner.show(undefined, loadingProps);
         const request: RicercaBrani = { name: this.ricerca };
         this.braniService.getRisultatiRicerca(request).subscribe((brani) => {
