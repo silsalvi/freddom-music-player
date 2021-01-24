@@ -15,6 +15,15 @@
   text-align: center;
 }
 
+.player-container-minimize-no-res {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+  background: #243857;
+  padding: 2px;
+  text-align: center;
+}
+
 .name-song-minimize {
   padding: 5px;
   color: white;

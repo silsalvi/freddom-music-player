@@ -4,7 +4,14 @@
 </ng-container>
 
 <ng-template #minimize>
-  <div id="player-minimize" class="player-container-minimize">
+  <div
+    id="player-minimize"
+    [class]="
+      risultati.length > 0
+        ? 'player-container-minimize'
+        : 'player-container-minimize-no-res'
+    "
+  >
     <div class="name-song-minimize">
       <div id="label-nome" (click)="onSwitchMode()">
         <strong>
