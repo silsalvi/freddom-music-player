@@ -4,7 +4,6 @@ import { BraniService } from '../services/brani.service';
 import { RicercaBraniResponse } from '../models/brano.model';
 import { trigger, style, transition, animate } from '@angular/animations';
 
-declare var $: any;
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
@@ -38,7 +37,9 @@ export class PlayerComponent implements OnInit {
   get isPlaying(): boolean {
     return this.braniService.isPlaying;
   }
-
+  get risultati(): RicercaBraniResponse[] {
+    return this.braniService.risultatiRicerca;
+  }
   ngOnInit(): void {
     this.braniService.brani$.subscribe((brano) => {
       this.branoSelezionato = brano;
@@ -121,6 +122,7 @@ export class PlayerComponent implements OnInit {
     this.timeChanged = this.calculateTime(eventEmitted);
     this.howl.seek(this.timeChanged);
   }
+
   /**
    * Calcola il tempo verso cui spostarsi.
    */
