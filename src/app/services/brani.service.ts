@@ -35,27 +35,23 @@ export class BraniService {
   riproduci(brano: RicercaBraniResponse) {
     this.branoSelezionato = brano;
     this.spinner.show(undefined, loadingProps);
-    this.getBrano(brano).subscribe((blob) => {
-      this.creaNuovoFlusso(brano, blob);
-    });
+    this.creaNuovoFlusso(brano);
   }
 
   /**
    * Ritorna un nuovo oggetto di tipo Howl per riprodurre un nuovo brano
    * @param brano brano da cui creare il nuovo flusso
    */
-  private creaNuovoFlusso(brano: RicercaBraniResponse, stream: Blob) {
+  private creaNuovoFlusso(brano: RicercaBraniResponse) {
     if (this.howl) {
       this.howl.pause();
       this.howl.stop();
     }
-    const url = URL.createObjectURL(stream);
-
     this.howl = new Howl({
-      src: url,
+      src: BASE_API_URL + '/video/' + brano.id,
       autoplay: true,
       html5: true,
-      format: ['mp3'],
+      format: ['mp4'],
     });
     this.howl.once('load', () => {
       this.spinner.hide();
@@ -99,15 +95,5 @@ export class BraniService {
       BASE_API_URL + '/find-brani',
       ricerca
     );
-  }
-
-  /**
-   * Effettua una chiamata al servizio di Freedom per recuperare lo stream del file mp3,
-   * ottenuto a partire dalla conversione effettuata lato backend
-   */
-  getBrano(brano: RicercaBraniResponse) {
-    return this.http.get(BASE_API_URL + '/video/' + brano.id, {
-      responseType: 'blob',
-    });
   }
 }
