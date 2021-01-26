@@ -10,7 +10,10 @@
 .player-container-minimize {
   bottom: 0;
   position: sticky;
-  background: #243857;
+  background: url("src\assets\app-data\purple.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
   padding: 2px;
   text-align: center;
 }
@@ -19,7 +22,9 @@
   bottom: 0;
   position: fixed;
   width: 100%;
-  background: #243857;
+  background: url("src\assets\app-data\purple.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
   padding: 2px;
   text-align: center;
 }
@@ -40,7 +45,12 @@
 .player-container-full {
   height: 100%;
   position: fixed;
-  background: rgba(36, 56, 87, 0.9);
+  background: url("src\assets\app-data\circle.gif");
+  background-repeat: round;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  opacity: 0.75;
   top: 0;
   left: 0;
   right: 0;
