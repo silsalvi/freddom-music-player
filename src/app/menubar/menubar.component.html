@@ -26,7 +26,7 @@
         placeholder="Cerca un brano..."
         aria-label="Search"
         style="color: white"
-        (click)="onSearch($event)"
+        (input)="onSearch()"
         [(ngModel)]="ricerca"
         [ngModelOptions]="{ standalone: true }"
       />

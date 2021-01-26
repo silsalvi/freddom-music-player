@@ -14,10 +14,7 @@ const BASE_API_URL = environment.apiFreedom;
 export class BraniService {
   braniSubject = new BehaviorSubject<RicercaBraniResponse>(null);
   brani$ = this.braniSubject.asObservable();
-  howl = new Howl({
-    src: [''],
-    format: ['mp3'],
-  });
+  howl = null;
   mostraPlayer: boolean;
   branoSelezionato: RicercaBraniResponse;
   durata: string;
@@ -48,16 +45,19 @@ export class BraniService {
    * @param brano brano da cui creare il nuovo flusso
    */
   private creaNuovoFlusso(brano: RicercaBraniResponse, stream: Blob) {
-    this.howl.pause();
-    this.howl.stop();
+    if (this.howl) {
+      this.howl.pause();
+      this.howl.stop();
+    }
     const url = URL.createObjectURL(stream);
 
     this.howl = new Howl({
-      src: [url],
-      format: ['mp4'],
+      src: url,
       autoplay: true,
+      html5: true,
+      format: ['mp3'],
     });
-    this.howl.once('play', () => {
+    this.howl.once('load', () => {
       this.spinner.hide();
       this.durata = this.calcolaDurata();
       this.braniSubject.next(brano);

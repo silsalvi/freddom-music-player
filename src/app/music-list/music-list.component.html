@@ -1,6 +1,9 @@
 <p-dataView
   [value]="risultatiRicerca"
   [emptyMessage]="'Inizia una ricerca per visualizzare dei risultati.'"
+  [paginator]="true"
+  [alwaysShowPaginator]="false"
+  [rows]="5"
 >
   <ng-template let-brano pTemplate="listItem">
     <div
@@ -23,3 +26,5 @@
     </div>
   </ng-template>
 </p-dataView>
+
+<app-player *ngIf="mostraPlayer"></app-player>

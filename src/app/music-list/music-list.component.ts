@@ -18,6 +18,10 @@ export class MusicListComponent {
   get isPlaying() {
     return this.braniService.isPlaying;
   }
+
+  get mostraPlayer() {
+    return this.braniService.mostraPlayer;
+  }
   constructor(private braniService: BraniService) {}
 
   /**
