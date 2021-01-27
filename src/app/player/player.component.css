@@ -45,8 +45,7 @@
 .player-container-full {
   height: 100%;
   position: fixed;
-  background: url("src\assets\app-data\circle.gif");
-  background-repeat: round;
+  background: url("src\assets\app-data\smoke.gif");
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -94,11 +93,11 @@
 }
 
 #label-nome {
-  padding: 25px;
+  padding: 18px;
 }
 
 .p-slider.p-slider-horizontal {
-  height: 0.5rem !important;
+  height: 0.2rem !important;
 }
 
 .thumb {
@@ -114,7 +113,7 @@
 
 @media only screen and (min-width: 800px) {
   .name-song-full {
-    font-size: xx-large;
+    font-size: x-large;
   }
   .player-controls-full {
     text-align: center;

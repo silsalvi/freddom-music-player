@@ -19,6 +19,7 @@ export class BraniService {
   branoSelezionato: RicercaBraniResponse;
   durata: string;
   risultatiRicerca: RicercaBraniResponse[];
+  listaBrani: RicercaBraniResponse[];
   /**
    * Ritorna true se c'è già un brano in riproduzione
    */
@@ -50,10 +51,9 @@ export class BraniService {
     this.howl = new Howl({
       src: BASE_API_URL + '/video/' + brano.id,
       autoplay: true,
-      html5: true,
-      format: ['mp4'],
+      format: ['mp4', 'webm'],
     });
-    this.howl.once('load', () => {
+    this.howl.once('play', () => {
       this.spinner.hide();
       this.durata = this.calcolaDurata();
       this.braniSubject.next(brano);
@@ -67,11 +67,14 @@ export class BraniService {
    * @param id id del brano selezionato su cui applicare la classe
    */
   private applySelectedClass(id: string) {
-    document.querySelectorAll('.selected').forEach((element) => {
-      element.classList.remove('selected');
-    });
+    const elements = document.querySelectorAll('.selected');
     const element = document.querySelector(`#brano${id}`);
-    element.classList.add('selected');
+    if (elements && element) {
+      elements.forEach((element) => {
+        element.classList.remove('selected');
+      });
+      element.classList.add('selected');
+    }
   }
 
   /**

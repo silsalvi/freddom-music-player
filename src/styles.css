@@ -11,7 +11,7 @@ body {
 .spinner-text {
   font-size: 15px;
   color: white;
-  padding: 10px;
+  margin: 30px;
 }
 
 .pulse {
@@ -21,6 +21,7 @@ body {
   box-shadow: 0 0 0 #243857;
   animation: pulse 1s infinite;
 }
+
 .pulse:hover {
   animation: none;
 }

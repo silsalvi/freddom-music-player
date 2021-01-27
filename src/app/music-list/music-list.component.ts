@@ -8,13 +8,6 @@ import { BraniService } from '../services/brani.service';
   styleUrls: ['./music-list.component.css'],
 })
 export class MusicListComponent {
-  /**
-   * Ritorna i risultati delle ricerche dal service
-   */
-  get risultatiRicerca() {
-    return this.braniService.risultatiRicerca;
-  }
-
   get isPlaying() {
     return this.braniService.isPlaying;
   }
@@ -22,7 +15,7 @@ export class MusicListComponent {
   get mostraPlayer() {
     return this.braniService.mostraPlayer;
   }
-  constructor(private braniService: BraniService) {}
+  constructor(public braniService: BraniService) {}
 
   /**
    * Handler per l'evento di selezione di un brano.
