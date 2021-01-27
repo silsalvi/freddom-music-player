@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BraniService } from '../services/brani.service';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { loadingProps } from '../config/loading-congif';
 import { RicercaBrani } from '../models/brano.model';
 
 @Component({
@@ -14,10 +12,7 @@ export class MenubarComponent implements OnInit {
   ricerca: string = '';
   private timeout: number = 0;
   showDialog: boolean = false;
-  constructor(
-    private braniService: BraniService,
-    private spinner: NgxSpinnerService
-  ) {}
+  constructor(private braniService: BraniService) {}
 
   ngOnInit(): void {}
 
@@ -29,16 +24,15 @@ export class MenubarComponent implements OnInit {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
       if (this.ricerca.length > 0) {
-        this.spinner.show(undefined, loadingProps);
         const request: RicercaBrani = { name: this.ricerca };
         this.braniService.getRisultatiRicerca(request).subscribe((brani) => {
-          this.spinner.hide();
           this.braniService.risultatiRicerca = brani;
+          this.braniService.listaBrani = [...brani];
         });
       } else {
         this.braniService.risultatiRicerca = [];
       }
-    }, 600);
+    }, 800);
   }
 
   openModal() {

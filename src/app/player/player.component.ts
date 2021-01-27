@@ -29,16 +29,13 @@ export class PlayerComponent implements OnInit {
   attuale: string;
   durata: string;
   timeChanged: number;
-  constructor(private braniService: BraniService) {}
+  constructor(public braniService: BraniService) {}
 
   get howl(): Howl {
     return this.braniService.howl;
   }
   get isPlaying(): boolean {
     return this.braniService.isPlaying;
-  }
-  get risultati(): RicercaBraniResponse[] {
-    return this.braniService.risultatiRicerca;
   }
   ngOnInit(): void {
     this.braniService.brani$.subscribe((brano) => {
@@ -65,7 +62,7 @@ export class PlayerComponent implements OnInit {
    * Se è vero allora riparte dal primo, altrimenti avanza di 1
    */
   onForwardClick() {
-    const brani = this.braniService.risultatiRicerca;
+    const brani = this.braniService.listaBrani;
     let branoSelezionato = this.braniService.branoSelezionato;
     const index = brani.findIndex((brano) => brano === branoSelezionato);
     if (index < brani.length - 1) {
@@ -90,7 +87,7 @@ export class PlayerComponent implements OnInit {
    * se è vero allora riprende dall'ultimo altrimenti retrocede di 1
    */
   onBackwordClick() {
-    const brani = this.braniService.risultatiRicerca;
+    const brani = this.braniService.listaBrani;
     let branoSelezionato = this.braniService.branoSelezionato;
     const index = brani.findIndex((brano) => brano === branoSelezionato);
     if (index > 0) {
@@ -116,6 +113,11 @@ export class PlayerComponent implements OnInit {
     }
   }
 
+  /**
+   * Handler per il rilascio dello slider.
+   * Porta il brano al valore richiesto
+   * @param eventEmitted
+   */
   onProgressBarEnd(eventEmitted: any) {
     eventEmitted.originalEvent.preventDefault();
     eventEmitted.originalEvent.stopPropagation();
@@ -147,6 +149,9 @@ export class PlayerComponent implements OnInit {
     }, 1000);
   }
 
+  /**
+   * Aggiorna il tempo man mano che viene richiamata
+   */
   private update() {
     if (this.isPlaying) {
       const seek = this.howl.seek() as number;
@@ -157,6 +162,9 @@ export class PlayerComponent implements OnInit {
     }
   }
 
+  /**
+   * Attiva o disattiva la full mode o la mini mode.
+   */
   onSwitchMode() {
     this.fullMode = !this.fullMode;
   }
