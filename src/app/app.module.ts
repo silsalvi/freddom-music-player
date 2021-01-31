@@ -17,14 +17,17 @@ import { DialogModule } from 'primeng/dialog';
 import { SliderModule } from 'primeng/slider';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TooltipModule } from 'primeng/tooltip';
-import { HttpClientModule } from '@angular/common/http';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FreedomInterceptor } from './services/http-interceptor';
+import { ModalComponent } from './modal/modal.component';
+import { DialogService } from 'primeng';
 @NgModule({
   declarations: [
     AppComponent,
     MusicListComponent,
     MenubarComponent,
     PlayerComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,14 @@ import { HttpClientModule } from '@angular/common/http';
     TooltipModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: FreedomInterceptor,
+      multi: true,
+    },
+    DialogService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

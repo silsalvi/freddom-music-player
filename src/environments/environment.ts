@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiFreedom: 'http://localhost:5000',
+  apiFreedom: 'http://localhost:5000/api',
 };
 
 /*

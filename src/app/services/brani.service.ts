@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { RicercaBrani, RicercaBraniResponse } from '../models/brano.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { Howl } from 'howler';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { loadingProps } from 'src/app/config/loading-congif';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { HttpError } from 'src/app/models/http-error-response.model';
+import { ModalComponent } from '../modal/modal.component';
+import { catchError } from 'rxjs/operators';
+import { DialogService } from 'primeng';
 
 const BASE_API_URL = environment.apiFreedom;
 @Injectable({
@@ -27,7 +31,11 @@ export class BraniService {
     return this.howl.playing();
   }
 
-  constructor(private spinner: NgxSpinnerService, private http: HttpClient) {}
+  constructor(
+    private spinner: NgxSpinnerService,
+    private http: HttpClient,
+    private dialogService: DialogService
+  ) {}
 
   /**
    * Riproduce un brano passato in input
@@ -48,17 +56,20 @@ export class BraniService {
       this.howl.pause();
       this.howl.stop();
     }
-    this.howl = new Howl({
-      src: BASE_API_URL + '/video/' + brano.id,
-      autoplay: true,
-      format: ['mp4', 'webm'],
-    });
-    this.howl.once('play', () => {
-      this.spinner.hide();
-      this.durata = this.calcolaDurata();
-      this.braniSubject.next(brano);
-      this.mostraPlayer = true;
-      this.applySelectedClass(brano.id);
+
+    this.getBrano(brano).subscribe((stream) => {
+      this.howl = new Howl({
+        src: URL.createObjectURL(stream),
+        autoplay: true,
+        format: ['mp4', 'webm'],
+        html5: true,
+      });
+      this.howl.once('play', () => {
+        this.durata = this.calcolaDurata();
+        this.braniSubject.next(brano);
+        this.mostraPlayer = true;
+        this.applySelectedClass(brano.id);
+      });
     });
   }
 
@@ -98,5 +109,27 @@ export class BraniService {
       BASE_API_URL + '/find-brani',
       ricerca
     );
+  }
+
+  /**
+   * Effettua una chiamata al servizio di Freedom per recuperare lo stream del file mp3,
+   * ottenuto a partire dalla conversione effettuata lato backend
+   */
+  getBrano(brano: RicercaBraniResponse) {
+    return this.http
+      .get(BASE_API_URL + '/video/' + brano.id, {
+        responseType: 'blob' as 'json',
+        observe: 'body',
+      })
+      .pipe(
+        catchError((err) => {
+          this.dialogService.open(ModalComponent, {
+            data: { message: err },
+            header: 'Avviso',
+            style: { width: '70vh' },
+          });
+          return throwError(err);
+        })
+      );
   }
 }
