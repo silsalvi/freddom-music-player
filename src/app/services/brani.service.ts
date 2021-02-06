@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { HttpError } from 'src/app/models/http-error-response.model';
 import { ModalComponent } from '../modal/modal.component';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { DialogService } from 'primeng';
 
 const BASE_API_URL = environment.apiFreedom;
@@ -18,12 +18,12 @@ const BASE_API_URL = environment.apiFreedom;
 export class BraniService {
   braniSubject = new BehaviorSubject<RicercaBraniResponse>(null);
   brani$ = this.braniSubject.asObservable();
-  howl = null;
+  howl: Howl = null;
   mostraPlayer: boolean;
   branoSelezionato: RicercaBraniResponse;
   durata: string;
-  risultatiRicerca: RicercaBraniResponse[];
-  listaBrani: RicercaBraniResponse[];
+  risultatiRicerca: RicercaBraniResponse[] = [];
+  listaBrani: RicercaBraniResponse[] = [];
   /**
    * Ritorna true se c'è già un brano in riproduzione
    */
@@ -41,17 +41,22 @@ export class BraniService {
    * Riproduce un brano passato in input
    * @param brano il brano da riprodurre
    */
-  riproduci(brano: RicercaBraniResponse) {
+  riproduci(brano: RicercaBraniResponse, autoplay: boolean = true) {
     this.branoSelezionato = brano;
-    this.spinner.show(undefined, loadingProps);
-    this.creaNuovoFlusso(brano);
+    if (this.branoSelezionato !== this.braniSubject.value) {
+      this.spinner.show(undefined, loadingProps);
+      this.creaNuovoFlusso(brano, autoplay);
+    }
   }
 
   /**
    * Ritorna un nuovo oggetto di tipo Howl per riprodurre un nuovo brano
    * @param brano brano da cui creare il nuovo flusso
    */
-  private creaNuovoFlusso(brano: RicercaBraniResponse) {
+  private creaNuovoFlusso(
+    brano: RicercaBraniResponse,
+    autoplay: boolean = false
+  ) {
     if (this.howl) {
       this.howl.pause();
       this.howl.stop();
@@ -60,16 +65,25 @@ export class BraniService {
     this.getBrano(brano).subscribe((stream) => {
       this.howl = new Howl({
         src: URL.createObjectURL(stream),
-        autoplay: true,
+        autoplay: autoplay,
         format: ['mp4', 'webm'],
         html5: true,
       });
-      this.howl.once('play', () => {
-        this.durata = this.calcolaDurata();
-        this.braniSubject.next(brano);
-        this.mostraPlayer = true;
-        this.applySelectedClass(brano.id);
-      });
+      localStorage.setItem('brano', JSON.stringify(brano));
+      if (autoplay) {
+        this.howl.once('play', () => {
+          this.durata = this.calcolaDurata();
+          this.braniSubject.next(brano);
+          this.mostraPlayer = true;
+          this.applySelectedClass(brano.id);
+        });
+      } else {
+        this.howl.once('load', () => {
+          this.durata = this.calcolaDurata();
+          this.braniSubject.next(brano);
+          this.mostraPlayer = true;
+        });
+      }
     });
   }
 
@@ -105,10 +119,13 @@ export class BraniService {
    * direttamente dalle API di Youtube
    */
   getRisultatiRicerca(ricerca: RicercaBrani) {
-    return this.http.post<RicercaBraniResponse[]>(
-      BASE_API_URL + '/find-brani',
-      ricerca
-    );
+    return this.http
+      .post<RicercaBraniResponse[]>(BASE_API_URL + '/find-brani', ricerca)
+      .pipe(
+        tap((response) => {
+          localStorage.setItem('risultati', JSON.stringify(response));
+        })
+      );
   }
 
   /**
