@@ -20,7 +20,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FreedomInterceptor } from './services/http-interceptor';
 import { ModalComponent } from './modal/modal.component';
-import { DialogService } from 'primeng';
+import { DialogService } from 'primeng/dynamicdialog';
 @NgModule({
   declarations: [
     AppComponent,
