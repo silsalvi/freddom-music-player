@@ -40,3 +40,8 @@ body {
     box-shadow: 0 0 0 0 #243857;
   }
 }
+
+input[type="search"]:disabled {
+  background: slategrey;
+  font-style: italic;
+}

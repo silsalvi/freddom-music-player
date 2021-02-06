@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { ModalComponent } from '../modal/modal.component';
 import { catchError } from 'rxjs/operators';
 import { DialogService } from 'primeng';
+import { AdvancedSearch } from '../models/advanced-search.model';
 
 const BASE_API_URL = environment.apiFreedom;
 @Injectable({
@@ -120,6 +121,17 @@ export class BraniService {
   getRisultatiRicerca(ricerca: RicercaBrani) {
     return this.http.post<RicercaBraniResponse[]>(
       BASE_API_URL + '/find-brani',
+      ricerca
+    );
+  }
+
+  /**
+   * Effettua una ricerca avanzata al servizio di Youtube
+   * @param ricerca
+   */
+  getRicercheAvanzate(ricerca: AdvancedSearch) {
+    return this.http.post<RicercaBraniResponse[]>(
+      BASE_API_URL + '/find-brani/advanced',
       ricerca
     );
   }

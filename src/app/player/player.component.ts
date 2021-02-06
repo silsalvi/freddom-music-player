@@ -43,7 +43,7 @@ export class PlayerComponent implements OnInit {
       this.startPlay();
       if (this.braniService.isFirstPlay) {
         const attuale = localStorage.getItem('minutoCorrente');
-        if (attuale !== '0:00') {
+        if (attuale && attuale !== '0:00') {
           const actual = this.utils.convertDurationToSeconds(attuale);
           this.howl.seek(actual);
           this.attuale = attuale;
