@@ -3,7 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BraniService } from '../services/brani.service';
 import { RicercaBraniResponse } from '../models/brano.model';
 import { trigger, style, transition, animate } from '@angular/animations';
-
+import { UtilsService } from '../services/utils.service';
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
@@ -29,7 +29,7 @@ export class PlayerComponent implements OnInit {
   attuale: string;
   durata: string;
   timeChanged: number;
-  constructor(public braniService: BraniService) {}
+  constructor(public braniService: BraniService, private utils: UtilsService) {}
 
   get howl(): Howl {
     return this.braniService.howl;
@@ -41,6 +41,28 @@ export class PlayerComponent implements OnInit {
     this.braniService.brani$.subscribe((brano) => {
       this.branoSelezionato = brano;
       this.startPlay();
+      if (this.braniService.isFirstPlay) {
+        const attuale = localStorage.getItem('minutoCorrente');
+        if (attuale !== '0:00') {
+          const actual = this.utils.convertDurationToSeconds(attuale);
+          this.howl.seek(actual);
+          this.attuale = attuale;
+          this.tempo = (actual / this.howl.duration()) * 100;
+          this.braniService.isFirstPlay = false;
+        }
+      }
+    });
+
+    window.addEventListener('unload', () => {
+      localStorage.setItem('minutoCorrente', this.attuale);
+      localStorage.setItem(
+        'brano',
+        JSON.stringify(this.braniService.branoSelezionato)
+      );
+      localStorage.setItem(
+        'risultati',
+        JSON.stringify(this.braniService.listaBrani)
+      );
     });
   }
 

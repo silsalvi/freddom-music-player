@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.primeNgConfig.ripple = true;
     const brano = JSON.parse(localStorage.getItem('brano'));
-    console.log(localStorage);
     const risultati: RicercaBraniResponse[] =
       JSON.parse(localStorage.getItem('risultati')) || [];
 

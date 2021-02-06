@@ -1,6 +1,6 @@
 {
   "name": "freedom-music-player",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
