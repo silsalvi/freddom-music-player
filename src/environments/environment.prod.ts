@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiFreedom: 'https://freedom-cloud-backend.herokuapp.com',
+  apiFreedom: 'https://freedom-cloud-backend.herokuapp.com/api',
 };
