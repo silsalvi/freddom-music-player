@@ -6,9 +6,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { loadingProps } from 'src/app/config/loading-congif';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { HttpError } from 'src/app/models/http-error-response.model';
 import { ModalComponent } from '../modal/modal.component';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { DialogService } from 'primeng';
 
 const BASE_API_URL = environment.apiFreedom;
@@ -24,6 +23,7 @@ export class BraniService {
   durata: string;
   risultatiRicerca: RicercaBraniResponse[] = [];
   listaBrani: RicercaBraniResponse[] = [];
+  isFirstPlay: boolean = true;
   /**
    * Ritorna true se c'è già un brano in riproduzione
    */
@@ -69,7 +69,6 @@ export class BraniService {
         format: ['mp4', 'webm'],
         html5: true,
       });
-      localStorage.setItem('brano', JSON.stringify(brano));
       if (autoplay) {
         this.howl.once('play', () => {
           this.durata = this.calcolaDurata();
@@ -119,13 +118,10 @@ export class BraniService {
    * direttamente dalle API di Youtube
    */
   getRisultatiRicerca(ricerca: RicercaBrani) {
-    return this.http
-      .post<RicercaBraniResponse[]>(BASE_API_URL + '/find-brani', ricerca)
-      .pipe(
-        tap((response) => {
-          localStorage.setItem('risultati', JSON.stringify(response));
-        })
-      );
+    return this.http.post<RicercaBraniResponse[]>(
+      BASE_API_URL + '/find-brani',
+      ricerca
+    );
   }
 
   /**
