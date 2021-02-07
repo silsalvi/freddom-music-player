@@ -50,11 +50,182 @@
   [position]="'top'"
   [draggable]="false"
 >
-  <p-header>Aggiungi criteri di ricerca</p-header>
-  <div class="row">
-    <div class="col-12">PROSSIMAMENTE DISPONIBILE!</div>
+  <p-header>Ricerca Avanzata</p-header>
+  <p class="text-left" style="font-size: smaller">
+    Effettua una ricerca avanzata. E' possibile cercare solo per un campo alla
+    volta. Selezionando uno dei campi, gli altri si disabiliteranno
+    automaticamente.
+  </p>
+  <div class="row mt-4">
+    <div class="col-12">
+      <form class="form-group" [formGroup]="form" id="form">
+        <div class="row mb-2">
+          <div class="col-2">
+            <p-radioButton
+              name="ricerca"
+              value="brano"
+              [(ngModel)]="enabledField"
+              (onClick)="onChangeRicerca()"
+              [ngModelOptions]="{ standalone: true }"
+            ></p-radioButton>
+          </div>
+          <div class="col-10">
+            <input
+              id="song"
+              class="form-control blue"
+              type="search"
+              placeholder="Cerca un brano..."
+              aria-label="Search"
+              style="color: white"
+              [formControlName]="'brano'"
+              aria-describedby="emailHelp"
+            />
+            <small id="emailHelp" class="form-text text-muted">
+              Immetti il nome di un brano.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-2">
+            <p-radioButton
+              name="ricerca"
+              value="video"
+              [(ngModel)]="enabledField"
+              (onClick)="onChangeRicerca()"
+              [ngModelOptions]="{ standalone: true }"
+            ></p-radioButton>
+          </div>
+          <div class="col-10">
+            <input
+              id="video"
+              class="form-control blue"
+              type="search"
+              placeholder="Cerca un video..."
+              aria-label="Search"
+              style="color: white"
+              [formControlName]="'video'"
+              aria-describedby="emailHelp"
+            />
+            <small id="emailHelp" class="form-text text-muted">
+              Immetti il nome di un video.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-2">
+            <p-radioButton
+              name="ricerca"
+              value="playlist"
+              [(ngModel)]="enabledField"
+              (onClick)="onChangeRicerca()"
+              [ngModelOptions]="{ standalone: true }"
+            ></p-radioButton>
+          </div>
+          <div class="col-10">
+            <input
+              id="playlist"
+              class="form-control blue"
+              type="search"
+              placeholder="Cerca una playlist..."
+              aria-label="Search"
+              style="color: white"
+              [formControlName]="'playlist'"
+              aria-describedby="emailHelp"
+            />
+            <small id="emailHelp" class="form-text text-muted">
+              Immetti il nome di una playlist.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-2">
+            <p-radioButton
+              name="ricerca"
+              value="album"
+              [(ngModel)]="enabledField"
+              (onClick)="onChangeRicerca()"
+              [ngModelOptions]="{ standalone: true }"
+            ></p-radioButton>
+          </div>
+          <div class="col-10">
+            <input
+              id="album"
+              class="form-control blue"
+              type="search"
+              placeholder="Cerca un album..."
+              aria-label="Search"
+              style="color: white"
+              [formControlName]="'album'"
+              aria-describedby="emailHelp"
+            />
+            <small id="emailHelp" class="form-text text-muted">
+              Immetti il nome di un album.
+            </small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-2">
+            <p-radioButton
+              name="ricerca"
+              value="artista"
+              [(ngModel)]="enabledField"
+              (onClick)="onChangeRicerca()"
+              [ngModelOptions]="{ standalone: true }"
+            ></p-radioButton>
+          </div>
+          <div class="col-10">
+            <input
+              id="artist"
+              class="form-control blue"
+              type="search"
+              placeholder="Cerca un'artista..."
+              aria-label="Search"
+              style="color: white"
+              [formControlName]="'artista'"
+              aria-describedby="emailHelp"
+            />
+            <small id="emailHelp" class="form-text text-muted">
+              Immetti il nome di un'artista.
+            </small>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
+
   <p-footer>
-    <button class="btn btn-dark" pRipple>Effettua Ricerca Avanzata</button>
+    <div class="row">
+      <div class="col-12">
+        <button
+          class="btn btn-dark"
+          pRipple
+          (click)="form.reset(); isValid = true"
+        >
+          <span class="fas fa-broom"></span>
+          Pulisci
+        </button>
+        <button
+          class="btn btn-dark mr-0"
+          pRipple
+          (click)="onAdvancedSearch()"
+          [disabled]="form.invalid"
+        >
+          <span class="fas fa-search-plus"></span>
+          Effettua Ricerca Avanzata
+        </button>
+      </div>
+    </div>
+    <div class="row" *ngIf="!isValid">
+      <div class="col-12">
+        <p-message
+          [text]="'Inserire almeno un campo di ricerca.'"
+          [severity]="'error'"
+        ></p-message>
+      </div>
+    </div>
   </p-footer>
 </p-dialog>

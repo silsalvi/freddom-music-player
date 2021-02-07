@@ -40,3 +40,26 @@ body {
     box-shadow: 0 0 0 0 #243857;
   }
 }
+
+input[type="search"]:disabled {
+  background: slategrey;
+}
+
+input[type="search"]:disabled::placeholder {
+  color: black;
+}
+.p-inline-message.p-inline-message-error {
+  margin-top: 5px;
+  width: 100%;
+}
+
+.p-inline-message.p-inline-message-info {
+  background: #343a40 !important;
+  color: white !important;
+  width: 100%;
+  border: 1px solid #a1a9b1 !important;
+}
+
+.p-inline-message.p-inline-message-info .p-inline-message-icon {
+  color: white !important;
+}
