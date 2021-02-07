@@ -215,5 +215,13 @@
         </button>
       </div>
     </div>
+    <div class="row" *ngIf="!isValid">
+      <div class="col-12">
+        <p-message
+          [text]="'Inserire almeno un campo di ricerca.'"
+          [severity]="'error'"
+        ></p-message>
+      </div>
+    </div>
   </p-footer>
 </p-dialog>

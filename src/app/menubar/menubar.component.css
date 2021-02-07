@@ -10,9 +10,3 @@
 .blue {
   background: #1b2736;
 }
-
-@media only screen and (max-width: 728px) {
-  button.btn {
-    width: 100%;
-  }
-}

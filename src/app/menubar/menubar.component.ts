@@ -15,13 +15,8 @@ export class MenubarComponent implements OnInit {
   ricerca: string = '';
   private timeout: number = 0;
   showDialog: boolean = false;
-  advancedSearch: AdvancedSearch = {
-    album: null,
-    artist: null,
-    playlist: null,
-    song: null,
-    video: null,
-  };
+  isValid: boolean = true;
+  advancedSearch: AdvancedSearch = null;
   form: FormGroup;
   enabledField: string = 'song';
   constructor(
@@ -65,10 +60,10 @@ export class MenubarComponent implements OnInit {
    * Chiama il backend per ottenere dei risultati in base ad una ricerca avanzata
    */
   onAdvancedSearch() {
-    const isValid = Object.values(this.form.controls).some(
+    this.isValid = Object.values(this.form.controls).some(
       (control) => control.value
     );
-    if (isValid) {
+    if (this.isValid) {
       this.advancedSearch = this.form.value;
 
       this.braniService
