@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { ModalComponent } from '../modal/modal.component';
 import { catchError } from 'rxjs/operators';
 import { DialogService } from 'primeng';
+import { AdvancedSearch } from '../models/advanced-search.model';
 
 const BASE_API_URL = environment.apiFreedom;
 @Injectable({
@@ -24,6 +25,7 @@ export class BraniService {
   risultatiRicerca: RicercaBraniResponse[] = [];
   listaBrani: RicercaBraniResponse[] = [];
   isFirstPlay: boolean = true;
+  enabledField: string;
   /**
    * Ritorna true se c'è già un brano in riproduzione
    */
@@ -125,6 +127,17 @@ export class BraniService {
   }
 
   /**
+   * Effettua una ricerca avanzata al servizio di Youtube
+   * @param ricerca
+   */
+  getRicercheAvanzate(ricerca: AdvancedSearch) {
+    return this.http.post<RicercaBraniResponse[]>(
+      BASE_API_URL + '/find-brani/advanced',
+      ricerca
+    );
+  }
+
+  /**
    * Effettua una chiamata al servizio di Freedom per recuperare lo stream del file mp3,
    * ottenuto a partire dalla conversione effettuata lato backend
    */
@@ -144,5 +157,33 @@ export class BraniService {
           return throwError(err);
         })
       );
+  }
+
+  /**
+   * Effettua una chiamata al backend per ritornare i brani appartenenti ad una playlist.
+   */
+  getSongsByPlaylist(playlist: RicercaBraniResponse) {
+    return this.http.get<RicercaBraniResponse[]>(
+      BASE_API_URL + '/getPlaylist/' + playlist.id
+    );
+  }
+
+  /**
+   * Effettua una chiamata al backend per ritornare i brani appartenenti ad una playlist.
+   */
+  getSongsByAlbum(album: RicercaBraniResponse) {
+    return this.http.get<RicercaBraniResponse[]>(
+      BASE_API_URL + '/getAlbum/' + album.id
+    );
+  }
+
+  /**
+   * Effettua una chiamata al backend per ritornare i brani appartenenti ad una playlist.
+   */
+  getSongsByArtist(artist: RicercaBraniResponse) {
+    return this.http.post<RicercaBraniResponse[]>(
+      BASE_API_URL + '/getSongsByArtist',
+      { name: artist.titolo }
+    );
   }
 }
