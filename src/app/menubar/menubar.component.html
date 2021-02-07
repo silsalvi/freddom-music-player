@@ -63,7 +63,7 @@
           <div class="col-2">
             <p-radioButton
               name="ricerca"
-              value="song"
+              value="brano"
               [(ngModel)]="enabledField"
               (onClick)="onChangeRicerca()"
               [ngModelOptions]="{ standalone: true }"
@@ -77,7 +77,7 @@
               placeholder="Cerca un brano..."
               aria-label="Search"
               style="color: white"
-              [formControlName]="'song'"
+              [formControlName]="'brano'"
               aria-describedby="emailHelp"
             />
             <small id="emailHelp" class="form-text text-muted">
@@ -171,7 +171,7 @@
           <div class="col-2">
             <p-radioButton
               name="ricerca"
-              value="artist"
+              value="artista"
               [(ngModel)]="enabledField"
               (onClick)="onChangeRicerca()"
               [ngModelOptions]="{ standalone: true }"
@@ -185,7 +185,7 @@
               placeholder="Cerca un'artista..."
               aria-label="Search"
               style="color: white"
-              [formControlName]="'artist'"
+              [formControlName]="'artista'"
               aria-describedby="emailHelp"
             />
             <small id="emailHelp" class="form-text text-muted">
@@ -200,7 +200,11 @@
   <p-footer>
     <div class="row">
       <div class="col-12">
-        <button class="btn btn-dark" pRipple (click)="form.reset()">
+        <button
+          class="btn btn-dark"
+          pRipple
+          (click)="form.reset(); isValid = true"
+        >
           <span class="fas fa-broom"></span>
           Pulisci
         </button>

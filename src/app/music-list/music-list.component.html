@@ -1,31 +1,176 @@
-<p-dataView
-  [value]="braniService.risultatiRicerca"
-  [emptyMessage]="'Inizia una ricerca per visualizzare dei risultati.'"
-  [paginator]="true"
-  [alwaysShowPaginator]="false"
-  [rows]="5"
-  [paginatorPosition]="'top'"
->
-  <ng-template let-brano pTemplate="listItem">
-    <div
-      pRipple
-      class="list-item"
-      (click)="onSelection(brano)"
-      [id]="'brano' + brano.id"
-    >
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 col-md-4">
-            <img src="{{ brano.thumbnail }}" style="width: 100%" />
-          </div>
-          <div class="col-12 col-md-8">
-            <strong style="font-size: large">{{ brano.titolo }}</strong>
-            <p class="lbl-artista">{{ brano.artista }}</p>
+<div [ngSwitch]="enabledField">
+  <ng-container
+    *ngSwitchCase="'brano'"
+    [ngTemplateOutlet]="risultatiSongs"
+  ></ng-container>
+  <ng-container
+    *ngSwitchCase="'video'"
+    [ngTemplateOutlet]="risultatiSongs"
+  ></ng-container>
+  <ng-container
+    *ngSwitchCase="'playlist'"
+    [ngTemplateOutlet]="playlist"
+  ></ng-container>
+  <ng-container
+    *ngSwitchCase="'album'"
+    [ngTemplateOutlet]="album"
+  ></ng-container>
+  <ng-container
+    *ngSwitchCase="'artista'"
+    [ngTemplateOutlet]="artista"
+  ></ng-container>
+</div>
+
+<app-player *ngIf="mostraPlayer"></app-player>
+
+<ng-template #risultatiSongs>
+  <div style="background: #1f2d40">
+    <p-message
+      text="E' attiva la ricerca per {{ enabledField }}"
+      severity="info"
+    ></p-message>
+  </div>
+  <p-dataView
+    [value]="braniService.risultatiRicerca"
+    [emptyMessage]="'Inizia una ricerca per visualizzare dei risultati.'"
+    [paginator]="true"
+    [alwaysShowPaginator]="false"
+    [rows]="5"
+    [paginatorPosition]="'top'"
+  >
+    <ng-template let-brano pTemplate="listItem">
+      <div
+        pRipple
+        class="list-item"
+        (click)="onSelection(brano)"
+        [id]="'brano' + brano.id"
+      >
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <img src="{{ brano.thumbnail }}" style="width: 100%" />
+            </div>
+            <div class="col-12 col-md-8">
+              <strong style="font-size: large">{{ brano.titolo }}</strong>
+              <p class="lbl-artista">{{ brano.artista }}</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </ng-template>
-</p-dataView>
+    </ng-template>
+  </p-dataView>
+</ng-template>
 
-<app-player *ngIf="mostraPlayer"></app-player>
+<ng-template #playlist>
+  <div style="background: #1f2d40">
+    <p-message
+      text="E' attiva la ricerca per playlist"
+      severity="info"
+    ></p-message>
+  </div>
+  <p-dataView
+    [value]="braniService.risultatiRicerca"
+    [emptyMessage]="'Inizia una ricerca per visualizzare dei risultati.'"
+    [paginator]="true"
+    [alwaysShowPaginator]="false"
+    [rows]="5"
+    [paginatorPosition]="'top'"
+  >
+    <ng-template let-playlist pTemplate="listItem">
+      <div
+        pRipple
+        class="list-item"
+        (click)="onPlaylistClick(playlist)"
+        [id]="'playlist' + playlist.id"
+      >
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <img src="{{ playlist.thumbnail }}" style="width: 100%" />
+            </div>
+            <div class="col-12 col-md-8">
+              <strong style="font-size: large">{{ playlist.titolo }}</strong>
+              <p class="lbl-artista">{{ playlist.totalTrack }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView></ng-template
+>
+
+<ng-template #album>
+  <div style="background: #1f2d40">
+    <p-message
+      text="E' attiva la ricerca per album"
+      severity="info"
+    ></p-message>
+  </div>
+  <p-dataView
+    [value]="braniService.risultatiRicerca"
+    [emptyMessage]="'Inizia una ricerca per visualizzare dei risultati.'"
+    [paginator]="true"
+    [alwaysShowPaginator]="false"
+    [rows]="5"
+    [paginatorPosition]="'top'"
+  >
+    <ng-template let-album pTemplate="listItem">
+      <div
+        pRipple
+        class="list-item"
+        (click)="onAlbumClick(album)"
+        [id]="'album' + album.id"
+      >
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <img src="{{ album.thumbnail }}" style="width: 100%" />
+            </div>
+            <div class="col-12 col-md-8">
+              <strong style="font-size: large">{{ album.titolo }}</strong>
+              <p class="lbl-artista">{{ album.artista }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
+</ng-template>
+
+<ng-template #artista>
+  <div style="background: #1f2d40">
+    <p-message
+      text="E' attiva la ricerca per artista"
+      severity="info"
+    ></p-message>
+  </div>
+  <p-dataView
+    [value]="braniService.risultatiRicerca"
+    [emptyMessage]="'Inizia una ricerca per visualizzare dei risultati.'"
+    [paginator]="true"
+    [alwaysShowPaginator]="false"
+    [rows]="5"
+    [paginatorPosition]="'top'"
+  >
+    <ng-template let-artista pTemplate="listItem">
+      <div
+        pRipple
+        class="list-item"
+        (click)="onArtistaClick(artista)"
+        [id]="'artista' + artista.id"
+      >
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <img src="{{ artista.thumbnail }}" style="width: 100%" />
+            </div>
+            <div class="col-12 col-md-8">
+              <strong style="font-size: large">{{ artista.titolo }}</strong>
+              <p class="lbl-artista">{{ artista.artista }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
+</ng-template>
