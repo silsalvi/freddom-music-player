@@ -72,6 +72,7 @@ export class MenubarComponent implements OnInit {
       (control) => control.value
     );
     if (this.isValid) {
+      this.braniService.enabledField = this.enabledField;
       this.advancedSearch.album = this.form.value.album;
       this.advancedSearch.song = this.form.value.brano;
       this.advancedSearch.artist = this.form.value.artista;

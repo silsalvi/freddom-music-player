@@ -26,7 +26,7 @@
 <ng-template #risultatiSongs>
   <div style="background: #1f2d40">
     <p-message
-      text="E' attiva la ricerca per {{ enabledField }}"
+      text="Si sta cercando per {{ enabledField }}"
       severity="info"
     ></p-message>
   </div>
@@ -63,10 +63,7 @@
 
 <ng-template #playlist>
   <div style="background: #1f2d40">
-    <p-message
-      text="E' attiva la ricerca per playlist"
-      severity="info"
-    ></p-message>
+    <p-message text="Si sta cercando per playlist" severity="info"></p-message>
   </div>
   <p-dataView
     [value]="braniService.risultatiRicerca"
@@ -101,10 +98,7 @@
 
 <ng-template #album>
   <div style="background: #1f2d40">
-    <p-message
-      text="E' attiva la ricerca per album"
-      severity="info"
-    ></p-message>
+    <p-message text="Si sta cercando per album" severity="info"></p-message>
   </div>
   <p-dataView
     [value]="braniService.risultatiRicerca"
@@ -139,10 +133,7 @@
 
 <ng-template #artista>
   <div style="background: #1f2d40">
-    <p-message
-      text="E' attiva la ricerca per artista"
-      severity="info"
-    ></p-message>
+    <p-message text="Si sta cercando per artista" severity="info"></p-message>
   </div>
   <p-dataView
     [value]="braniService.risultatiRicerca"
