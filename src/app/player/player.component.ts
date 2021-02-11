@@ -53,7 +53,7 @@ export class PlayerComponent implements OnInit {
       }
     });
 
-    window.addEventListener('unload', () => {
+    window.addEventListener('beforeunload', () => {
       localStorage.setItem('minutoCorrente', this.attuale);
       localStorage.setItem(
         'brano',
