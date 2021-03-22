@@ -1,7 +1,6 @@
 <app-menubar></app-menubar>
-
 <app-music-list></app-music-list>
-
+<app-player *ngIf="mostraPlayer"></app-player>
 <ngx-spinner template="<img src='assets/app-data/freedom.png' class='pulse'/>">
   <p class="spinner-text">Caricamento in corso...</p>
 </ngx-spinner>

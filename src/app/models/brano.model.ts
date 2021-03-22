@@ -7,4 +7,5 @@ export interface RicercaBraniResponse {
   artista: string;
   thumbnail: string;
   totalTrack: number;
+  selected: boolean;
 }

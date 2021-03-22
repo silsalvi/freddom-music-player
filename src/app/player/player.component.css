@@ -10,9 +10,7 @@
 .player-container-minimize {
   bottom: 0;
   position: sticky;
-  background: url("src\assets\app-data\purple.gif");
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: #1b2736;
   width: 100%;
   padding: 2px;
   text-align: center;
@@ -22,9 +20,7 @@
   bottom: 0;
   position: fixed;
   width: 100%;
-  background: url("src\assets\app-data\purple.gif");
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: #1b2736;
   padding: 2px;
   text-align: center;
 }
@@ -42,18 +38,15 @@
   margin: 5px;
 }
 
-.player-container-full {
+.player-container-full:not(img) {
   height: 100%;
   position: fixed;
-  background: url("src\assets\app-data\smoke.gif");
-  background-size: cover;
-  background-position: center;
   width: 100%;
-  opacity: 0.95;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  background: rgba(27, 39, 54, 0.9);
 }
 
 .name-song-full {
@@ -102,6 +95,7 @@
 
 .thumb {
   text-align: center;
+  opacity: 1;
 }
 /* MEDIA QUERIES*/
 
