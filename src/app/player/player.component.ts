@@ -4,6 +4,8 @@ import { BraniService } from '../services/brani.service';
 import { RicercaBraniResponse } from '../models/brano.model';
 import { trigger, style, transition, animate } from '@angular/animations';
 import { UtilsService } from '../services/utils.service';
+import { BehaviorSubject, timer } from 'rxjs';
+import { repeat, switchMap, takeUntil, takeWhile } from 'rxjs/operators';
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
@@ -29,6 +31,12 @@ export class PlayerComponent implements OnInit {
   attuale: string;
   durata: string;
   timeChanged: number;
+  private playerSubject = new BehaviorSubject<boolean>(false);
+  player$ = timer(0, 1000).pipe(
+    switchMap((_) => this.playerSubject.asObservable()),
+    takeWhile((_) => this.isPlaying),
+    repeat()
+  );
   constructor(public braniService: BraniService, private utils: UtilsService) {}
 
   get howl(): Howl {
@@ -129,8 +137,8 @@ export class PlayerComponent implements OnInit {
     eventEmitted.event.preventDefault();
     eventEmitted.event.stopPropagation();
     const type = eventEmitted.event.type;
-    this.timeChanged = this.calculateTime(eventEmitted);
     if (type !== 'touchmove' && type !== 'mousemove') {
+      this.timeChanged = this.calculateTime(eventEmitted);
       this.howl.seek(this.timeChanged);
     }
   }
@@ -165,23 +173,23 @@ export class PlayerComponent implements OnInit {
     this.durata = '0:00';
     this.durata = this.braniService.durata;
 
-    setInterval(() => {
-      this.update();
-      clearInterval();
-    }, 1000);
+    this.player$.subscribe((isPlaying) => {
+      if (isPlaying) {
+        this.update();
+      }
+    });
+    this.playerSubject.next(true);
   }
 
   /**
    * Aggiorna il tempo man mano che viene richiamata
    */
   private update() {
-    if (this.isPlaying) {
-      const seek = this.howl.seek() as number;
-      this.tempo = (seek / this.howl.duration()) * 100;
-      const minutes = Math.floor(seek / 60);
-      const seconds = Math.floor(seek % 60);
-      this.attuale = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-    }
+    const seek = this.howl.seek() as number;
+    this.tempo = (seek / this.howl.duration()) * 100;
+    const minutes = Math.floor(seek / 60);
+    const seconds = Math.floor(seek % 60);
+    this.attuale = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
   }
 
   /**

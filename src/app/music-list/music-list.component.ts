@@ -12,10 +12,6 @@ export class MusicListComponent {
     return this.braniService.isPlaying;
   }
 
-  get mostraPlayer() {
-    return this.braniService.mostraPlayer;
-  }
-
   get enabledField() {
     return this.braniService.enabledField;
   }
@@ -28,6 +24,10 @@ export class MusicListComponent {
    */
   onSelection(brano: RicercaBraniResponse) {
     this.braniService.riproduci(brano);
+    this.braniService.risultatiRicerca.forEach((brano) => {
+      brano.selected = false;
+    });
+    brano.selected = true;
   }
 
   /**

@@ -76,7 +76,6 @@ export class BraniService {
           this.durata = this.calcolaDurata();
           this.braniSubject.next(brano);
           this.mostraPlayer = true;
-          this.applySelectedClass(brano.id);
         });
       } else {
         this.howl.once('load', () => {
@@ -86,21 +85,6 @@ export class BraniService {
         });
       }
     });
-  }
-
-  /**
-   * Applica la classe selected al brano selezionato
-   * @param id id del brano selezionato su cui applicare la classe
-   */
-  private applySelectedClass(id: string) {
-    const elements = document.querySelectorAll('.selected');
-    const element = document.querySelector(`#brano${id}`);
-    if (elements && element) {
-      elements.forEach((element) => {
-        element.classList.remove('selected');
-      });
-      element.classList.add('selected');
-    }
   }
 
   /**
