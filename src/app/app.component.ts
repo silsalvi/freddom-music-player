@@ -13,7 +13,9 @@ export class AppComponent implements OnInit {
     private primeNgConfig: PrimeNGConfig,
     private braniService: BraniService
   ) {}
-
+  get mostraPlayer() {
+    return this.braniService.mostraPlayer;
+  }
   ngOnInit() {
     this.primeNgConfig.ripple = true;
     const brano = JSON.parse(localStorage.getItem('brano'));
