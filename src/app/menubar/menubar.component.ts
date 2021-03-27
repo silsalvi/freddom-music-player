@@ -1,17 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BraniService } from '../services/brani.service';
 import { RicercaBrani } from '../models/brano.model';
 import { AdvancedSearch } from '../models/advanced-search.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { loadingProps } from '../config/loading-congif';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-menubar',
   templateUrl: './menubar.component.html',
   styleUrls: ['./menubar.component.css'],
 })
-export class MenubarComponent implements OnInit {
+export class MenubarComponent implements OnInit, AfterViewInit {
   //valore della ricerca
   ricerca: string = '';
   private timeout: number = 0;
@@ -31,6 +32,13 @@ export class MenubarComponent implements OnInit {
     private formBuilder: FormBuilder,
     private ngxSpinner: NgxSpinnerService
   ) {}
+  ngAfterViewInit(): void {
+    fromEvent(document, 'keyup').subscribe((event: KeyboardEvent) => {
+      if (event.key == 'Enter' && this.showDialog) {
+        this.onAdvancedSearch();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -96,6 +104,7 @@ export class MenubarComponent implements OnInit {
    */
   openModal() {
     this.showDialog = true;
+    this.isValid = true;
   }
 
   /**
