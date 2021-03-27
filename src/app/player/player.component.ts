@@ -5,7 +5,7 @@ import { RicercaBraniResponse } from '../models/brano.model';
 import { trigger, style, transition, animate } from '@angular/animations';
 import { UtilsService } from '../services/utils.service';
 import { BehaviorSubject, timer } from 'rxjs';
-import { repeat, switchMap, takeUntil, takeWhile } from 'rxjs/operators';
+import { repeat, switchMap, takeWhile } from 'rxjs/operators';
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
@@ -31,6 +31,7 @@ export class PlayerComponent implements OnInit {
   attuale: string;
   durata: string;
   timeChanged: number;
+  repeatSong: boolean;
   private playerSubject = new BehaviorSubject<boolean>(false);
   player$ = timer(0, 1000).pipe(
     switchMap((_) => this.playerSubject.asObservable()),
@@ -170,7 +171,6 @@ export class PlayerComponent implements OnInit {
   startPlay() {
     this.tempo = 0;
     this.attuale = '0:00';
-    this.durata = '0:00';
     this.durata = this.braniService.durata;
 
     this.player$.subscribe((isPlaying) => {
@@ -178,6 +178,7 @@ export class PlayerComponent implements OnInit {
         this.update();
       }
     });
+
     this.playerSubject.next(true);
   }
 
@@ -186,10 +187,14 @@ export class PlayerComponent implements OnInit {
    */
   private update() {
     const seek = this.howl.seek() as number;
-    this.tempo = (seek / this.howl.duration()) * 100;
-    const minutes = Math.floor(seek / 60);
-    const seconds = Math.floor(seek % 60);
-    this.attuale = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+    if (typeof seek === 'number') {
+      this.tempo = (seek / this.howl.duration()) * 100;
+      const minutes = Math.floor(seek / 60);
+      const seconds = Math.floor(seek % 60);
+      this.attuale = `${minutes}:${
+        seconds < 10 ? '0' + (seconds + 1) : seconds + 1
+      }`;
+    }
   }
 
   /**
@@ -197,5 +202,20 @@ export class PlayerComponent implements OnInit {
    */
   onSwitchMode() {
     this.fullMode = !this.fullMode;
+  }
+
+  /**
+   * Attiva o disattiva la ripetizione del brano corrente
+   */
+  repeat() {
+    this.repeatSong = !this.repeatSong;
+    if (this.repeatSong) {
+      this.howl.on('end', () => {
+        this.howl.stop();
+        this.howl.play();
+      });
+    } else {
+      this.howl.off('end');
+    }
   }
 }

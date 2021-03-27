@@ -97,6 +97,11 @@
   text-align: center;
   opacity: 1;
 }
+
+.align-left {
+  float: left;
+}
+
 /* MEDIA QUERIES*/
 
 @media only screen and (max-width: 600px) {

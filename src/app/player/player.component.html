@@ -38,21 +38,36 @@
     </div>
 
     <div class="player-controls-minimize mt-3">
-      <p-button
-        [icon]="'pi pi-backward'"
-        [styleClass]="'p-button-rounded p-button-text'"
-        (onClick)="onBackwordClick($event)"
-      ></p-button>
-      <p-button
-        [icon]="isPlaying ? 'pi pi-pause' : 'pi pi-play'"
-        [styleClass]="'p-button-rounded p-button-text'"
-        (onClick)="onPlayClick($event)"
-      ></p-button>
-      <p-button
-        [icon]="'pi pi-forward'"
-        [styleClass]="'p-button-rounded p-button-text'"
-        (onClick)="onForwardClick($event)"
-      ></p-button>
+      <div class="container">
+        <div class="row">
+          <div class="col-4"></div>
+          <div class="col-4">
+            <p-button
+              [icon]="'pi pi-backward'"
+              [styleClass]="'p-button-rounded p-button-text'"
+              (onClick)="onBackwordClick($event)"
+            ></p-button>
+            <p-button
+              [icon]="isPlaying ? 'pi pi-pause' : 'pi pi-play'"
+              [styleClass]="'p-button-rounded p-button-text'"
+              (onClick)="onPlayClick($event)"
+            ></p-button>
+            <p-button
+              [icon]="'pi pi-forward'"
+              [styleClass]="'p-button-rounded p-button-text'"
+              (onClick)="onForwardClick($event)"
+            ></p-button>
+          </div>
+          <div class="col-4">
+            <p-button
+              [icon]="'pi pi-replay'"
+              [styleClass]="'p-button-rounded p-button-text align-left'"
+              (onClick)="repeat()"
+              [badge]="repeatSong ? '1' : ''"
+            ></p-button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </ng-template>
@@ -92,21 +107,38 @@
       <div class="time-duration">{{ durata }}</div>
     </div>
     <div class="player-controls-full">
-      <p-button
-        [icon]="'pi pi-backward'"
-        [styleClass]="'p-button-rounded p-button-text p-button-lg'"
-        (onClick)="onBackwordClick($event)"
-      ></p-button>
-      <p-button
-        [icon]="isPlaying ? 'pi pi-pause' : 'pi pi-play'"
-        [styleClass]="'p-button-rounded p-button-text p-button-lg'"
-        (onClick)="onPlayClick($event)"
-      ></p-button>
-      <p-button
-        [icon]="'pi pi-forward'"
-        [styleClass]="'p-button-rounded p-button-text p-button-lg'"
-        (onClick)="onForwardClick($event)"
-      ></p-button>
+      <div class="container">
+        <div class="row">
+          <div class="col-4"></div>
+          <div class="col-4 pr-0">
+            <p-button
+              [icon]="'pi pi-backward'"
+              [styleClass]="'p-button-rounded p-button-text p-button-lg'"
+              (onClick)="onBackwordClick($event)"
+            ></p-button>
+            <p-button
+              [icon]="isPlaying ? 'pi pi-pause' : 'pi pi-play'"
+              [styleClass]="'p-button-rounded p-button-text p-button-lg'"
+              (onClick)="onPlayClick($event)"
+            ></p-button>
+            <p-button
+              [icon]="'pi pi-forward'"
+              [styleClass]="'p-button-rounded p-button-text p-button-lg'"
+              (onClick)="onForwardClick($event)"
+            ></p-button>
+          </div>
+          <div class="col-4">
+            <p-button
+              [icon]="'pi pi-replay'"
+              [styleClass]="
+                'p-button-rounded p-button-text p-button-lg align-left'
+              "
+              (onClick)="repeat()"
+              [badge]="repeatSong ? '1' : ''"
+            ></p-button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </ng-template>
