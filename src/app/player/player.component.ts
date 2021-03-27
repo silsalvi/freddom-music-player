@@ -5,7 +5,7 @@ import { RicercaBraniResponse } from '../models/brano.model';
 import { trigger, style, transition, animate } from '@angular/animations';
 import { UtilsService } from '../services/utils.service';
 import { BehaviorSubject, timer } from 'rxjs';
-import { repeat, switchMap, takeUntil, takeWhile } from 'rxjs/operators';
+import { repeat, switchMap, takeWhile } from 'rxjs/operators';
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
@@ -171,7 +171,6 @@ export class PlayerComponent implements OnInit {
   startPlay() {
     this.tempo = 0;
     this.attuale = '0:00';
-    this.durata = '0:00';
     this.durata = this.braniService.durata;
 
     this.player$.subscribe((isPlaying) => {
@@ -179,6 +178,7 @@ export class PlayerComponent implements OnInit {
         this.update();
       }
     });
+
     this.playerSubject.next(true);
   }
 
