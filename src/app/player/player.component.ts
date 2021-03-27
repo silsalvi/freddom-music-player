@@ -31,6 +31,7 @@ export class PlayerComponent implements OnInit {
   attuale: string;
   durata: string;
   timeChanged: number;
+  repeatSong: boolean;
   private playerSubject = new BehaviorSubject<boolean>(false);
   player$ = timer(0, 1000).pipe(
     switchMap((_) => this.playerSubject.asObservable()),
@@ -186,10 +187,14 @@ export class PlayerComponent implements OnInit {
    */
   private update() {
     const seek = this.howl.seek() as number;
-    this.tempo = (seek / this.howl.duration()) * 100;
-    const minutes = Math.floor(seek / 60);
-    const seconds = Math.floor(seek % 60);
-    this.attuale = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+    if (typeof seek === 'number') {
+      this.tempo = (seek / this.howl.duration()) * 100;
+      const minutes = Math.floor(seek / 60);
+      const seconds = Math.floor(seek % 60);
+      this.attuale = `${minutes}:${
+        seconds < 10 ? '0' + (seconds + 1) : seconds + 1
+      }`;
+    }
   }
 
   /**
@@ -197,5 +202,20 @@ export class PlayerComponent implements OnInit {
    */
   onSwitchMode() {
     this.fullMode = !this.fullMode;
+  }
+
+  /**
+   * Attiva o disattiva la ripetizione del brano corrente
+   */
+  repeat() {
+    this.repeatSong = !this.repeatSong;
+    if (this.repeatSong) {
+      this.howl.on('end', () => {
+        this.howl.stop();
+        this.howl.play();
+      });
+    } else {
+      this.howl.off('end');
+    }
   }
 }
