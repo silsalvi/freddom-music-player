@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiFreedom: 'https://freedom-cloud-backend.herokuapp.com/api',
+  apiFreedom: 'http://localhost:5000/api',
 };
 
 /*
