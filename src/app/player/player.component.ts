@@ -5,6 +5,7 @@ import { trigger, style, transition, animate } from '@angular/animations';
 import { UtilsService } from '../services/utils.service';
 import { BehaviorSubject, timer } from 'rxjs';
 import { repeat, switchMap, takeWhile } from 'rxjs/operators';
+
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
@@ -30,7 +31,7 @@ export class PlayerComponent implements OnInit {
   attuale: string;
   durata: string;
   timeChanged: number;
-  repeatSong: boolean;
+  repeatSong: boolean = false;
   isPlaying: boolean = false;
   private playerSubject = new BehaviorSubject<boolean>(this.isPlaying);
   player$ = timer(0, 1000).pipe(
@@ -42,7 +43,10 @@ export class PlayerComponent implements OnInit {
   ngOnInit(): void {
     this.braniService.brani$.subscribe((brano) => {
       this.branoSelezionato = brano;
-      this.startPlay();
+      this.tempo = 0;
+      this.attuale = '0:00';
+      this.durata = this.braniService.durata;
+      this.repeatSong = false;
       if (this.braniService.isFirstPlay) {
         const attuale = localStorage.getItem('minutoCorrente');
         if (attuale && attuale !== '0:00') {
@@ -52,6 +56,8 @@ export class PlayerComponent implements OnInit {
           this.tempo = (actual / this.braniService.howl.duration()) * 100;
           this.braniService.isFirstPlay = false;
         }
+      } else {
+        this.startPlay();
       }
     });
 
@@ -172,10 +178,6 @@ export class PlayerComponent implements OnInit {
    * Avvia lo slider al caricamento del brano selezionato
    */
   startPlay() {
-    this.tempo = 0;
-    this.attuale = '0:00';
-    this.durata = this.braniService.durata;
-    this.repeatSong = false;
     this.isPlaying = this.braniService.howl.playing();
     this.playerSubject.next(true);
   }
