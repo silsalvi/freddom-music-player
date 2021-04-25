@@ -21,7 +21,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <form class="form-inline ml-auto">
       <input
-        class="form-control blue mt-1 mr-2"
+        class="form-control blue"
         type="search"
         placeholder="Cerca un brano..."
         aria-label="Search"
@@ -29,12 +29,14 @@
         (input)="onSearch()"
         [(ngModel)]="ricerca"
         [ngModelOptions]="{ standalone: true }"
+        id="inputSearch"
       />
       <button
-        class="btn btn-dark mt-1"
+        class="btn btn-dark"
         type="button"
         pRipple
         (click)="openModal()"
+        id="search"
       >
         <span class="pi pi-search"></span>
         Ricerca Avanzata
@@ -51,7 +53,7 @@
   [draggable]="false"
 >
   <p-header>Ricerca Avanzata</p-header>
-  <p class="text-left" style="font-size: smaller">
+  <p class="text-left">
     Effettua una ricerca avanzata. E' possibile cercare solo per un campo alla
     volta. Selezionando uno dei campi, gli altri si disabiliteranno
     automaticamente.
@@ -204,6 +206,7 @@
           class="btn btn-dark"
           pRipple
           (click)="form.reset(); isValid = true"
+          id="clean"
         >
           <span class="fas fa-broom"></span>
           Pulisci
@@ -213,6 +216,7 @@
           pRipple
           (click)="onAdvancedSearch()"
           [disabled]="form.invalid"
+          id="advanced"
         >
           <span class="fas fa-search-plus"></span>
           Effettua Ricerca Avanzata

@@ -3,17 +3,26 @@
   height: 100%;
 }
 
-.full {
-  width: 100%;
-}
-
 .blue {
   background: #1b2736;
 }
 
-@media only screen and (max-width: 400px) {
-  button.btn {
-    margin: 1px;
+#inputSearch,
+#advanced,
+#clean,
+#search {
+  margin-top: 5px;
+}
+
+#inputSearch {
+  margin-right: 5px;
+}
+@media only screen and (max-width: 720px) {
+  #inputSearch,
+  #advanced,
+  #clean,
+  #search {
+    margin-right: 0;
     width: 100%;
   }
 }

@@ -35,6 +35,8 @@
     [alwaysShowPaginator]="false"
     [rows]="10"
     [paginatorPosition]="'top'"
+    [(first)]="first"
+    (onPage)="onPage($event)"
   >
     <ng-template let-brano pTemplate="listItem">
       <div
@@ -71,6 +73,8 @@
     [alwaysShowPaginator]="false"
     [rows]="10"
     [paginatorPosition]="'top'"
+    [(first)]="first"
+    (onPage)="onPage($event)"
   >
     <ng-template let-playlist pTemplate="listItem">
       <div
@@ -106,6 +110,8 @@
     [alwaysShowPaginator]="false"
     [rows]="10"
     [paginatorPosition]="'top'"
+    [(first)]="first"
+    (onPage)="onPage($event)"
   >
     <ng-template let-album pTemplate="listItem">
       <div
@@ -141,6 +147,8 @@
     [alwaysShowPaginator]="false"
     [rows]="10"
     [paginatorPosition]="'top'"
+    [(first)]="first"
+    (onPage)="onPage($event)"
   >
     <ng-template let-artista pTemplate="listItem">
       <div

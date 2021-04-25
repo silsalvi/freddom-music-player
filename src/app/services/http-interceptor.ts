@@ -10,11 +10,15 @@ import { catchError, finalize } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { HttpError } from '../models/http-error-response.model';
+import { ModalComponent } from '../modal/modal.component';
+import { DialogService } from 'primeng';
 
 @Injectable()
 export class FreedomInterceptor implements HttpInterceptor {
-  constructor(private spinner: NgxSpinnerService) {}
+  constructor(
+    private spinner: NgxSpinnerService,
+    private dialogService: DialogService
+  ) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -28,9 +32,13 @@ export class FreedomInterceptor implements HttpInterceptor {
         } else if (httpError.error instanceof Blob) {
           errorMsg = 'Il video non è disponibile';
         } else {
-          errorMsg = `Error Code: ${httpError.status},  Message: `;
+          errorMsg = `Codice Errore: ${httpError.status}<br /><br />Messaggio: ${httpError.message}`;
         }
-
+        this.dialogService.open(ModalComponent, {
+          data: { message: errorMsg },
+          header: 'Avviso',
+          style: { width: '70vh' },
+        });
         return throwError(errorMsg);
       }),
       finalize(() => {

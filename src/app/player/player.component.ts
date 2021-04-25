@@ -1,4 +1,3 @@
-import { Howl } from 'howler';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BraniService } from '../services/brani.service';
 import { RicercaBraniResponse } from '../models/brano.model';
@@ -32,20 +31,14 @@ export class PlayerComponent implements OnInit {
   durata: string;
   timeChanged: number;
   repeatSong: boolean;
-  private playerSubject = new BehaviorSubject<boolean>(false);
+  isPlaying: boolean = false;
+  private playerSubject = new BehaviorSubject<boolean>(this.isPlaying);
   player$ = timer(0, 1000).pipe(
     switchMap((_) => this.playerSubject.asObservable()),
-    takeWhile((_) => this.isPlaying),
+    takeWhile((_) => this.playerSubject.value),
     repeat()
   );
   constructor(public braniService: BraniService, private utils: UtilsService) {}
-
-  get howl(): Howl {
-    return this.braniService.howl;
-  }
-  get isPlaying(): boolean {
-    return this.braniService.isPlaying;
-  }
   ngOnInit(): void {
     this.braniService.brani$.subscribe((brano) => {
       this.branoSelezionato = brano;
@@ -54,24 +47,31 @@ export class PlayerComponent implements OnInit {
         const attuale = localStorage.getItem('minutoCorrente');
         if (attuale && attuale !== '0:00') {
           const actual = this.utils.convertDurationToSeconds(attuale);
-          this.howl.seek(actual);
+          this.braniService.howl.seek(actual);
           this.attuale = attuale;
-          this.tempo = (actual / this.howl.duration()) * 100;
+          this.tempo = (actual / this.braniService.howl.duration()) * 100;
           this.braniService.isFirstPlay = false;
         }
       }
     });
 
+    this.player$.subscribe((isPlaying) => {
+      if (isPlaying) {
+        this.update();
+      }
+    });
+
     window.addEventListener('beforeunload', () => {
-      localStorage.setItem('minutoCorrente', this.attuale);
-      localStorage.setItem(
-        'brano',
-        JSON.stringify(this.braniService.branoSelezionato)
-      );
-      localStorage.setItem(
-        'risultati',
-        JSON.stringify(this.braniService.listaBrani)
-      );
+      if (this.branoSelezionato) {
+        localStorage.setItem('minutoCorrente', this.attuale);
+        localStorage.setItem('idVideoBrano', this.branoSelezionato.id);
+      }
+      if (this.braniService.listaBrani.length > 0) {
+        localStorage.setItem(
+          'risultati',
+          JSON.stringify(this.braniService.listaBrani)
+        );
+      }
     });
   }
 
@@ -81,10 +81,13 @@ export class PlayerComponent implements OnInit {
    */
   onPlayClick() {
     if (this.isPlaying) {
-      this.howl.pause();
+      this.braniService.howl.pause();
+      this.isPlaying = false;
     } else {
-      this.howl.play();
+      this.braniService.howl.play();
+      this.isPlaying = true;
     }
+    this.playerSubject.next(this.isPlaying);
   }
 
   /**
@@ -140,7 +143,7 @@ export class PlayerComponent implements OnInit {
     const type = eventEmitted.event.type;
     if (type !== 'touchmove' && type !== 'mousemove') {
       this.timeChanged = this.calculateTime(eventEmitted);
-      this.howl.seek(this.timeChanged);
+      this.braniService.howl.seek(this.timeChanged);
     }
   }
 
@@ -153,14 +156,14 @@ export class PlayerComponent implements OnInit {
     eventEmitted.originalEvent.preventDefault();
     eventEmitted.originalEvent.stopPropagation();
     this.timeChanged = this.calculateTime(eventEmitted);
-    this.howl.seek(this.timeChanged);
+    this.braniService.howl.seek(this.timeChanged);
   }
 
   /**
    * Calcola il tempo verso cui spostarsi.
    */
   private calculateTime(eventEmitted: any) {
-    const song_duration = this.howl.duration();
+    const song_duration = this.braniService.howl.duration();
     const tempo_scelto = eventEmitted.value;
     return song_duration * (tempo_scelto / 100);
   }
@@ -172,13 +175,8 @@ export class PlayerComponent implements OnInit {
     this.tempo = 0;
     this.attuale = '0:00';
     this.durata = this.braniService.durata;
-
-    this.player$.subscribe((isPlaying) => {
-      if (isPlaying) {
-        this.update();
-      }
-    });
-
+    this.repeatSong = false;
+    this.isPlaying = this.braniService.howl.playing();
     this.playerSubject.next(true);
   }
 
@@ -186,14 +184,12 @@ export class PlayerComponent implements OnInit {
    * Aggiorna il tempo man mano che viene richiamata
    */
   private update() {
-    const seek = this.howl.seek() as number;
+    const seek = this.braniService.howl.seek() as number;
     if (typeof seek === 'number') {
-      this.tempo = (seek / this.howl.duration()) * 100;
+      this.tempo = (seek / this.braniService.howl.duration()) * 100;
       const minutes = Math.floor(seek / 60);
       const seconds = Math.floor(seek % 60);
-      this.attuale = `${minutes}:${
-        seconds < 10 ? '0' + (seconds + 1) : seconds + 1
-      }`;
+      this.attuale = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
     }
   }
 
@@ -210,12 +206,12 @@ export class PlayerComponent implements OnInit {
   repeat() {
     this.repeatSong = !this.repeatSong;
     if (this.repeatSong) {
-      this.howl.on('end', () => {
-        this.howl.stop();
-        this.howl.play();
+      this.braniService.howl.on('end', () => {
+        this.braniService.howl.stop();
+        this.braniService.howl.play();
       });
     } else {
-      this.howl.off('end');
+      this.braniService.howl.off('end');
     }
   }
 }

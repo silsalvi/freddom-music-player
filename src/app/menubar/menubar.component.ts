@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { BraniService } from '../services/brani.service';
 import { RicercaBrani } from '../models/brano.model';
 import { AdvancedSearch } from '../models/advanced-search.model';
@@ -65,10 +65,8 @@ export class MenubarComponent implements OnInit, AfterViewInit {
           this.braniService.risultatiRicerca = brani;
           this.braniService.listaBrani = [...brani];
         });
-      } else {
-        this.braniService.risultatiRicerca = [];
       }
-    }, 800);
+    }, 500);
   }
 
   /**

@@ -12,6 +12,6 @@ export class UtilsService {
    */
   convertDurationToSeconds(duration: string): number {
     const [minutes, seconds] = duration.split(':');
-    return Number(minutes) * 60 + (Number(seconds) - 1);
+    return Number(minutes) * 60 + Number(seconds);
   }
 }

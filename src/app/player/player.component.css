@@ -7,7 +7,7 @@
   padding: 5px;
 }
 
-.player-container-minimize {
+.player-container-minimize-more-res {
   bottom: 0;
   position: sticky;
   background: #1b2736;
@@ -16,7 +16,7 @@
   text-align: center;
 }
 
-.player-container-minimize-no-res {
+.player-container-minimize {
   bottom: 0;
   position: fixed;
   width: 100%;
