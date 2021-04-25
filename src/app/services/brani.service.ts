@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { RicercaBrani, RicercaBraniResponse } from '../models/brano.model';
-import { BehaviorSubject, throwError } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Howl } from 'howler';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { loadingProps } from 'src/app/config/loading-congif';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { ModalComponent } from '../modal/modal.component';
-import { catchError } from 'rxjs/operators';
-import { DialogService } from 'primeng';
 import { AdvancedSearch } from '../models/advanced-search.model';
 
 const BASE_API_URL = environment.apiFreedom;
@@ -33,11 +30,7 @@ export class BraniService {
     return this.howl.playing();
   }
 
-  constructor(
-    private spinner: NgxSpinnerService,
-    private http: HttpClient,
-    private dialogService: DialogService
-  ) {}
+  constructor(private spinner: NgxSpinnerService, private http: HttpClient) {}
 
   /**
    * Riproduce un brano passato in input
@@ -126,21 +119,10 @@ export class BraniService {
    * ottenuto a partire dalla conversione effettuata lato backend
    */
   getBrano(brano: RicercaBraniResponse) {
-    return this.http
-      .get(BASE_API_URL + '/video/' + brano.id, {
-        responseType: 'blob' as 'json',
-        observe: 'body',
-      })
-      .pipe(
-        catchError((err) => {
-          this.dialogService.open(ModalComponent, {
-            data: { message: err },
-            header: 'Avviso',
-            style: { width: '70vh' },
-          });
-          return throwError(err);
-        })
-      );
+    return this.http.get(BASE_API_URL + '/video/' + brano.id, {
+      responseType: 'blob' as 'json',
+      observe: 'body',
+    });
   }
 
   /**

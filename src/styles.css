@@ -1,12 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@500;700&display=swap");
 html,
 body {
   margin: 0;
   background: #1f2d40;
 }
 * {
-  font-family: "Work Sans", sans-serif;
+  font-family: "Jost", sans-serif;
 }
 .spinner-text {
   font-size: 15px;
@@ -22,22 +22,18 @@ body {
   animation: pulse 1s infinite;
 }
 
-.pulse:hover {
-  animation: none;
-}
-
 @keyframes pulse {
   0% {
-    -moz-box-shadow: 0 0 0 0 #243857;
-    box-shadow: 0 0 0 0 #243857;
+    -moz-box-shadow: 0 0 0 0 #696f75;
+    box-shadow: 0 0 0 0 #696f75;
   }
   70% {
     -moz-box-shadow: 0 0 0 30px rgba(204, 169, 44, 0);
     box-shadow: 0 0 0 30px rgba(204, 169, 44, 0);
   }
   100% {
-    -moz-box-shadow: 0 0 0 0 #243857;
-    box-shadow: 0 0 0 0 #243857;
+    -moz-box-shadow: 0 0 0 0 #696f75;
+    box-shadow: 0 0 0 0 #696f75;
   }
 }
 
@@ -54,7 +50,7 @@ input[type="search"]:disabled::placeholder {
 }
 
 .p-inline-message.p-inline-message-info {
-  background: #343a40 !important;
+  background: #696f75 !important;
   color: white !important;
   width: 100%;
   border: 1px solid #a1a9b1 !important;

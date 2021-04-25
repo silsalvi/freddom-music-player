@@ -7,9 +7,9 @@
   <div
     id="player-minimize"
     [class]="
-      braniService.risultatiRicerca.length > 0
-        ? 'player-container-minimize'
-        : 'player-container-minimize-no-res'
+      braniService.risultatiRicerca.length > 5
+        ? 'player-container-minimize-more-res'
+        : 'player-container-minimize'
     "
   >
     <div class="name-song-minimize">
@@ -40,8 +40,8 @@
     <div class="player-controls-minimize mt-3">
       <div class="container">
         <div class="row">
-          <div class="col-4"></div>
-          <div class="col-4">
+          <div class="col-3"></div>
+          <div class="col-6 p-0">
             <p-button
               [icon]="'pi pi-backward'"
               [styleClass]="'p-button-rounded p-button-text'"
@@ -58,7 +58,7 @@
               (onClick)="onForwardClick($event)"
             ></p-button>
           </div>
-          <div class="col-4">
+          <div class="col-3">
             <p-button
               [icon]="'pi pi-replay'"
               [styleClass]="'p-button-rounded p-button-text align-left'"
@@ -109,8 +109,8 @@
     <div class="player-controls-full">
       <div class="container">
         <div class="row">
-          <div class="col-4"></div>
-          <div class="col-4 pr-0">
+          <div class="col-3"></div>
+          <div class="col-6 p-0">
             <p-button
               [icon]="'pi pi-backward'"
               [styleClass]="'p-button-rounded p-button-text p-button-lg'"
@@ -127,7 +127,7 @@
               (onClick)="onForwardClick($event)"
             ></p-button>
           </div>
-          <div class="col-4">
+          <div class="col-3">
             <p-button
               [icon]="'pi pi-replay'"
               [styleClass]="

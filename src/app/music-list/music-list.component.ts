@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RicercaBraniResponse } from '../models/brano.model';
 import { BraniService } from '../services/brani.service';
 
@@ -7,7 +7,7 @@ import { BraniService } from '../services/brani.service';
   templateUrl: './music-list.component.html',
   styleUrls: ['./music-list.component.css'],
 })
-export class MusicListComponent {
+export class MusicListComponent implements OnInit {
   get isPlaying() {
     return this.braniService.isPlaying;
   }
@@ -16,7 +16,14 @@ export class MusicListComponent {
     return this.braniService.enabledField;
   }
 
+  first = 0;
   constructor(public braniService: BraniService) {}
+  ngOnInit() {
+    const firstFromLocal = +localStorage.getItem('first');
+    if (firstFromLocal && !isNaN(firstFromLocal)) {
+      this.first = firstFromLocal;
+    }
+  }
 
   /**
    * Handler per l'evento di selezione di un brano.
@@ -24,8 +31,8 @@ export class MusicListComponent {
    */
   onSelection(brano: RicercaBraniResponse) {
     this.braniService.riproduci(brano);
-    this.braniService.risultatiRicerca.forEach((brano) => {
-      brano.selected = false;
+    this.braniService.risultatiRicerca.forEach((song) => {
+      song.selected = false;
     });
     brano.selected = true;
   }
@@ -37,8 +44,7 @@ export class MusicListComponent {
    */
   onPlaylistClick(playlist: RicercaBraniResponse) {
     this.braniService.getSongsByPlaylist(playlist).subscribe((res) => {
-      this.braniService.risultatiRicerca = res;
-      this.braniService.listaBrani = [...res];
+      this.updateSearch(res);
       this.braniService.enabledField = 'brano';
     });
   }
@@ -50,8 +56,7 @@ export class MusicListComponent {
    */
   onAlbumClick(album: RicercaBraniResponse) {
     this.braniService.getSongsByAlbum(album).subscribe((res) => {
-      this.braniService.risultatiRicerca = res;
-      this.braniService.listaBrani = [...res];
+      this.updateSearch(res);
       this.braniService.enabledField = 'brano';
     });
   }
@@ -63,9 +68,24 @@ export class MusicListComponent {
    */
   onArtistaClick(artista: RicercaBraniResponse) {
     this.braniService.getSongsByArtist(artista).subscribe((res) => {
-      this.braniService.risultatiRicerca = res;
-      this.braniService.listaBrani = [...res];
+      this.updateSearch(res);
       this.braniService.enabledField = 'brano';
     });
+  }
+
+  /**
+   * Aggiorna le ricerche
+   */
+  updateSearch(res: RicercaBraniResponse[]) {
+    this.braniService.risultatiRicerca = res;
+    this.braniService.listaBrani = [...res];
+  }
+
+  /**
+   * Aggiorna l'attributo first ad ogni cambio di pagina
+   */
+  onPage(event: any) {
+    this.first = event.first;
+    localStorage.setItem('first', String(this.first));
   }
 }
