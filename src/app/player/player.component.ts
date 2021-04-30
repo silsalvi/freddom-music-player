@@ -34,6 +34,7 @@ export class PlayerComponent implements OnInit {
   repeatSong: boolean = false;
   isPlaying: boolean = false;
   private playerSubject = new BehaviorSubject<boolean>(this.isPlaying);
+  // Player osbervable
   player$ = timer(0, 1000).pipe(
     switchMap((_) => this.playerSubject.asObservable()),
     takeWhile((_) => this.playerSubject.value),
