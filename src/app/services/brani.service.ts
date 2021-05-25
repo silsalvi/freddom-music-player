@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
-import { RicercaBrani, RicercaBraniResponse } from '../models/brano.model';
-import { BehaviorSubject } from 'rxjs';
+import {
+  RicercaBrani,
+  RicercaBraniResponse,
+  TipiRicerca,
+} from '../models/brano.model';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Howl } from 'howler';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { loadingProps } from 'src/app/config/loading-congif';
@@ -21,8 +25,8 @@ export class BraniService {
   durata: string;
   risultatiRicerca: RicercaBraniResponse[] = [];
   listaBrani: RicercaBraniResponse[] = [];
-  isFirstPlay: boolean = true;
-  enabledField: string;
+  isRetrivedFromLocal: boolean = false;
+  updateEnabledField = new BehaviorSubject<string>(TipiRicerca.BRANO);
   /**
    * Ritorna true se c'è già un brano in riproduzione
    */

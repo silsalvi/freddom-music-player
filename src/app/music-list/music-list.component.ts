@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RicercaBraniResponse } from '../models/brano.model';
+import { Observable } from 'rxjs';
+import { RicercaBraniResponse, TipiRicerca } from '../models/brano.model';
 import { BraniService } from '../services/brani.service';
 
 @Component({
@@ -12,17 +13,18 @@ export class MusicListComponent implements OnInit {
     return this.braniService.isPlaying;
   }
 
-  get enabledField() {
-    return this.braniService.enabledField;
-  }
-
   first = 0;
+  enabledField$: Observable<string>;
+  tipiRicerca = TipiRicerca;
+
   constructor(public braniService: BraniService) {}
   ngOnInit() {
     const firstFromLocal = +localStorage.getItem('first');
     if (firstFromLocal && !isNaN(firstFromLocal)) {
       this.first = firstFromLocal;
     }
+
+    this.enabledField$ = this.braniService.updateEnabledField.asObservable();
   }
 
   /**
@@ -45,7 +47,6 @@ export class MusicListComponent implements OnInit {
   onPlaylistClick(playlist: RicercaBraniResponse) {
     this.braniService.getSongsByPlaylist(playlist).subscribe((res) => {
       this.updateSearch(res);
-      this.braniService.enabledField = 'brano';
     });
   }
 
@@ -57,7 +58,6 @@ export class MusicListComponent implements OnInit {
   onAlbumClick(album: RicercaBraniResponse) {
     this.braniService.getSongsByAlbum(album).subscribe((res) => {
       this.updateSearch(res);
-      this.braniService.enabledField = 'brano';
     });
   }
 
@@ -69,7 +69,6 @@ export class MusicListComponent implements OnInit {
   onArtistaClick(artista: RicercaBraniResponse) {
     this.braniService.getSongsByArtist(artista).subscribe((res) => {
       this.updateSearch(res);
-      this.braniService.enabledField = 'brano';
     });
   }
 
@@ -79,6 +78,7 @@ export class MusicListComponent implements OnInit {
   updateSearch(res: RicercaBraniResponse[]) {
     this.braniService.risultatiRicerca = res;
     this.braniService.listaBrani = [...res];
+    this.braniService.updateEnabledField.next(TipiRicerca.BRANO);
   }
 
   /**

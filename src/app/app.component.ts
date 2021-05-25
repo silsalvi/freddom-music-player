@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
       this.braniService.listaBrani = [...risultati];
     }
     if (brano) {
+      this.braniService.isRetrivedFromLocal = true;
       this.braniService.riproduci(brano, false);
     }
   }
