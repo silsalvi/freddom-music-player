@@ -9,3 +9,11 @@ export interface RicercaBraniResponse {
   totalTrack: number;
   selected: boolean;
 }
+
+export enum TipiRicerca {
+  BRANO = 'brano',
+  VIDEO = 'video',
+  PLAYLIST = 'playlist',
+  ALBUM = 'album',
+  ARTISTA = 'artista',
+}

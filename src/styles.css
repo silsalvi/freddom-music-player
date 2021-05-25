@@ -37,6 +37,18 @@ body {
   }
 }
 
+.border-cover-2 {
+  outline: 2px dashed gray;
+}
+
+.no-content {
+  font-size: 50px;
+}
+
+.border-cover-1 {
+  outline: 1px dashed gray;
+}
+
 input[type="search"]:disabled {
   background: slategrey;
 }

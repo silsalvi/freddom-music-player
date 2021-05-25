@@ -81,7 +81,7 @@
         (click)="onSwitchMode()"
       ></p-button>
     </div>
-    <div class="thumb">
+    <div class="thumb" *ngIf="branoSelezionato.thumbnail; else noThumb">
       <img
         src="{{ branoSelezionato.thumbnail }}"
         alt="thumbnail"
@@ -140,5 +140,12 @@
         </div>
       </div>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #noThumb>
+  <div class="thumb">
+    <span class="no-content">🤷‍♂️</span>
+    <p>Nessuna cover è stata trovata.</p>
   </div>
 </ng-template>

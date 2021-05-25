@@ -48,14 +48,14 @@ export class PlayerComponent implements OnInit {
       this.attuale = '0:00';
       this.durata = this.braniService.durata;
       this.repeatSong = false;
-      if (this.braniService.isFirstPlay) {
+      if (this.braniService.isRetrivedFromLocal) {
         const attuale = localStorage.getItem('minutoCorrente');
         if (attuale && attuale !== '0:00') {
           const actual = this.utils.convertDurationToSeconds(attuale);
           this.braniService.howl.seek(actual);
           this.attuale = attuale;
           this.tempo = (actual / this.braniService.howl.duration()) * 100;
-          this.braniService.isFirstPlay = false;
+          this.braniService.isRetrivedFromLocal = false;
         }
       } else {
         this.startPlay();
