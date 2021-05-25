@@ -78,7 +78,6 @@ export class MenubarComponent implements OnInit, AfterViewInit {
       (control) => control.value
     );
     if (this.isValid) {
-      this.braniService.enabledField = this.enabledField;
       this.advancedSearch.album = this.form.value.album;
       this.advancedSearch.song = this.form.value.brano;
       this.advancedSearch.artist = this.form.value.artista;
@@ -91,6 +90,7 @@ export class MenubarComponent implements OnInit, AfterViewInit {
           this.showDialog = false;
           this.braniService.risultatiRicerca = brani;
           this.braniService.listaBrani = [...brani];
+          this.braniService.updateEnabledField.next(this.enabledField);
         });
     } else {
       this.form.markAllAsTouched();
@@ -113,6 +113,5 @@ export class MenubarComponent implements OnInit, AfterViewInit {
     this.form.disable();
     this.form.reset();
     this.form.controls[this.enabledField].enable();
-    this.braniService.enabledField = this.enabledField;
   }
 }
