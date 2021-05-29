@@ -37,10 +37,6 @@ export class MusicListComponent implements OnInit {
           this.first = 0;
         })
       );
-
-    this.braniService.brani$.subscribe(() => {
-      this.first = this.paginaCorrente * 5;
-    });
   }
 
   /**
