@@ -103,6 +103,10 @@
   float: left;
 }
 
+.p-button .p-badge {
+  margin-left: 0 !important;
+}
+
 /* MEDIA QUERIES*/
 
 @media only screen and (max-width: 600px) {

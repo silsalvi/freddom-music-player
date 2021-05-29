@@ -33,6 +33,7 @@ export class PlayerComponent implements OnInit {
   timeChanged: number;
   repeatSong: boolean = false;
   isPlaying: boolean = false;
+  autoPlay: boolean = false;
   private playerSubject = new BehaviorSubject<boolean>(this.isPlaying);
   // Player osbervable
   player$ = timer(0, 1000).pipe(
@@ -55,11 +56,15 @@ export class PlayerComponent implements OnInit {
           this.braniService.howl.seek(actual);
           this.attuale = attuale;
           this.tempo = (actual / this.braniService.howl.duration()) * 100;
-          this.braniService.isRetrivedFromLocal = false;
         }
+        this.braniService.isRetrivedFromLocal = false;
       } else {
         this.startPlay();
       }
+    });
+
+    this.braniService.howl.on('end', () => {
+      this.onEnd();
     });
 
     this.player$.subscribe((isPlaying) => {
@@ -68,18 +73,28 @@ export class PlayerComponent implements OnInit {
       }
     });
 
-    window.addEventListener('beforeunload', () => {
-      if (this.branoSelezionato) {
-        localStorage.setItem('minutoCorrente', this.attuale);
-        localStorage.setItem('idVideoBrano', this.branoSelezionato.id);
-      }
-      if (this.braniService.listaBrani.length > 0) {
-        localStorage.setItem(
-          'risultati',
-          JSON.stringify(this.braniService.listaBrani)
-        );
-      }
-    });
+    window.onbeforeunload = () => {
+      localStorage.setItem('minutoCorrente', this.attuale);
+      localStorage.setItem(
+        'branoCorrente',
+        JSON.stringify(this.branoSelezionato)
+      );
+
+      localStorage.setItem(
+        'risultati',
+        JSON.stringify(this.braniService.risultatiRicerca)
+      );
+
+      localStorage.setItem(
+        'enabledField',
+        this.braniService.updateEnabledField.value
+      );
+
+      localStorage.setItem(
+        'listaBrani',
+        JSON.stringify(this.braniService.listaBrani)
+      );
+    };
   }
 
   /**
@@ -111,7 +126,7 @@ export class PlayerComponent implements OnInit {
     } else {
       this.braniService.branoSelezionato = brani[0];
     }
-    this.braniService.riproduci(this.braniService.branoSelezionato);
+    this.braniService.riproduci(this.braniService.branoSelezionato, true);
   }
 
   /**
@@ -136,7 +151,7 @@ export class PlayerComponent implements OnInit {
     } else {
       this.braniService.branoSelezionato = brani[brani.length - 1];
     }
-    this.braniService.riproduci(this.braniService.branoSelezionato);
+    this.braniService.riproduci(this.braniService.branoSelezionato, true);
   }
 
   /**
@@ -207,14 +222,40 @@ export class PlayerComponent implements OnInit {
    * Attiva o disattiva la ripetizione del brano corrente
    */
   repeat() {
+    this.braniService.howl.off('end');
     this.repeatSong = !this.repeatSong;
     if (this.repeatSong) {
+      this.autoPlay = false;
       this.braniService.howl.on('end', () => {
         this.braniService.howl.stop();
         this.braniService.howl.play();
       });
     } else {
-      this.braniService.howl.off('end');
+      this.braniService.howl.on('end', () => {
+        this.onEnd();
+      });
     }
+  }
+
+  onAutoPlay() {
+    this.braniService.howl.off('end');
+    this.autoPlay = !this.autoPlay;
+    if (this.autoPlay) {
+      this.repeatSong = false;
+      this.braniService.howl.on('end', () => {
+        this.onForwardClick();
+      });
+    } else {
+      this.braniService.howl.on('end', () => {
+        this.onEnd();
+      });
+    }
+  }
+
+  private onEnd() {
+    this.attuale = '0:00';
+    this.tempo = 0;
+    this.isPlaying = false;
+    this.playerSubject.next(this.isPlaying);
   }
 }

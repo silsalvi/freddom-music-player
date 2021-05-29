@@ -22,7 +22,13 @@ import { FreedomInterceptor } from './services/http-interceptor';
 import { ModalComponent } from './modal/modal.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { MessageModule, MessagesModule } from 'primeng';
+import {
+  ContextMenuModule,
+  MessageModule,
+  MessageService,
+  MessagesModule,
+  ToastModule,
+} from 'primeng';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +56,8 @@ import { MessageModule, MessagesModule } from 'primeng';
     RadioButtonModule,
     MessagesModule,
     MessageModule,
+    ToastModule,
+    ContextMenuModule,
   ],
   providers: [
     {
@@ -58,6 +66,7 @@ import { MessageModule, MessagesModule } from 'primeng';
       multi: true,
     },
     DialogService,
+    MessageService,
   ],
   bootstrap: [AppComponent],
 })

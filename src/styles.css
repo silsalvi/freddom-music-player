@@ -49,6 +49,11 @@ body {
   outline: 1px dashed gray;
 }
 
+.p-paginator-element:focus {
+  z-index: 0 !important;
+  position: relative !important;
+}
+
 input[type="search"]:disabled {
   background: slategrey;
 }
