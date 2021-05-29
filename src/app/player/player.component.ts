@@ -62,6 +62,10 @@ export class PlayerComponent implements OnInit {
       }
     });
 
+    this.braniService.howl.on('end', () => {
+      this.onEnd();
+    });
+
     this.player$.subscribe((isPlaying) => {
       if (isPlaying) {
         this.update();
@@ -207,6 +211,7 @@ export class PlayerComponent implements OnInit {
    * Attiva o disattiva la ripetizione del brano corrente
    */
   repeat() {
+    this.braniService.howl.off('end');
     this.repeatSong = !this.repeatSong;
     if (this.repeatSong) {
       this.braniService.howl.on('end', () => {
@@ -214,7 +219,16 @@ export class PlayerComponent implements OnInit {
         this.braniService.howl.play();
       });
     } else {
-      this.braniService.howl.off('end');
+      this.braniService.howl.on('end', () => {
+        this.onEnd();
+      });
     }
+  }
+
+  private onEnd() {
+    this.attuale = '0:00';
+    this.tempo = 0;
+    this.isPlaying = false;
+    this.playerSubject.next(this.isPlaying);
   }
 }
