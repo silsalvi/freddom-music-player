@@ -34,7 +34,7 @@
     [paginator]="true"
     [alwaysShowPaginator]="false"
     [rows]="5"
-    [paginatorPosition]="braniService.rowsInPage >= 5 ? 'bottom' : 'top'"
+    [paginatorPosition]="'both'"
     [(first)]="first"
     (onPage)="onPage($event)"
   >
