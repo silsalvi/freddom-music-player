@@ -75,17 +75,30 @@ export class BraniService {
         format: ['mp4', 'webm'],
         html5: true,
       });
+
       if (autoplay) {
         this.howl.once('play', () => {
           this.durata = this.calcolaDurata();
           this.braniSubject.next(brano);
           this.mostraPlayer = true;
+          this.risultatiRicerca.forEach((song) => {
+            song.selected = false;
+            if (brano.id === song.id) {
+              song.selected = true;
+            }
+          });
         });
       } else {
         this.howl.once('load', () => {
           this.durata = this.calcolaDurata();
           this.braniSubject.next(brano);
           this.mostraPlayer = true;
+          this.risultatiRicerca.forEach((song) => {
+            song.selected = false;
+            if (brano.id === song.id) {
+              song.selected = true;
+            }
+          });
         });
       }
     });
