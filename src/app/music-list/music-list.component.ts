@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { RicercaBraniResponse, TipiRicerca } from '../models/brano.model';
@@ -18,17 +17,17 @@ export class MusicListComponent implements OnInit {
   first = 0;
   enabledField$: Observable<string>;
   tipiRicerca = TipiRicerca;
-  items: MenuItem[] = [
-    {
-      label: 'Aggiungi alla coda di riproduzione',
-      icon: 'pi pi-bars',
-    },
-  ];
+  paginaCorrente = 1;
   constructor(public braniService: BraniService) {}
   ngOnInit() {
     const firstFromLocal = +localStorage.getItem('first');
+    const pageCurr = +localStorage.getItem('paginaCorrente');
     if (firstFromLocal && !isNaN(firstFromLocal)) {
       this.first = firstFromLocal;
+    }
+
+    if (pageCurr && !isNaN(pageCurr)) {
+      this.paginaCorrente = pageCurr;
     }
 
     this.enabledField$ = this.braniService.updateEnabledField
@@ -38,6 +37,10 @@ export class MusicListComponent implements OnInit {
           this.first = 0;
         })
       );
+
+    this.braniService.brani$.subscribe(() => {
+      this.first = this.paginaCorrente * 5;
+    });
   }
 
   /**
@@ -104,6 +107,9 @@ export class MusicListComponent implements OnInit {
     ).length;
 
     this.first = event.first;
+    this.paginaCorrente = this.first / event.rows + 1;
+
     localStorage.setItem('first', String(this.first));
+    localStorage.setItem('paginaCorrente', String(this.paginaCorrente));
   }
 }

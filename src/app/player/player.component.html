@@ -7,7 +7,7 @@
   <div
     id="player-minimize"
     [class]="
-      braniService.rowsInPage >= 5
+      braniService.rowsInPage > 1
         ? 'player-container-minimize-more-res'
         : 'player-container-minimize'
     "
@@ -47,6 +47,12 @@
               [style]="{ float: 'right' }"
               (onClick)="onAutoPlay()"
               [badge]="autoPlay ? '1' : ''"
+              [disabled]="braniService.listaBrani.length === 0"
+              [title]="
+                braniService.listaBrani.length === 0
+                  ? 'Non sono presenti brani nella coda di riproduzione.'
+                  : ''
+              "
             ></p-button>
           </div>
           <div class="col-6 p-0">
@@ -54,6 +60,12 @@
               [icon]="'pi pi-backward'"
               [styleClass]="'p-button-rounded p-button-text'"
               (onClick)="onBackwordClick($event)"
+              [disabled]="braniService.listaBrani.length === 0"
+              [title]="
+                braniService.listaBrani.length === 0
+                  ? 'Non sono presenti brani nella coda di riproduzione.'
+                  : ''
+              "
             ></p-button>
             <p-button
               [icon]="isPlaying ? 'pi pi-pause' : 'pi pi-play'"
@@ -64,6 +76,12 @@
               [icon]="'pi pi-forward'"
               [styleClass]="'p-button-rounded p-button-text'"
               (onClick)="onForwardClick($event)"
+              [disabled]="braniService.listaBrani.length === 0"
+              [title]="
+                braniService.listaBrani.length === 0
+                  ? 'Non sono presenti brani nella coda di riproduzione.'
+                  : ''
+              "
             ></p-button>
           </div>
           <div class="col-3">
@@ -72,6 +90,12 @@
               [styleClass]="'p-button-rounded p-button-text align-left'"
               (onClick)="repeat()"
               [badge]="repeatSong ? '1' : ''"
+              [disabled]="braniService.listaBrani.length === 0"
+              [title]="
+                braniService.listaBrani.length === 0
+                  ? 'Non sono presenti brani nella coda di riproduzione.'
+                  : ''
+              "
             ></p-button>
           </div>
         </div>
@@ -124,6 +148,12 @@
               [style]="{ float: 'right' }"
               (onClick)="onAutoPlay()"
               [badge]="autoPlay ? '1' : ''"
+              [disabled]="braniService.listaBrani.length === 0"
+              [title]="
+                braniService.listaBrani.length === 0
+                  ? 'Non sono presenti brani nella coda di riproduzione.'
+                  : ''
+              "
             ></p-button>
           </div>
           <div class="col-6 p-0">
@@ -131,6 +161,12 @@
               [icon]="'pi pi-backward'"
               [styleClass]="'p-button-rounded p-button-text p-button-lg'"
               (onClick)="onBackwordClick($event)"
+              [disabled]="braniService.listaBrani.length === 0"
+              [title]="
+                braniService.listaBrani.length === 0
+                  ? 'Non sono presenti brani nella coda di riproduzione.'
+                  : ''
+              "
             ></p-button>
             <p-button
               [icon]="isPlaying ? 'pi pi-pause' : 'pi pi-play'"
@@ -141,6 +177,12 @@
               [icon]="'pi pi-forward'"
               [styleClass]="'p-button-rounded p-button-text p-button-lg'"
               (onClick)="onForwardClick($event)"
+              [disabled]="braniService.listaBrani.length === 0"
+              [title]="
+                braniService.listaBrani.length === 0
+                  ? 'Non sono presenti brani nella coda di riproduzione.'
+                  : ''
+              "
             ></p-button>
           </div>
           <div class="col-3">
@@ -151,6 +193,12 @@
               "
               (onClick)="repeat()"
               [badge]="repeatSong ? '1' : ''"
+              [disabled]="braniService.listaBrani.length === 0"
+              [title]="
+                braniService.listaBrani.length === 0
+                  ? 'Non sono presenti brani nella coda di riproduzione.'
+                  : ''
+              "
             ></p-button>
           </div>
         </div>

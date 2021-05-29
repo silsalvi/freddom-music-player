@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
     const listaBrani: RicercaBraniResponse[] =
       JSON.parse(localStorage.getItem('listaBrani')) || [];
 
+    const index = risultati.findIndex((song) => song.id === brano.id);
     if (risultati.length > 0) {
       this.braniService.risultatiRicerca = risultati;
     }
@@ -35,6 +36,9 @@ export class AppComponent implements OnInit {
     if (brano) {
       this.braniService.isRetrivedFromLocal = true;
       this.braniService.riproduci(brano, false);
+      if (index > -1) {
+        this.braniService.risultatiRicerca[index].selected = true;
+      }
     }
   }
 }
