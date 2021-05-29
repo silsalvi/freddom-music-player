@@ -32,7 +32,14 @@ export class FreedomInterceptor implements HttpInterceptor {
         } else if (httpError.error instanceof Blob) {
           errorMsg = 'Il video non è disponibile';
         } else {
-          errorMsg = `Codice Errore: ${httpError.status}<br /><br />Messaggio: ${httpError.message}`;
+          errorMsg = `<strong>Houston abbiamo un problema!</strong><br /> I servizi, per qualche motivo, non sono raggiungibili. <br />
+          Contattare il servizio clienti... cioè, contatta la persona che ha fatto il sito.
+          <br />
+          <br />
+          `;
+          if (httpError.status !== 0) {
+            errorMsg += `Codice Errore: ${httpError.status}<br /><br />Messaggio: ${httpError.message}`;
+          }
         }
         this.dialogService.open(ModalComponent, {
           data: { message: errorMsg },
