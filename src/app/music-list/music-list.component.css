@@ -7,3 +7,7 @@
 .selected {
   color: #43a5f4;
 }
+
+.right {
+  float: right;
+}

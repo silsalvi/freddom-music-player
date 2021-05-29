@@ -27,6 +27,7 @@ export class BraniService {
   listaBrani: RicercaBraniResponse[] = [];
   isRetrivedFromLocal: boolean = false;
   updateEnabledField = new BehaviorSubject<string>(TipiRicerca.BRANO);
+  rowsInPage: number = 5;
   /**
    * Ritorna true se c'è già un brano in riproduzione
    */
@@ -34,7 +35,13 @@ export class BraniService {
     return this.howl.playing();
   }
 
-  constructor(private spinner: NgxSpinnerService, private http: HttpClient) {}
+  constructor(private spinner: NgxSpinnerService, private http: HttpClient) {
+    const enabled = localStorage.getItem('enabledField');
+    console.log(enabled);
+    if (enabled) {
+      this.updateEnabledField.next(enabled);
+    }
+  }
 
   /**
    * Riproduce un brano passato in input

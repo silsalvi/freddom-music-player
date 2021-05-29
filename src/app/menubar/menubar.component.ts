@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { BraniService } from '../services/brani.service';
-import { RicercaBrani } from '../models/brano.model';
+import { RicercaBrani, TipiRicerca } from '../models/brano.model';
 import { AdvancedSearch } from '../models/advanced-search.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -26,7 +26,7 @@ export class MenubarComponent implements OnInit, AfterViewInit {
     video: null,
   };
   form: FormGroup;
-  enabledField: string = 'brano';
+  enabledField: string = TipiRicerca.BRANO;
   constructor(
     private braniService: BraniService,
     private formBuilder: FormBuilder,
@@ -34,7 +34,7 @@ export class MenubarComponent implements OnInit, AfterViewInit {
   ) {}
   ngAfterViewInit(): void {
     fromEvent(document, 'keyup').subscribe((event: KeyboardEvent) => {
-      if (event.key == 'Enter' && this.showDialog) {
+      if (event.key === 'Enter' && this.showDialog) {
         this.onAdvancedSearch();
       }
     });
@@ -89,7 +89,9 @@ export class MenubarComponent implements OnInit, AfterViewInit {
         .subscribe((brani) => {
           this.showDialog = false;
           this.braniService.risultatiRicerca = brani;
-          this.braniService.listaBrani = [...brani];
+          if (this.enabledField === TipiRicerca.BRANO) {
+            this.braniService.listaBrani = [...brani];
+          }
           this.braniService.updateEnabledField.next(this.enabledField);
         });
     } else {

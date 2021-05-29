@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { RicercaBraniResponse, TipiRicerca } from '../models/brano.model';
 import { BraniService } from '../services/brani.service';
 
@@ -16,7 +18,12 @@ export class MusicListComponent implements OnInit {
   first = 0;
   enabledField$: Observable<string>;
   tipiRicerca = TipiRicerca;
-
+  items: MenuItem[] = [
+    {
+      label: 'Aggiungi alla coda di riproduzione',
+      icon: 'pi pi-bars',
+    },
+  ];
   constructor(public braniService: BraniService) {}
   ngOnInit() {
     const firstFromLocal = +localStorage.getItem('first');
@@ -24,7 +31,13 @@ export class MusicListComponent implements OnInit {
       this.first = firstFromLocal;
     }
 
-    this.enabledField$ = this.braniService.updateEnabledField.asObservable();
+    this.enabledField$ = this.braniService.updateEnabledField
+      .asObservable()
+      .pipe(
+        tap(() => {
+          this.first = 0;
+        })
+      );
   }
 
   /**
@@ -37,6 +50,7 @@ export class MusicListComponent implements OnInit {
       song.selected = false;
     });
     brano.selected = true;
+    this.braniService.listaBrani = [...this.braniService.risultatiRicerca];
   }
 
   /**
@@ -77,7 +91,6 @@ export class MusicListComponent implements OnInit {
    */
   updateSearch(res: RicercaBraniResponse[]) {
     this.braniService.risultatiRicerca = res;
-    this.braniService.listaBrani = [...res];
     this.braniService.updateEnabledField.next(TipiRicerca.BRANO);
   }
 
@@ -85,6 +98,11 @@ export class MusicListComponent implements OnInit {
    * Aggiorna l'attributo first ad ogni cambio di pagina
    */
   onPage(event: any) {
+    this.braniService.rowsInPage = this.braniService.risultatiRicerca.slice(
+      event.first,
+      event.first + event.rows
+    ).length;
+
     this.first = event.first;
     localStorage.setItem('first', String(this.first));
   }

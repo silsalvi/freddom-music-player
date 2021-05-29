@@ -18,16 +18,20 @@ export class AppComponent implements OnInit {
   }
   ngOnInit() {
     this.primeNgConfig.ripple = true;
-    const videoId = localStorage.getItem('idVideoBrano');
+    const brano = JSON.parse(localStorage.getItem('branoCorrente'));
     const risultati: RicercaBraniResponse[] =
       JSON.parse(localStorage.getItem('risultati')) || [];
-
-    const brano = risultati.find((song) => song.id === videoId);
+    const listaBrani: RicercaBraniResponse[] =
+      JSON.parse(localStorage.getItem('listaBrani')) || [];
 
     if (risultati.length > 0) {
       this.braniService.risultatiRicerca = risultati;
-      this.braniService.listaBrani = [...risultati];
     }
+
+    if (risultati.length > 0) {
+      this.braniService.listaBrani = listaBrani;
+    }
+
     if (brano) {
       this.braniService.isRetrivedFromLocal = true;
       this.braniService.riproduci(brano, false);

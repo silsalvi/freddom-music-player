@@ -7,7 +7,7 @@
   <div
     id="player-minimize"
     [class]="
-      braniService.risultatiRicerca.length > 5
+      braniService.rowsInPage >= 5
         ? 'player-container-minimize-more-res'
         : 'player-container-minimize'
     "
@@ -40,7 +40,15 @@
     <div class="player-controls-minimize mt-3">
       <div class="container">
         <div class="row">
-          <div class="col-3"></div>
+          <div class="col-3">
+            <p-button
+              [icon]="'fas fa-retweet'"
+              [styleClass]="'p-button-rounded p-button-text p-button-lg'"
+              [style]="{ float: 'right' }"
+              (onClick)="onAutoPlay()"
+              [badge]="autoPlay ? '1' : ''"
+            ></p-button>
+          </div>
           <div class="col-6 p-0">
             <p-button
               [icon]="'pi pi-backward'"
@@ -109,7 +117,15 @@
     <div class="player-controls-full">
       <div class="container">
         <div class="row">
-          <div class="col-3"></div>
+          <div class="col-3">
+            <p-button
+              [icon]="'fas fa-retweet'"
+              [styleClass]="'p-button-rounded p-button-text p-button-lg'"
+              [style]="{ float: 'right' }"
+              (onClick)="onAutoPlay()"
+              [badge]="autoPlay ? '1' : ''"
+            ></p-button>
+          </div>
           <div class="col-6 p-0">
             <p-button
               [icon]="'pi pi-backward'"
