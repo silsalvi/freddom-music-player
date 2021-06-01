@@ -37,7 +37,6 @@ export class BraniService {
 
   constructor(private spinner: NgxSpinnerService, private http: HttpClient) {
     const enabled = localStorage.getItem('enabledField');
-    console.log(enabled);
     if (enabled) {
       this.updateEnabledField.next(enabled);
     }
@@ -70,7 +69,9 @@ export class BraniService {
 
     this.getBrano(brano).subscribe((stream) => {
       this.howl = new Howl({
-        src: URL.createObjectURL(stream),
+        src: window.webkitURL
+          ? window.webkitURL.createObjectURL(stream)
+          : URL.createObjectURL(stream),
         autoplay: autoplay,
         format: ['mp4', 'webm'],
         html5: true,
