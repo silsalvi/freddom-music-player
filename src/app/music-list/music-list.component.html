@@ -28,179 +28,111 @@
       severity="info"
     ></p-message>
   </div>
-  <p-dataView
-    [value]="braniService.risultatiRicerca"
-    [emptyMessage]="'Inizia una ricerca per visualizzare dei risultati.'"
-    [paginator]="true"
-    [alwaysShowPaginator]="false"
-    [rows]="5"
-    [paginatorPosition]="'both'"
-    [(first)]="first"
-    (onPage)="onPage($event)"
-  >
-    <ng-template let-brano pTemplate="listItem">
-      <div
-        pRipple
-        class="list-item"
-        (click)="onSelection(brano)"
-        [id]="'brano' + brano.id"
-        [ngClass]="{ selected: brano.selected }"
-        #song
-      >
-        <div class="container-fluid">
-          <div class="row">
-            <div
-              class="col-12 col-sm-3 border-cover-1 p-0"
-              *ngIf="brano.thumbnail; else noThumb"
-            >
-              <img src="{{ brano.thumbnail }}" style="width: 100%" />
-            </div>
+  <div id="music-list-wrapper" *ngIf="braniService.risultatiRicerca.length > 0">
+    <div
+      *ngFor="let item of braniService.risultatiRicerca"
+      class="list-item"
+      pRipple
+      (click)="onSelection(item)"
+      [ngClass]="{ selected: item.selected }"
+    >
+      <img [src]="item.thumbnail" alt="🤷‍♂️" class="border-cover-2" />
 
-            <div class="col-12 col-sm-9">
-              <strong style="font-size: large">{{ brano.titolo }}</strong>
-              <p class="lbl-artista">{{ brano.artista }}</p>
-            </div>
-          </div>
-        </div>
-        <p-contextMenu
-          [target]="song"
-          [model]="items"
-          [appendTo]="'body'"
-          (onHide)="onHideContextMenu()"
-        ></p-contextMenu>
-      </div>
-    </ng-template>
-  </p-dataView>
+      <span *ngIf="item.titolo && item.artista" class="data-info">
+        <h4>{{ item.titolo }}</h4>
+        {{ item.artista }}
+      </span>
+      <span *ngIf="!item.artista" class="data-info">
+        <h3>{{ item.titolo }}</h3>
+      </span>
+      <span *ngIf="!item.titolo" class="data-info">
+        {{ item.artista }}
+      </span>
+    </div>
+  </div>
+  <div id="no-results" *ngIf="braniService.risultatiRicerca.length === 0">
+    <span>Nessun brano trovato.</span>
+  </div>
 </ng-template>
 
 <ng-template #playlist>
   <div style="background: #1f2d40">
     <p-message text="Si sta cercando per playlist" severity="info"></p-message>
   </div>
-  <p-dataView
-    [value]="braniService.risultatiRicerca"
-    [emptyMessage]="'Inizia una ricerca per visualizzare dei risultati.'"
-    [paginator]="true"
-    [alwaysShowPaginator]="false"
-    [rows]="5"
-    [paginatorPosition]="'both'"
-    [(first)]="first"
-    (onPage)="onPage($event)"
-  >
-    <ng-template let-playlist pTemplate="listItem">
-      <div
-        pRipple
-        class="list-item"
-        (click)="onPlaylistClick(playlist)"
-        [id]="'playlist' + playlist.id"
-      >
-        <div class="container-fluid">
-          <div class="row">
-            <div
-              class="col-12 col-sm-3 border-cover-1 p-0"
-              *ngIf="playlist.thumbnail; else noThumb"
-            >
-              <img src="{{ playlist.thumbnail }}" style="width: 100%" />
-            </div>
-
-            <div class="col-12 col-sm-9">
-              <strong style="font-size: large">{{ playlist.titolo }}</strong>
-              <p class="lbl-artista">
-                Numero totale di brani: {{ playlist.totalTrack }}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-  </p-dataView></ng-template
->
+  <div id="music-list-wrapper" *ngIf="braniService.risultatiRicerca.length > 0">
+    <div
+      *ngFor="let playlist of braniService.risultatiRicerca"
+      class="list-item"
+      pRipple
+      (click)="onPlaylistClick(playlist)"
+    >
+      <img [src]="playlist.thumbnail" alt="🤷‍♂️" class="border-cover-2" />
+      <span *ngIf="playlist.titolo && playlist.totalTrack" class="data-info">
+        <h4>{{ playlist.titolo }}</h4>
+        {{ "Numero di brani contenuti: " + playlist.totalTrack }}
+      </span>
+      <span *ngIf="!playlist.totalTrack" class="data-info">
+        <h3>{{ playlist.titolo }}</h3>
+      </span>
+      <span *ngIf="!playlist.titolo" class="data-info">
+        {{ "Numero di brani contenuti: " + playlist.totalTrack }}
+      </span>
+    </div>
+  </div>
+  <div id="no-results" *ngIf="braniService.risultatiRicerca.length === 0">
+    <span>Nessuna playlist trovata.</span>
+  </div>
+</ng-template>
 
 <ng-template #album>
   <div style="background: #1f2d40">
     <p-message text="Si sta cercando per album" severity="info"></p-message>
   </div>
-  <p-dataView
-    [value]="braniService.risultatiRicerca"
-    [emptyMessage]="'Inizia una ricerca per visualizzare dei risultati.'"
-    [paginator]="true"
-    [alwaysShowPaginator]="false"
-    [rows]="5"
-    [paginatorPosition]="'both'"
-    [(first)]="first"
-    (onPage)="onPage($event)"
-  >
-    <ng-template let-album pTemplate="listItem">
-      <div
-        pRipple
-        class="list-item"
-        (click)="onAlbumClick(album)"
-        [id]="'album' + album.id"
-      >
-        <div class="container-fluid">
-          <div class="row">
-            <div
-              class="col-12 col-sm-3 border-cover-1 p-0"
-              *ngIf="album.thumbnail; else noThumb"
-            >
-              <img src="{{ album.thumbnail }}" style="width: 100%" />
-            </div>
+  <div id="music-list-wrapper" *ngIf="braniService.risultatiRicerca.length > 0">
+    <div
+      *ngFor="let item of braniService.risultatiRicerca"
+      class="list-item"
+      pRipple
+      (click)="onAlbumClick(item)"
+    >
+      <img [src]="item.thumbnail" alt="🤷‍♂️" class="border-cover-2" />
 
-            <div class="col-12 col-sm-9">
-              <strong style="font-size: large">{{ album.titolo }}</strong>
-              <p class="lbl-artista">{{ album.artista }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-  </p-dataView>
+      <span *ngIf="item.titolo && item.artista" class="data-info">
+        <h4>{{ item.titolo }}</h4>
+        {{ item.artista }}
+      </span>
+      <span *ngIf="!item.artista" class="data-info">
+        <h3>{{ item.titolo }}</h3>
+      </span>
+      <span *ngIf="!item.titolo" class="data-info">
+        {{ item.artista }}
+      </span>
+    </div>
+  </div>
+  <div id="no-results" *ngIf="braniService.risultatiRicerca.length === 0">
+    <span>Nessun album trovato.</span>
+  </div>
 </ng-template>
 
 <ng-template #artista>
   <div style="background: #1f2d40">
     <p-message text="Si sta cercando per artista" severity="info"></p-message>
   </div>
-  <p-dataView
-    [value]="braniService.risultatiRicerca"
-    [emptyMessage]="'Inizia una ricerca per visualizzare dei risultati.'"
-    [paginator]="true"
-    [alwaysShowPaginator]="false"
-    [rows]="5"
-    [paginatorPosition]="'both'"
-    [(first)]="first"
-    (onPage)="onPage($event)"
-  >
-    <ng-template let-artista pTemplate="listItem">
-      <div
-        pRipple
-        class="list-item"
-        (click)="onArtistaClick(artista)"
-        [id]="'artista' + artista.id"
-      >
-        <div class="container-fluid">
-          <div class="row">
-            <div
-              class="col-12 col-sm-3 border-cover-1 p-0"
-              *ngIf="artista.thumbnail; else noThumb"
-            >
-              <img src="{{ artista.thumbnail }}" style="width: 100%" />
-            </div>
+  <div id="music-list-wrapper" *ngIf="braniService.risultatiRicerca.length > 0">
+    <div
+      *ngFor="let item of braniService.risultatiRicerca"
+      class="list-item"
+      pRipple
+      (click)="onArtistaClick(item)"
+    >
+      <img [src]="item.thumbnail" alt="🤷‍♂️" class="border-cover-2" />
 
-            <div class="col-12 col-sm-9">
-              <strong style="font-size: large">{{ artista.titolo }}</strong>
-              <p class="lbl-artista">{{ artista.artista }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-  </p-dataView>
-</ng-template>
-
-<ng-template #noThumb>
-  <div class="col-12 col-sm-3 border-cover-2">
-    <span class="no-content">🤷‍♂️</span>
-    <p>Nessuna cover è stata trovata.</p>
+      <span class="data-info">
+        <h4>{{ item.titolo }}</h4>
+      </span>
+    </div>
+  </div>
+  <div id="no-results" *ngIf="braniService.risultatiRicerca.length === 0">
+    <span>Nessun'artista trovato.</span>
   </div>
 </ng-template>

@@ -7,7 +7,7 @@
   <div
     id="player-minimize"
     [class]="
-      braniService.risultatiRicerca.length > 5
+      braniService.risultatiRicerca.length > 0
         ? 'player-container-minimize-more-res'
         : 'player-container-minimize'
     "
@@ -90,12 +90,6 @@
               [styleClass]="'p-button-rounded p-button-text align-left'"
               (onClick)="repeat()"
               [badge]="repeatSong ? '1' : ''"
-              [disabled]="braniService.listaBrani.length === 0"
-              [title]="
-                braniService.listaBrani.length === 0
-                  ? 'Non sono presenti brani nella coda di riproduzione.'
-                  : ''
-              "
             ></p-button>
           </div>
         </div>
@@ -113,14 +107,10 @@
         (click)="onSwitchMode()"
       ></p-button>
     </div>
-    <div class="thumb" *ngIf="branoSelezionato.thumbnail; else noThumb">
-      <img
-        src="{{ branoSelezionato.thumbnail }}"
-        alt="thumbnail"
-        width="200"
-        height="200"
-      />
+    <div class="thumb">
+      <img [src]="branoSelezionato.thumbnail" alt="🤷‍♂️" class="border-cover-2" />
     </div>
+
     <div class="name-song-full">
       <strong>{{ branoSelezionato.titolo }} </strong>
       <h4>
@@ -193,23 +183,10 @@
               "
               (onClick)="repeat()"
               [badge]="repeatSong ? '1' : ''"
-              [disabled]="braniService.listaBrani.length === 0"
-              [title]="
-                braniService.listaBrani.length === 0
-                  ? 'Non sono presenti brani nella coda di riproduzione.'
-                  : ''
-              "
             ></p-button>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</ng-template>
-
-<ng-template #noThumb>
-  <div class="thumb">
-    <span class="no-content">🤷‍♂️</span>
-    <p>Nessuna cover è stata trovata.</p>
   </div>
 </ng-template>

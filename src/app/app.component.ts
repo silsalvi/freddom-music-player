@@ -9,6 +9,7 @@ import { BraniService } from './services/brani.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
+  showWelcome = false;
   constructor(
     private primeNgConfig: PrimeNGConfig,
     private braniService: BraniService
@@ -18,27 +19,35 @@ export class AppComponent implements OnInit {
   }
   ngOnInit() {
     this.primeNgConfig.ripple = true;
-    const brano = JSON.parse(localStorage.getItem('branoCorrente'));
-    const risultati: RicercaBraniResponse[] =
-      JSON.parse(localStorage.getItem('risultati')) || [];
-    const listaBrani: RicercaBraniResponse[] =
-      JSON.parse(localStorage.getItem('listaBrani')) || [];
+    this.showWelcome = localStorage.length === 0;
 
-    const index = risultati.findIndex((song) => song.id === brano.id);
-    if (risultati.length > 0) {
-      this.braniService.risultatiRicerca = risultati;
-    }
+    if (!this.showWelcome) {
+      const brano = JSON.parse(localStorage.getItem('branoCorrente'));
+      const risultati: RicercaBraniResponse[] =
+        JSON.parse(localStorage.getItem('risultati')) || [];
+      const listaBrani: RicercaBraniResponse[] =
+        JSON.parse(localStorage.getItem('listaBrani')) || [];
 
-    if (risultati.length > 0) {
-      this.braniService.listaBrani = listaBrani;
-    }
+      const index = risultati.findIndex((song) => song.id === brano.id);
+      if (risultati.length > 0) {
+        this.braniService.risultatiRicerca = risultati;
+      }
 
-    if (brano) {
-      this.braniService.isRetrivedFromLocal = true;
-      this.braniService.riproduci(brano, false);
-      if (index > -1) {
-        this.braniService.risultatiRicerca[index].selected = true;
+      if (risultati.length > 0) {
+        this.braniService.listaBrani = listaBrani;
+      }
+
+      if (brano) {
+        this.braniService.isRetrivedFromLocal = true;
+        this.braniService.riproduci(brano, false);
+        if (index > -1) {
+          this.braniService.risultatiRicerca[index].selected = true;
+        }
       }
     }
+  }
+
+  onSearch() {
+    this.showWelcome = false;
   }
 }

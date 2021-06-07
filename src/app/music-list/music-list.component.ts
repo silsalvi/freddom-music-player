@@ -92,20 +92,4 @@ export class MusicListComponent implements OnInit {
     this.braniService.risultatiRicerca = res;
     this.braniService.updateEnabledField.next(TipiRicerca.BRANO);
   }
-
-  /**
-   * Aggiorna l'attributo first ad ogni cambio di pagina
-   */
-  onPage(event: any) {
-    this.braniService.rowsInPage = this.braniService.risultatiRicerca.slice(
-      event.first,
-      event.first + event.rows
-    ).length;
-
-    this.first = event.first;
-    this.paginaCorrente = this.first / event.rows + 1;
-
-    localStorage.setItem('first', String(this.first));
-    localStorage.setItem('paginaCorrente', String(this.paginaCorrente));
-  }
 }

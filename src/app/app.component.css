@@ -1,0 +1,9 @@
+#welcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #1f2d40;
+  color: azure;
+  padding: 10%;
+}

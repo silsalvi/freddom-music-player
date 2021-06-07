@@ -2,6 +2,12 @@
   padding: 25px;
   font-size: 18px;
   cursor: pointer;
+  border-bottom: 0.5px solid #a1a9b1;
+  display: flex;
+}
+
+.data-info {
+  margin: 1.5rem;
 }
 
 .selected {
@@ -10,4 +16,37 @@
 
 .right {
   float: right;
+}
+
+img.border-cover-2 {
+  width: 100px;
+  height: 100px;
+}
+
+#music-list-wrapper,
+#no-results {
+  background: #1f2d40;
+  color: azure;
+}
+
+#no-results {
+  padding: 1rem;
+  border-bottom: 0.5px solid #a1a9b1;
+}
+
+.entity {
+  display: initial;
+}
+
+@media only screen and (max-width: 480px) {
+  img,
+  div.border-cover-2 {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 5px;
+  }
+
+  .entity {
+    display: none;
+  }
 }
