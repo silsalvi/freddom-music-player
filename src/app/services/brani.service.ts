@@ -4,13 +4,14 @@ import {
   RicercaBraniResponse,
   TipiRicerca,
 } from '../models/brano.model';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { Howl } from 'howler';
+import { BehaviorSubject } from 'rxjs';
+import { Howl, Howler } from 'howler';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { loadingProps } from 'src/app/config/loading-congif';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AdvancedSearch } from '../models/advanced-search.model';
+import { tap } from 'rxjs/operators';
 
 const BASE_API_URL = environment.apiFreedom;
 @Injectable({
@@ -48,7 +49,7 @@ export class BraniService {
    */
   riproduci(brano: RicercaBraniResponse, autoplay: boolean = true) {
     this.branoSelezionato = brano;
-    if (this.branoSelezionato !== this.braniSubject.value) {
+    if (this.branoSelezionato?.id !== this.braniSubject.value?.id) {
       this.spinner.show(undefined, loadingProps);
       this.creaNuovoFlusso(brano, autoplay);
     }
@@ -62,44 +63,37 @@ export class BraniService {
     brano: RicercaBraniResponse,
     autoplay: boolean = false
   ) {
+    this.risultatiRicerca.forEach((song) => {
+      song.selected = false;
+      if (brano.id === song.id) {
+        song.selected = true;
+      }
+    });
+
     if (this.howl) {
       this.howl.pause();
       this.howl.stop();
     }
 
-    this.getBrano(brano).subscribe((stream) => {
+    this.getBrano(brano).subscribe((stream: any) => {
       this.howl = new Howl({
-        src: window.webkitURL
-          ? window.webkitURL.createObjectURL(stream)
-          : URL.createObjectURL(stream),
+        src: URL.createObjectURL(stream),
         autoplay: autoplay,
-        format: ['mp4', 'webm'],
+        format: ['mp4', 'webm', 'm4a'],
         html5: true,
       });
-
+      Howler.autoUnlock = false;
       if (autoplay) {
         this.howl.once('play', () => {
           this.durata = this.calcolaDurata();
           this.braniSubject.next(brano);
           this.mostraPlayer = true;
-          this.risultatiRicerca.forEach((song) => {
-            song.selected = false;
-            if (brano.id === song.id) {
-              song.selected = true;
-            }
-          });
         });
       } else {
         this.howl.once('load', () => {
           this.durata = this.calcolaDurata();
           this.braniSubject.next(brano);
           this.mostraPlayer = true;
-          this.risultatiRicerca.forEach((song) => {
-            song.selected = false;
-            if (brano.id === song.id) {
-              song.selected = true;
-            }
-          });
         });
       }
     });

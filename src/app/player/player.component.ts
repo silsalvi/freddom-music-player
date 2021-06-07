@@ -80,28 +80,34 @@ export class PlayerComponent implements OnInit {
       }
     });
 
-    window.onbeforeunload = () => {
-      localStorage.setItem('minutoCorrente', this.attuale);
-      localStorage.setItem(
-        'branoCorrente',
-        JSON.stringify(this.branoSelezionato)
-      );
+    window.addEventListener(
+      'beforeunload',
+      () => {
+        {
+          localStorage.setItem('minutoCorrente', this.attuale);
+          localStorage.setItem(
+            'branoCorrente',
+            JSON.stringify(this.branoSelezionato)
+          );
 
-      localStorage.setItem(
-        'risultati',
-        JSON.stringify(this.braniService.risultatiRicerca)
-      );
+          localStorage.setItem(
+            'risultati',
+            JSON.stringify(this.braniService.risultatiRicerca)
+          );
 
-      localStorage.setItem(
-        'enabledField',
-        this.braniService.updateEnabledField.value
-      );
+          localStorage.setItem(
+            'enabledField',
+            this.braniService.updateEnabledField.value
+          );
 
-      localStorage.setItem(
-        'listaBrani',
-        JSON.stringify(this.braniService.listaBrani)
-      );
-    };
+          localStorage.setItem(
+            'listaBrani',
+            JSON.stringify(this.braniService.listaBrani)
+          );
+        }
+      },
+      { capture: true }
+    );
   }
 
   /**

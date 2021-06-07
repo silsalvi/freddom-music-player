@@ -1,6 +1,22 @@
-<app-menubar></app-menubar>
+<app-menubar (searchEvent)="onSearch()"></app-menubar>
 <app-music-list></app-music-list>
 <app-player *ngIf="mostraPlayer"></app-player>
+<div id="welcome" *ngIf="showWelcome">
+  <p>
+    Ti do il benvenuto/a su Freedom! La WebApp di tutti, senza scopi di lucro,
+    che permette di riprodurre diversi tipi di audio:<br /><br />
+    Brani, Video (Solo audio disponibile), Album e Playlist, tutto in un unico
+    punto! <br /><br />
+    Se non sai cosa fare, effettua una ricerca veloce per brano nell'apposito
+    campo, oppure una ricerca avanzata cliccando sul pulsante con la lente
+    d'ingrandimento.<br /><br />
+    Sei libero di provare l'app in tutto e per tutto, e nel caso in cui ci siano
+    problemi ( speriamo di no, sennò che rottura di c***o per lo sviluppatore :)
+    ), contattalo e segnala problemi od eventuali migliorie da apportare
+    all'app.<br /><br />
+    Buona permanenza!
+  </p>
+</div>
 <ngx-spinner
   template="<img src='assets/app-data/freedom.png' class='p-2 pulse'/>"
 >

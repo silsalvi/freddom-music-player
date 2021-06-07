@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { BraniService } from '../services/brani.service';
 import { RicercaBrani, TipiRicerca } from '../models/brano.model';
 import { AdvancedSearch } from '../models/advanced-search.model';
@@ -27,6 +33,7 @@ export class MenubarComponent implements OnInit, AfterViewInit {
   };
   form: FormGroup;
   enabledField: string = TipiRicerca.BRANO;
+  @Output() searchEvent = new EventEmitter();
   constructor(
     private braniService: BraniService,
     private formBuilder: FormBuilder,
@@ -64,6 +71,7 @@ export class MenubarComponent implements OnInit, AfterViewInit {
         this.braniService.getRisultatiRicerca(request).subscribe((brani) => {
           this.braniService.risultatiRicerca = brani;
           this.braniService.listaBrani = [...brani];
+          this.searchEvent.emit('searched');
         });
       }
     }, 500);
@@ -92,6 +100,7 @@ export class MenubarComponent implements OnInit, AfterViewInit {
           if (this.enabledField === TipiRicerca.BRANO) {
             this.braniService.listaBrani = [...brani];
           }
+          this.searchEvent.emit('searched');
           this.braniService.updateEnabledField.next(this.enabledField);
         });
     } else {
